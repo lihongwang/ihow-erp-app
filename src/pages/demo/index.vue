@@ -24,12 +24,35 @@
       </tui-card>
     </view>
     <view class="bg-red-500">你好，世界！</view>
+    <view>
+      <input v-model="formData.age" type="text" placeholder="请输入年龄" class="textarea" />
+      <uni-forms :model-value="formData">
+        <uni-forms-item label="姓名" name="name">
+          <uni-easyinput v-model="formData.name" type="text" placeholder="请输入姓名" />
+        </uni-forms-item>
+        <uni-forms-item label="年龄" name="name">
+          <input v-model="formData.age" type="text" placeholder="请输入年龄" />
+        </uni-forms-item>
+        <uni-forms-item required name="hobby" label="兴趣爱好">
+          <uni-data-checkbox v-model="formData.hobby" multiple :localdata="hobby" />
+        </uni-forms-item>
+      </uni-forms>
+      <button @click="submitForm">Submit</button>
+    </view>
   </view>
+  <tabbar current="1" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 const title = ref('Hello')
+const formData = {
+  name: 1,
+  age: 1,
+  hobby: 1,
+}
+const hobby = [{ label: 1, value: 1 }]
+const submitForm = function () {}
 const card = {
   img: {
     url: '/static/images/news/avatar_1.jpg',
