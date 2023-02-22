@@ -113,7 +113,6 @@
       </view>
     </uni-section>
   </view>
-  <tabbar current="2" />
 </template>
 <script>
 export default {

@@ -40,10 +40,10 @@ export default {
           path: '/pages/form/index',
         },
         {
-          text: 'Test',
+          text: 'Login',
           icon: 'person',
           icon_a: '/static/images/me_i.png',
-          path: '/pages/test/index',
+          path: '/pages/login/index',
         },
       ],
     }

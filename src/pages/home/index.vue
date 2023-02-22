@@ -123,7 +123,6 @@
       </uni-grid>
     </uni-section>
   </view>
-  <tabbar current="0" />
 </template>
 <script>
 export default {

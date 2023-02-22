@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "Login"
+      }
+    },
+    {
       "path": "pages/form/index",
       "style": {
         "navigationBarTitleText": "Form"
@@ -65,10 +71,10 @@
         "text": "Demo"
       },
       {
-        "pagePath": "pages/test/index",
+        "pagePath": "pages/login/index",
         "iconPath": "static/images/tab_home.png",
         "selectedIconPath": "static/images/tab_home_s.png",
-        "text": "Test"
+        "text": "Login"
       }
     ]
   }

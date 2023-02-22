@@ -40,7 +40,6 @@
       <button @click="submitForm">Submit</button>
     </view>
   </view>
-  <tabbar current="1" />
 </template>
 
 <script setup lang="ts">
