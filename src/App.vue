@@ -3,7 +3,7 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import { fetchUserInfo } from '@/utils/request'
 
 onLaunch(() => {
-  fetchUserInfo()
+  // fetchUserInfo()
   console.log('App Launch')
 })
 onShow(() => {

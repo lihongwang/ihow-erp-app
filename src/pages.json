@@ -4,7 +4,11 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "首页",
+        "backgroundColorTop": "#FFFFFF",
+        "navigationBarTextStyle": "white"
       }
     },
     {
@@ -14,15 +18,37 @@
       }
     },
     {
-      "path": "pages/form/index",
+      "path": "pages/purchase/index",
       "style": {
-        "navigationBarTitleText": "Form"
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "采购订单"
       }
     },
     {
-      "path": "pages/demo/index",
+      "path": "pages/purchase/orderDetail",
       "style": {
-        "navigationBarTitleText": "Demo"
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/stock/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表"
+      }
+    },
+    {
+      "path": "pages/chart/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "图表"
+      }
+    },
+    {
+      "path": "pages/uni/index",
+      "style": {
+        "navigationBarTitleText": "UNI-UI"
       }
     },
     {
@@ -59,17 +85,24 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/form/index",
+        "pagePath": "pages/stock/index",
         "iconPath": "static/images/tab_home.png",
         "selectedIconPath": "static/images/tab_home_s.png",
-        "text": "Form"
+        "text": "报表"
       },
       {
-        "pagePath": "pages/demo/index",
+        "pagePath": "pages/chart/index",
         "iconPath": "static/images/tab_home.png",
         "selectedIconPath": "static/images/tab_home_s.png",
-        "text": "Demo"
+        "text": "图表"
       },
+      {
+        "pagePath": "pages/uni/index",
+        "iconPath": "static/images/tab_home.png",
+        "selectedIconPath": "static/images/tab_home_s.png",
+        "text": "UNI-UI"
+      },
+
       {
         "pagePath": "pages/login/index",
         "iconPath": "static/images/tab_home.png",

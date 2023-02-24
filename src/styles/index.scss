@@ -1,0 +1,17 @@
+.uni-section-content {
+  padding: 5px;
+}
+.uni-grid {
+  .grid-item-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 5px;
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+  }
+}
+.page-wrapper > navbar {
+  z-index: 9999999;
+}

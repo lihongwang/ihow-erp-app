@@ -1,280 +1,185 @@
 <template>
-  <view class="warp">
-    <uni-card is-full :is-shadow="false">
-      <text class="uni-h6">宫格组件主要使用场景如：商品推荐列表、热门内容等</text>
-    </uni-card>
-    <uni-section title="基础样式" type="line" padding>
-      <uni-grid :column="4" :highlight="true" @change="change">
-        <uni-grid-item v-for="(item, index) in 4" :key="index" :index="index">
-          <view class="grid-item-box" style="background-color: #fff">
-            <uni-icons type="image" :size="30" color="#777" />
-            <text class="text">文本信息</text>
-          </view>
-        </uni-grid-item>
-      </uni-grid>
-    </uni-section>
-    <uni-section title="自定义列数" type="line" padding>
-      <uni-grid :column="4" :highlight="true" @change="change">
-        <uni-grid-item v-for="(item, index) in 8" :key="index" :index="index">
-          <view class="grid-item-box" style="background-color: #fff">
-            <uni-icons type="image" :size="30" color="#777" />
-            <text class="text">文本信息</text>
-          </view>
-        </uni-grid-item>
-      </uni-grid>
-    </uni-section>
-
-    <uni-section title="滑动视图" type="line" padding>
-      <!-- 因为swiper特性的关系，请指定swiper的高度 ，swiper的高度并不会被内容撑开-->
-      <swiper class="swiper" :indicator-dots="true">
-        <swiper-item>
-          <uni-grid :column="3" :highlight="true" @change="change">
-            <uni-grid-item v-for="(item, index) in list" :key="index" :index="index">
-              <view class="grid-item-box">
-                <image :src="item.url" class="image" mode="aspectFill" />
-                <text class="text">{{ item.text }}</text>
-              </view>
-            </uni-grid-item>
-          </uni-grid>
-        </swiper-item>
-        <swiper-item>
-          <uni-grid :column="3" :highlight="true" @change="change">
-            <uni-grid-item v-for="(item, index) in list" :key="index" :index="index">
-              <view class="grid-item-box">
-                <image :src="item.url" class="image" mode="aspectFill" />
-                <text class="text">{{ item.text }}</text>
-              </view>
-            </uni-grid-item>
-          </uni-grid>
-        </swiper-item>
-        <swiper-item>
-          <uni-grid :column="3" :highlight="true" @change="change">
-            <uni-grid-item v-for="(item, index) in list" :key="index" :index="index">
-              <view class="grid-item-box">
-                <image :src="item.url" class="image" mode="aspectFill" />
-                <text class="text">{{ item.text }}</text>
-              </view>
-            </uni-grid-item>
-          </uni-grid>
-        </swiper-item>
-      </swiper>
-    </uni-section>
-    <uni-section title="动态加载" type="line" padding>
-      <view class="grid-dynamic-box">
-        <uni-grid :column="3" :highlight="true" @change="change">
-          <uni-grid-item v-for="(item, index) in dynamicList" :key="index" :index="index">
-            <view class="grid-item-box" :style="{ backgroundColor: item.color }">
-              <image :src="item.url" class="image" mode="aspectFill" />
-              <text class="text">{{ item.text }}</text>
+  <view class="home-page page-wrapper">
+    <Navbar
+      :is-back="false"
+      back-icon-color="#fff"
+      back-text="皓网ERP"
+      title="皓网ERP"
+      title-color="#fff"
+      :back-text-style="{ color: '#fff' }"
+    ></Navbar>
+    <view class="page-content">
+      <uni-swiper-dot
+        class="uni-swiper-dot-box"
+        :info="info"
+        :current="current"
+        mode="nav"
+        :dots-styles="dotsStyles"
+        field="content"
+        @clickItem="clickItem"
+      >
+        <swiper class="swiper-box" :current="swiperDotIndex" @change="change">
+          <swiper-item v-for="(item, index) in 3" :key="index">
+            <view class="swiper-item" :class="'swiper-item' + index">
+              <text style="color: #fff; font-size: 32px">{{ index + 1 }}</text>
             </view>
-          </uni-grid-item>
-        </uni-grid>
+          </swiper-item>
+        </swiper>
+      </uni-swiper-dot>
+      <view v-for="(listitem, index) in menuList" :key="index">
+        <uni-section :title="listitem.title" :right="false" :show-line="true" type="line">
+          <uni-grid :highlight="true" :column="3" :show-border="false" :square="false">
+            <uni-grid-item
+              v-for="(item, index) in listitem.list"
+              :key="index"
+              :index="index"
+              @tap="handleClick(item.url ? item.url : null)"
+            >
+              <view class="grid-item-box" style="background-color: #fff">
+                <uni-icons type="image" :size="30" color="#777" />
+                <text class="text">{{ item.title }}</text>
+              </view>
+            </uni-grid-item>
+          </uni-grid>
+        </uni-section>
       </view>
-      <button type="primary" @click="add">点击添加一个宫格</button>
-      <button v-if="dynamicList.length !== 0" type="primary" style="margin-top: 15px" @click="del">
-        点击删除一个宫格
-      </button>
-    </uni-section>
-    <uni-section title="无边框带角标（3列）" type="line" padding>
-      <uni-grid :column="3" :show-border="false" :square="false" @change="change">
-        <uni-grid-item v-for="(item, index) in list" :key="index" :index="index">
-          <view class="grid-item-box">
-            <image class="image" :src="item.url" mode="aspectFill" />
-            <text class="text">{{ item.text }}</text>
-            <view v-if="item.badge" class="grid-dot">
-              <uni-badge :text="item.badge" :type="item.type" />
-            </view>
-          </view>
-        </uni-grid-item>
-      </uni-grid>
-    </uni-section>
-    <uni-section title="矩形宫格（3列）" type="line" padding>
-      <uni-grid :column="3" :square="false" :highlight="false" @change="change">
-        <uni-grid-item v-for="(item, index) in list" :key="index" :index="index">
-          <view class="grid-item-box">
-            <image :src="item.url" class="image" mode="aspectFill" />
-            <text class="text">{{ item.text }}</text>
-          </view>
-        </uni-grid-item>
-      </uni-grid>
-    </uni-section>
-    <uni-section title="边框颜色（4列 无文字）" type="line" padding>
-      <uni-grid :column="4" border-color="#03a9f4" @change="change">
-        <uni-grid-item :index="0">
-          <view class="grid-item-box">
-            <image class="image" src="/static/c1.png" mode="aspectFill" />
-          </view>
-        </uni-grid-item>
-        <uni-grid-item :index="1">
-          <view class="grid-item-box">
-            <image class="image" src="/static/c2.png" mode="aspectFill" />
-          </view>
-        </uni-grid-item>
-        <uni-grid-item :index="2">
-          <view class="grid-item-box">
-            <image class="image" src="/static/c3.png" mode="aspectFill" />
-          </view>
-        </uni-grid-item>
-        <uni-grid-item :index="3">
-          <view class="grid-item-box">
-            <image class="image" src="/static/c4.png" mode="aspectFill" />
-          </view>
-        </uni-grid-item>
-      </uni-grid>
-    </uni-section>
+    </view>
   </view>
 </template>
-<script>
-export default {
-  components: {},
-  data() {
-    return {
-      dynamicList: [],
-      list: [
-        {
-          url: '/static/c1.png',
-          text: 'Grid 1',
-          badge: '0',
-          type: 'primary',
-        },
-        {
-          url: '/static/c2.png',
-          text: 'Grid 2',
-          badge: '1',
-          type: 'success',
-        },
-        {
-          url: '/static/c3.png',
-          text: 'Grid 3',
-          badge: '99',
-          type: 'warning',
-        },
-        {
-          url: '/static/c4.png',
-          text: 'Grid 4',
-          badge: '2',
-          type: 'error',
-        },
-        {
-          url: '/static/c5.png',
-          text: 'Grid 5',
-        },
-        {
-          url: '/static/c6.png',
-          text: 'Grid 6',
-        },
-        {
-          url: '/static/c7.png',
-          text: 'Grid 7',
-        },
-        {
-          url: '/static/c8.png',
-          text: 'Grid 8',
-        },
-        {
-          url: '/static/c9.png',
-          text: 'Grid 9',
-        },
-      ],
-    }
+<script setup>
+import { useMenuStore } from '@/store/modules/menu'
+import Navbar from '@/components/pageNavbar'
+import { ref } from 'vue'
+const menuStore = useMenuStore()
+const menuList = Object.values(menuStore.menuList)
+console.log(menuList)
+const current = ref(0)
+const swiperDotIndex = ref(0)
+const change = (e) => {
+  current.value = e.detail.current
+}
+const clickItem = (e) => {
+  swiperDotIndex.value = e
+}
+const info = [
+  {
+    colorClass: 'uni-bg-red',
+    url: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+    content: '内容 A',
   },
-  methods: {
-    change(e) {
-      let { index } = e.detail
-      this.list[index].badge && this.list[index].badge++
-
-      uni.showToast({
-        title: `点击第${index + 1}个宫格`,
-        icon: 'none',
-      })
-    },
-    add() {
-      if (this.dynamicList.length < 9) {
-        this.dynamicList.push({
-          url: `/static/c${this.dynamicList.length + 1}.png`,
-          text: `Grid ${this.dynamicList.length + 1}`,
-          color: this.dynamicList.length % 2 === 0 ? '#f5f5f5' : '#fff',
-        })
-      } else {
-        uni.showToast({
-          title: '最多添加9个',
-          icon: 'none',
-        })
-      }
-    },
-    del() {
-      this.dynamicList.splice(this.dynamicList.length - 1, 1)
-    },
+  {
+    colorClass: 'uni-bg-green',
+    url: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+    content: '内容 B',
   },
+  {
+    colorClass: 'uni-bg-blue',
+    url: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
+    content: '内容 C',
+  },
+]
+const dotsStyles = [
+  {
+    backgroundColor: 'rgba(0, 0, 0, .3)',
+    border: '1px rgba(0, 0, 0, .3) solid',
+    color: '#fff',
+    selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
+    selectedBorder: '1px rgba(0, 0, 0, .9) solid',
+  },
+  {
+    backgroundColor: 'rgba(255, 90, 95,0.3)',
+    border: '1px rgba(255, 90, 95,0.3) solid',
+    color: '#fff',
+    selectedBackgroundColor: 'rgba(255, 90, 95,0.9)',
+    selectedBorder: '1px rgba(255, 90, 95,0.9) solid',
+  },
+  {
+    backgroundColor: 'rgba(83, 200, 249,0.3)',
+    border: '1px rgba(83, 200, 249,0.3) solid',
+    color: '#fff',
+    selectedBackgroundColor: 'rgba(83, 200, 249,0.9)',
+    selectedBorder: '1px rgba(83, 200, 249,0.9) solid',
+  },
+]
+const background = {
+  'background-size': '100% auto',
+  background: 'url(../../static/images/bg_hometop.png) no-repeat',
+}
+const handleClick = (url) => {
+  if (url) {
+    uni.navigateTo({
+      url: url,
+    })
+  }
 }
 </script>
 <style lang="scss">
-.image {
-  width: 25px;
-  height: 25px;
+.uni-grid-item {
+  margin: 5px;
+}
+.swiper-box {
+  height: 200px;
 }
 
-.text {
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.example-body {
-  /* #ifndef APP-NVUE */
-  // display: block;
-  /* #endif */
-}
-
-.grid-dynamic-box {
-  margin-bottom: 15px;
-}
-
-.grid-item-box {
-  flex: 1;
-  // position: relative;
+.swiper-item {
   /* #ifndef APP-NVUE */
   display: flex;
   /* #endif */
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 15px 0;
-}
-
-.grid-item-box-row {
-  flex: 1;
-  // position: relative;
-  /* #ifndef APP-NVUE */
-  display: flex;
-  /* #endif */
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 15px 0;
+  height: 200px;
+  color: #fff;
 }
 
-.grid-dot {
-  position: absolute;
-  top: 5px;
-  right: 15px;
+.swiper-item0 {
+  background-color: #cee1fd;
 }
 
-.swiper {
-  height: 420px;
+.swiper-item1 {
+  background-color: #b2cef7;
 }
 
-/* #ifdef H5 */
-@media screen and (min-width: 768px) and (max-width: 1425px) {
-  .swiper {
-    height: 630px;
-  }
+.swiper-item2 {
+  background-color: #cee1fd;
 }
 
-@media screen and (min-width: 1425px) {
-  .swiper {
-    height: 830px;
-  }
+.image {
+  width: 750rpx;
+}
+
+/* #ifndef APP-NVUE */
+::v-deep .image img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 }
 
 /* #endif */
+
+@media screen and (min-width: 500px) {
+  .uni-swiper-dot-box {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 8px;
+  }
+
+  .image {
+    width: 100%;
+  }
+}
+
+.uni-bg-red {
+  background-color: #ff5a5f;
+}
+
+.uni-bg-green {
+  background-color: #09bb07;
+}
+
+.uni-bg-blue {
+  background-color: #007aff;
+}
 </style>

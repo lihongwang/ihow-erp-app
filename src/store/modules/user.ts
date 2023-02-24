@@ -61,6 +61,16 @@ export const useUserStore = defineStore({
       // 路由表重置
       location.reload()
     },
+
+    async access(params) {
+      const res: any = await fetchApi.access(params)
+      if (res) {
+        // save token
+        // this.setToken(res.token)
+        console.log(res)
+      }
+      return res
+    },
   },
 })
 

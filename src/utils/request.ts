@@ -2,6 +2,8 @@
 import luchRequest from 'luch-request'
 import config from '@/config'
 import { getToken, setToken } from './auth'
+import { throttle, currentPage } from './tools'
+import { getWeixinCode, toLogin } from './login'
 // 默认配置，和luch-request基本一致
 const defaultConfig = {
   baseURL: '',
@@ -57,9 +59,12 @@ function request(config) {
   const token = uni.getStorageSync('token')
   const header = {
     ...defaultConfig.header,
+    // 'content-type': 'application/json',
+    'content-type': 'application/x-www-form-urlencoded',
     ...config.header,
     'X-AUTH-TOKEN': token, //自定义请求头信息
   }
+  console.log(header)
   const request = new luchRequest({
     ...defaultConfig,
     ...config,
@@ -101,81 +106,95 @@ function request(config) {
  */
 async function intercept(response) {
   const { data } = response || {}
+  const { route } = currentPage()
   if (data?.status === 5003) {
     // token失效重新获取微信code从后台获取token
-    getWeixinCode()
+    //#ifdef MP-WEIXIN
+    weixinLogin()
+    // #endif
+    //#ifdef H5 || APP-PLUS
+    if (route) {
+      toLogin()
+    }
+    // #endif
   } else if (data?.status === 2000) {
     return data?.data
   } else {
     throw new Error(data.message)
   }
 }
-const http = request(config)
-export const getSystemToken = (code: string) => {
-  http
-    .get('wechat/miniapp/api/anon/userAccess', {
-      params: {
-        code,
-      },
-    })
-    .then((res: any) => {
-      console.log(res)
-      // 微信账号已经绑定用户
-      if (res.isBundled) {
-        setToken(res)
-      } else {
-        // 未绑定用户，跳转到登录页面
-        uni.navigateTo({
-          url: '/pages/login/index',
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
 
-export function fetchUserInfo() {
-  const token = getToken()
-  if (token) {
-    http
-      .get('wechat/miniapp/api/userInfo', {
-        params: {},
-      })
-      .then((res: any) => {
-        uni.setStorageSync('userInfo', res.data)
-        uni.navigateTo({
-          url: '/pages/home/index',
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+export const weixinLogin = throttle(_weixinLogin, 1000)
+//小程序静默授权
+async function _weixinLogin() {
+  const code: any = await getWeixinCode()
+  const res: any = await getSystemToken(code)
+  console.log(res)
+
+  const { onLoad, onShow } = currentPage()
+  // 微信账号已经绑定用户
+  if (res.isBundled) {
+    setToken(res.token)
+    onLoad && onLoad()
+    onShow && onShow()
   } else {
-    getWeixinCode()
+    // 未绑定用户，跳转到登录页面
+    uni.navigateTo({
+      url: '/pages/login/index',
+    })
   }
 }
 
-export function getWeixinCode() {
-  uni.getProvider({
-    service: 'oauth',
-    success: function (res) {
-      console.log(res)
-      //微信端
-      if (~(res.provider as any).indexOf('weixin')) {
-        //微信登录
-        uni.login({
-          provider: 'weixin',
-          success: function (loginRes) {
-            console.log('loginRes.code---------' + loginRes.code)
-            getSystemToken(loginRes.code)
-          },
-          fail: function (loginRes) {
-            console.log(loginRes)
-          },
+const http = request(config)
+export const getSystemToken = (code: any) => {
+  return new Promise((resolve, reject) => {
+    http
+      .get('wechat/miniapp/api/anon/userAccess', {
+        params: {
+          code,
+        },
+      })
+      .then((res: any) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        console.log(err)
+        reject(err)
+      })
+  })
+}
+
+export function fetchUserInfo(params) {
+  return new Promise((resolve, reject) => {
+    const token = getToken()
+    const getUser = (args) => {
+      http
+        .post('wechat/miniapp/api/anon/userGrant', args)
+        .then((res: any) => {
+          resolve(true)
+          uni.setStorageSync('userInfo', res.data)
+
+          uni.navigateTo({
+            url: '/pages/home/index',
+          })
         })
-      }
-    },
+        .catch((err) => {
+          reject(err)
+          console.log(err)
+        })
+    }
+    if (token) {
+      getUser(params)
+    } else {
+      getSystemToken(params.code).then((res: any) => {
+        setToken(res.token)
+        if (!res.syncTime) {
+          getWeixinCode().then((code) => {
+            getUser({ ...params, code })
+          })
+        }
+      })
+    }
   })
 }
 export default http

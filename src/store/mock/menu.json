@@ -1,0 +1,83 @@
+{
+  "baseInfo": {
+    "title": "基础资料",
+    "list": [
+      {
+        "title": "存货编码",
+        "url": "/pages/baseInfo/goods"
+      },
+      {
+        "title": "往来单位",
+        "url": "/pages/baseInfo/relatedParty"
+      },
+      {
+        "title": "仓库管理",
+        "url": "/pages/baseInfo/warehouse"
+      },
+      {
+        "title": "仓位管理",
+        "url": "/pages/baseInfo/warehouseArea"
+      }
+    ]
+  },
+  "purchase": {
+    "title": "采购管理",
+    "list": [
+      {
+        "title": "采购订单",
+        "url": "/pages/purchase/index"
+      },
+      {
+        "title": "采购入库",
+        "url": "/pages/purchase/in"
+      },
+      {
+        "title": "采购客诉",
+        "url": "/pages/purchase/complain"
+      },
+      {
+        "title": "采购退库",
+        "url": "/pages/purchase/back"
+      }
+    ]
+  },
+  "sale": {
+    "title": "销售管理",
+    "list": [
+      {
+        "title": "销售订单",
+        "url": "/pages/sale/index"
+      },
+      {
+        "title": "销售出库",
+        "url": "/pages/sale/out"
+      },
+      {
+        "title": "销售客诉",
+        "url": "/pages/sale/complain"
+      },
+      {
+        "title": "销售退库",
+        "url": "/pages/sale/back"
+      }
+    ]
+  },
+  "warehouse": {
+    "title": "仓库管理",
+    "list": [
+      {
+        "title": "仓库盘点",
+        "url": "/pages/warehouse/inventory"
+      }
+    ]
+  },
+  "finance": {
+    "title": "财务管理",
+    "list": [
+      {
+        "title": "发票登记",
+        "url": "/pages/finance/invoice"
+      }
+    ]
+  }
+}
