@@ -16,14 +16,10 @@ const request = (obj) => {
 
   let loadingStatus = true
   //定义网络请求如果在一定时间内没有完成，则显示加载中提示框，默认时间为：500毫秒
-  setTimeout(() => {
-    if (loadingStatus && obj.loading) {
-      uni.showLoading({
-        title: '加载中',
-        mask: true,
-      })
-    }
-  }, obj.requestTime)
+  uni.showLoading({
+    title: '加载中',
+    mask: true,
+  })
   //返回Promise对象
   return new Promise((resolve, reject) => {
     uni.request({
@@ -36,18 +32,18 @@ const request = (obj) => {
         ...obj.header,
       },
       success: (res) => {
-        if (loadingStatus && obj.loading) {
-          uni.hideLoading()
-        }
-        loadingStatus = false
         resolve(intercept(res))
       },
       fail: (err: any) => {
         console.log('fail')
-        handleError(err.message)
+        if (loadingStatus && obj.loading) {
+          uni.hideLoading()
+        }
+        loadingStatus = false
         reject(err)
       },
       complete: () => {
+        loadingStatus = false
         console.log('complete')
       },
     })
@@ -55,10 +51,12 @@ const request = (obj) => {
 }
 // 错误提示
 const handleError = (title) => {
-  uni.showToast({
-    title,
-    icon: 'none',
-  })
+  setTimeout(() => {
+    uni.showToast({
+      title,
+      icon: 'none',
+    })
+  }, 1000)
 }
 /**
  * 响应拦截器，抽成一个方法，比较灵活
@@ -67,12 +65,10 @@ const handleError = (title) => {
 function intercept(response) {
   const { data } = response || {}
   const { route } = currentPage()
-  console.log(data)
-  console.log('intercept: go to login page')
+  uni.hideLoading()
   if (data?.status === 5003) {
     // token失效重新获取微信code从后台获取token
     //#ifdef MP-WEIXIN
-    console.log('intercept: weixin login')
     weixinLogin()
     // #endif
     //#ifdef H5 || APP-PLUS

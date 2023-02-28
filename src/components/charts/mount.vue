@@ -1,31 +1,21 @@
 <template>
-  <view class="charts-box">
-    <QiunDataCharts type="mount" :opts="opts" :chartData="chartData" />
-  </view>
+  <cover-view class="charts-box">
+    <QiunDataCharts type="mount" :opts="opts" :chart-data="chartData" />
+  </cover-view>
 </template>
 
 <script>
-import QiunDataCharts from './qiun-data-charts/qiun-data-charts.vue';
+import QiunDataCharts from './qiun-data-charts/qiun-data-charts.vue'
 export default {
   components: {
-    QiunDataCharts
+    QiunDataCharts,
   },
   data() {
     return {
       chartData: {},
       //您可以通过修改 config-ucharts.js 文件中下标为 ['mount'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
       opts: {
-        color: [
-          "#1890FF",
-          "#91CB74",
-          "#FAC858",
-          "#EE6666",
-          "#73C0DE",
-          "#3CA272",
-          "#FC8452",
-          "#9A60B4",
-          "#ea7ccc",
-        ],
+        color: ['#1890FF', '#91CB74', '#FAC858', '#EE6666', '#73C0DE', '#3CA272', '#FC8452', '#9A60B4', '#ea7ccc'],
         padding: [15, 15, 0, 5],
         enableScroll: false,
         legend: {},
@@ -43,17 +33,17 @@ export default {
         },
         extra: {
           mount: {
-            type: "mount",
+            type: 'mount',
             widthRatio: 1.5,
             borderWidth: 0,
-            linearType: "custom",
+            linearType: 'custom',
           },
         },
       },
-    };
+    }
   },
   created() {
-    this.getServerData();
+    this.getServerData()
   },
   methods: {
     getServerData() {
@@ -64,20 +54,20 @@ export default {
           series: [
             {
               data: [
-                { name: "一班", value: 82 },
-                { name: "二班", value: -63 },
-                { name: "三班", value: 86 },
-                { name: "四班", value: -75 },
-                { name: "五班", value: 79 },
+                { name: '一班', value: 82 },
+                { name: '二班', value: -63 },
+                { name: '三班', value: 86 },
+                { name: '四班', value: -75 },
+                { name: '五班', value: 79 },
               ],
             },
           ],
-        };
-        this.chartData = JSON.parse(JSON.stringify(res));
-      }, 500);
+        }
+        this.chartData = JSON.parse(JSON.stringify(res))
+      }, 500)
     },
   },
-};
+}
 </script>
 
 <style scoped>
