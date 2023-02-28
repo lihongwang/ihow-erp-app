@@ -14,11 +14,12 @@
     {
       "path": "pages/login/index",
       "style": {
-        "navigationBarTitleText": "Login"
+        "navigationStyle": "custom",
+        "navigationBarTitleText": ""
       }
     },
     {
-      "path": "pages/purchase/index",
+      "path": "pages/purchase/purchaseOrder",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "采购订单"
@@ -55,6 +56,48 @@
       "path": "pages/test/index",
       "style": {
         "navigationBarTitleText": "Test"
+      }
+    },
+    {
+      "path": "pages/user/index",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/account",
+      "style": {
+        "navigationBarTitleText": "帐号管理",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/about",
+      "style": {
+        "navigationBarTitleText": "关于",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/feedback",
+      "style": {
+        "navigationBarTitleText": "问题反馈",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/service",
+      "style": {
+        "navigationBarTitleText": "服务条款及协议",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/message",
+      "style": {
+        "navigationBarTitleText": "新消息通知",
+        "navigationStyle": "custom"
       }
     }
   ],
@@ -97,17 +140,10 @@
         "text": "图表"
       },
       {
-        "pagePath": "pages/uni/index",
+        "pagePath": "pages/user/index",
+        "text": "我的",
         "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png",
-        "text": "UNI-UI"
-      },
-
-      {
-        "pagePath": "pages/login/index",
-        "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png",
-        "text": "Login"
+        "selectedIconPath": "static/images/tab_home_s.png"
       }
     ]
   }

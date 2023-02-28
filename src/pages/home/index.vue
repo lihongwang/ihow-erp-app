@@ -50,9 +50,15 @@
 import { useMenuStore } from '@/store/modules/menu'
 import Navbar from '@/components/pageNavbar'
 import { ref } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 const menuStore = useMenuStore()
-const menuList = Object.values(menuStore.menuList)
-console.log(menuList)
+const menuList = ref([])
+onShow(() => {
+  console.log('home show')
+  menuStore.init().then((menus) => {
+    menuList.value = menus
+  })
+})
 const current = ref(0)
 const swiperDotIndex = ref(0)
 const change = (e) => {
@@ -101,10 +107,10 @@ const dotsStyles = [
     selectedBorder: '1px rgba(83, 200, 249,0.9) solid',
   },
 ]
-const background = {
-  'background-size': '100% auto',
-  background: 'url(../../static/images/bg_hometop.png) no-repeat',
-}
+// const background = {
+//   'background-size': '100% auto',
+//   background: 'url(../../static/images/bg_hometop.png) no-repeat',
+// }
 const handleClick = (url) => {
   if (url) {
     uni.navigateTo({

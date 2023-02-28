@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
 import purchaseMock from '../mock/purchase.json'
+import { getList } from '@/apis/purchase'
 interface PurchaseState {
   list: any
 }
@@ -20,6 +21,14 @@ export const usePurchaseStore = defineStore({
     },
     getById(id) {
       return this.list.find((p) => p.id == id)
+    },
+    init(data) {
+      return new Promise((resolve) => {
+        getList(data).then((res: any) => {
+          this.list = res.list
+          resolve(this.list)
+        })
+      })
     },
   },
 })

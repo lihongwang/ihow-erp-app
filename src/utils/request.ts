@@ -1,7 +1,7 @@
 // 引入 luch-request 插件
 import luchRequest from 'luch-request'
 import config from '@/config'
-import { getToken, setToken } from './auth'
+import { getToken, setToken, setUserInfo } from './auth'
 import { throttle, currentPage } from './tools'
 import { getWeixinCode, toLogin } from './login'
 // 默认配置，和luch-request基本一致
@@ -56,13 +56,11 @@ const handleError = (title) => {
  */
 function request(config) {
   // 对luch-request 实例化，并且合并用户配置和默认配置
-  const token = uni.getStorageSync('token')
   const header = {
     ...defaultConfig.header,
     // 'content-type': 'application/json',
     'content-type': 'application/x-www-form-urlencoded',
     ...config.header,
-    'X-AUTH-TOKEN': token, //自定义请求头信息
   }
   console.log(header)
   const request = new luchRequest({
@@ -72,11 +70,15 @@ function request(config) {
   })
   // 请求拦截，可以根据需求自定义配置
   request.interceptors.request.use(
-    (config) => {
+    (config: any) => {
+      console.log('interceptors request')
       uni.showLoading({})
+      console.log(config)
+      config.header['X-AUTH-TOKEN'] = getToken()
       return config
     },
     (err: any) => {
+      console.log(err)
       handleError(err.message)
       return Promise.reject(err)
     }
@@ -93,6 +95,7 @@ function request(config) {
       }
     },
     (err: any) => {
+      console.log(err)
       handleError(err.message)
       return Promise.reject(err)
     }
@@ -107,9 +110,12 @@ function request(config) {
 async function intercept(response) {
   const { data } = response || {}
   const { route } = currentPage()
+  console.log(data)
+  console.log('intercept: go to login page')
   if (data?.status === 5003) {
     // token失效重新获取微信code从后台获取token
     //#ifdef MP-WEIXIN
+    console.log('intercept: weixin login')
     weixinLogin()
     // #endif
     //#ifdef H5 || APP-PLUS
@@ -128,17 +134,19 @@ export const weixinLogin = throttle(_weixinLogin, 1000)
 //小程序静默授权
 async function _weixinLogin() {
   const code: any = await getWeixinCode()
+  console.log('_weixinLogin:', code)
   const res: any = await getSystemToken(code)
   console.log(res)
-
   const { onLoad, onShow } = currentPage()
   // 微信账号已经绑定用户
-  if (res.isBundled) {
+  if (res.bundled) {
     setToken(res.token)
-    onLoad && onLoad()
-    onShow && onShow()
+    onLoad?.()
+    onShow?.()
+    console.log('logined')
   } else {
     // 未绑定用户，跳转到登录页面
+    console.log('weixinLogin: weixin login')
     uni.navigateTo({
       url: '/pages/login/index',
     })
@@ -147,54 +155,65 @@ async function _weixinLogin() {
 
 const http = request(config)
 export const getSystemToken = (code: any) => {
+  console.log('getSystemToken:')
   return new Promise((resolve, reject) => {
-    http
-      .get('wechat/miniapp/api/anon/userAccess', {
-        params: {
-          code,
-        },
-      })
-      .then((res: any) => {
-        resolve(res)
-      })
-      .catch((err) => {
-        console.log(err)
-        reject(err)
-      })
+    // uni.request({
+    //   url: `${config.baseURL}wechat/miniapp/api/anon/userAccess?code=${code}`, //仅为示例，并非真实接口地址。
+    //   success: (res) => {
+    //     const { data }: any = res.data
+    //     resolve(data)
+    //   },
+    // })
+    try {
+      console.log('getSystemToken: promise')
+      http
+        .get('wechat/miniapp/api/anon/userAccess', {
+          params: {
+            code,
+          },
+        })
+        .then((res: any) => {
+          console.log('getSystemToken success:')
+          console.log(res)
+          resolve(res)
+        })
+        .catch((err) => {
+          console.log(err)
+          reject(err)
+        })
+    } catch (error) {
+      console.log(error)
+    }
   })
 }
 
 export function fetchUserInfo(params) {
   return new Promise((resolve, reject) => {
-    const token = getToken()
     const getUser = (args) => {
       http
         .post('wechat/miniapp/api/anon/userGrant', args)
         .then((res: any) => {
-          resolve(true)
-          uni.setStorageSync('userInfo', res.data)
-
-          uni.navigateTo({
-            url: '/pages/home/index',
-          })
+          if (res.bundled) {
+            resolve(true)
+            setUserInfo(res.data)
+            uni.switchTab({
+              url: '/pages/home/index',
+            })
+          } else {
+            resolve(false)
+          }
         })
         .catch((err) => {
           reject(err)
           console.log(err)
         })
     }
-    if (token) {
-      getUser(params)
-    } else {
-      getSystemToken(params.code).then((res: any) => {
-        setToken(res.token)
-        if (!res.syncTime) {
-          getWeixinCode().then((code) => {
-            getUser({ ...params, code })
-          })
-        }
+    getSystemToken(params.code).then((res: any) => {
+      setToken(res.token)
+      getWeixinCode().then((code) => {
+        getUser({ ...params, code })
       })
-    }
+    })
   })
 }
 export default http

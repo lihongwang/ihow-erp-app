@@ -1,16 +1,19 @@
 import { throttle, currentPage } from './tools'
 // 获取登录凭证（code）
 export function getWeixinCode() {
+  console.log('getWeixinCode: in')
   return new Promise((resolve, reject) => {
     uni.getProvider({
       service: 'oauth',
       success: function (res) {
+        console.log('getWeixinCode: success')
         console.log(res)
         //微信端
         if (~(res.provider as any).indexOf('weixin')) {
           //微信登录
           uni.login({
             success(res) {
+              console.log(`iniLogin: ${res.code}`)
               resolve(res.code)
             },
             fail(res) {
@@ -40,12 +43,6 @@ export function getUserProfile() {
 export const toLogin = throttle(_toLogin, 1000)
 // 去登录
 function _toLogin() {
-  //#ifdef APP-PLUS || MP-WEIXIN
-  uni.navigateTo({
-    url: '/pages/login/index',
-  })
-  //#endif
-  //#ifdef  H5
   const pathLogin = 'pages/login/index'
   let path = currentPage().route
   if (path != pathLogin) {
@@ -53,5 +50,4 @@ function _toLogin() {
       url: '/pages/login/index',
     })
   }
-  // #endif
 }

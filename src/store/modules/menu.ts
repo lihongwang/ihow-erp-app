@@ -1,3 +1,4 @@
+import { getMenus } from '@/apis/menu'
 import { defineStore } from 'pinia'
 import { store } from '@/store'
 import menuMock from '../mock/menu.json'
@@ -23,6 +24,25 @@ export const useMenuStore = defineStore({
     },
   },
   actions: {
+    init() {
+      return new Promise((resolve) => {
+        getMenus().then((menus: any) => {
+          console.log(menus)
+          this.list = (menus || []).map((menu) => {
+            return {
+              title: menu.name,
+              list: (menu.children || []).map((c) => {
+                return {
+                  title: c.name,
+                  url: `/pages${c.route}`,
+                }
+              }),
+            }
+          })
+          resolve(this.list)
+        })
+      })
+    },
     resetState() {
       this.list = {}
     },

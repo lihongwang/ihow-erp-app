@@ -52,7 +52,7 @@
                 <view class="flex flex-col">
                   <text class="flex flex-row m-2 items-center justify-start">
                     <text class="font-bold">供 应 商：</text>
-                    <text>{{ item.supplier }}</text>
+                    <text>{{ item.supplierName }}</text>
                   </text>
                   <text class="flex flex-row m-2 items-center justify-start">
                     <text class="font-bold">联 系 人：</text>
@@ -61,10 +61,6 @@
                   <text class="flex flex-row m-2 items-center justify-start">
                     <text class="font-bold">联系电话：</text>
                     <text>{{ item.phone }}</text>
-                  </text>
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">交货方式：</text>
-                    <text>{{ typeList[item.type].label }}</text>
                   </text>
                   <text class="flex flex-row m-2 items-center justify-start">
                     <text class="font-bold">产品总数：</text>
@@ -93,10 +89,16 @@
 import Card from '@/components/card/index'
 import Navbar from '@/components/pageNavbar'
 import { usePurchaseStore } from '@/store/modules/purchase'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 const store = usePurchaseStore()
-const orderList = store.list
-const value = orderList.length
+const orderList = ref([])
+const value = ref(0)
+onMounted(() => {
+  store.init().then((list) => {
+    orderList.value = list
+    value.value = list.length
+  })
+})
 const statusList = [
   {
     text: '未审核',

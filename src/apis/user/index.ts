@@ -1,15 +1,40 @@
-import type { ReqAuth, ReqParams, ResResult } from './model'
-import http from '@/utils/request'
+import http from '@/utils/uniRequest'
 
-const URL = {
-  login: '/v1/user/login',
-  permission: '/v1/user/permission',
-  access: '/wechat/miniapp/api/anon/userGrant',
+const apiUrls = {
+  appLogin: '/common/company/login',
+  appLogout: '/system/user/logout',
+  grant: '/wechat/miniapp/api/anon/userGrant',
+  bundle: '/wechat/miniapp/api/anon/userBundle',
+  unBundle: '/wechat/miniapp/api/userUnbundle',
 }
 
-const login = async (data: ReqParams) => http.post<ResResult>(URL.login, { params: data })
+const appLogin = async (data) => {
+  return http.post(apiUrls.appLogin, data, {
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  })
+}
 
-const permission = async () => http.get<ReqAuth>(URL.permission)
+const appLogout = async () => {
+  return http.get(apiUrls.appLogout)
+}
 
-const access = async (data: any) => http.post<any>(URL.access, { params: data })
-export default { login, permission, access }
+const grant = async (data) => {
+  return http.post(apiUrls.grant, data, {
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  })
+}
+const bundle = async (data) => {
+  return http.post(apiUrls.bundle, data, {
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  })
+}
+const unBundle = async () => {
+  return http.post(apiUrls.unBundle)
+}
+export { grant, bundle, appLogin, appLogout, unBundle }
