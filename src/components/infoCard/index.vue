@@ -6,10 +6,10 @@
           <i class="ti ti-users text-3xl"></i>
         </div>
         <div class="right">
+          <p>{{ title }}</p>
           <h3 class="num">
             {{ info }}
           </h3>
-          <p>{{ title }}</p>
         </div>
       </div>
     </div>

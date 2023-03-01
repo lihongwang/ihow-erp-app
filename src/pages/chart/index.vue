@@ -1,21 +1,6 @@
 <template>
   <view class="chart-page page-wrapper">
-    <Navbar
-      :is-back="false"
-      back-icon-color="#fff"
-      title="统计图表"
-      title-color="#fff"
-      :background="background"
-      :back-text-style="{ color: '#fff' }"
-    ></Navbar>
     <view class="page-content">
-      <view class="info-content">
-        <InfoCard title="采购汇总" info="2000" />
-        <InfoCard title="采购退货汇总" info="2000" />
-        <InfoCard title="销售汇总" info="2000" />
-        <InfoCard title="销售退货汇总" info="2000" />
-      </view>
-
       <view class="charts-wrap">
         <view class="chart-item">
           <QiunCharts type="line" :chart-data="chartData" :error-show="false" background="none" />
@@ -31,9 +16,7 @@
 </template>
 
 <script setup>
-import Navbar from '@/components/pageNavbar'
 import QiunCharts from '@/components/charts/qiun-data-charts/qiun-data-charts'
-import InfoCard from '@/components/infoCard'
 import Pie from '@/components/charts/pie'
 import Column from '@/components/charts/column'
 import Line from '@/components/charts/line'

@@ -27,7 +27,7 @@ const request = (obj) => {
       method: obj.method,
       data: obj.data,
       header: {
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
         'X-AUTH-TOKEN': getToken(),
         ...obj.header,
       },

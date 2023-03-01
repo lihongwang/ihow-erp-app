@@ -69,3 +69,13 @@
 .p-2 {
   padding: 0.5rem;
 }
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  column-gap: 10px;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 10px;
+}

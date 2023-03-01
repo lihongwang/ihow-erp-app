@@ -31,10 +31,12 @@
       v-if="isFixed"
       class="u-navbar-placeholder"
       :style="{
+        position: 'relative',
         width: '100%',
         height: Number(navbarHeight) + statusBarHeight + 'px',
       }"
-    ></view>
+    >
+    </view>
   </view>
 </template>
 
@@ -150,7 +152,7 @@ export default {
     },
     zIndex: {
       type: [String, Number],
-      default: 9999999,
+      default: 999999,
     },
     // 自定义返回逻辑
     customBack: {
@@ -303,5 +305,13 @@ export default {
   flex: 1;
   display: flex;
   align-items: center;
+}
+
+.u-navbar-placeholder {
+  .canvas {
+    width: 100%;
+    display: block !important;
+    z-index: 9999999;
+  }
 }
 </style>

@@ -1,11 +1,11 @@
 import http from '@/utils/uniRequest'
 
 const apiUrls = {
-  appLogin: '/common/company/login',
-  appLogout: '/system/user/logout',
-  grant: '/wechat/miniapp/api/anon/userGrant',
-  bundle: '/wechat/miniapp/api/anon/userBundle',
-  unBundle: '/wechat/miniapp/api/userUnbundle',
+  appLogin: 'common/company/login',
+  appLogout: 'system/user/logout',
+  grant: 'wechat/miniapp/api/anon/userGrant',
+  bundle: 'wechat/miniapp/api/anon/userBundle',
+  unBundle: 'wechat/miniapp/api/userUnbundle',
 }
 
 const appLogin = async (data) => {

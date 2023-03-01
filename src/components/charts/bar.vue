@@ -1,81 +1,174 @@
 <template>
-  <cover-view class="charts-box">
-    <QiunDataCharts type="bar" :opts="opts" :chart-data="chartData" />
-  </cover-view>
+  <view>
+    <view>销售统计</view>
+    <view class="data">
+      <view class="statistics">
+        <view class="qiun-charts">
+          <canvas id="canvasColumn" canvas-id="canvasColumn" class="charts checked" @touchstart="touchColumn"></canvas>
+          <image v-if="!isImg" :src="imgSrc" style="width: 100%; height: 240px"></image>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
-import QiunDataCharts from './qiun-data-charts/qiun-data-charts.vue'
+import uCharts from './u-charts/u-charts.js'
+let _self
+let canvaColumn = null
 export default {
-  components: {
-    QiunDataCharts,
-  },
   data() {
     return {
-      chartData: {},
-      //您可以通过修改 config-ucharts.js 文件中下标为 ['bar'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
-      opts: {
-        color: ['#1890FF', '#91CB74', '#FAC858', '#EE6666', '#73C0DE', '#3CA272', '#FC8452', '#9A60B4', '#ea7ccc'],
-        padding: [15, 30, 0, 5],
-        enableScroll: false,
-        legend: {},
-        xAxis: {
-          boundaryGap: 'justify',
-          disableGrid: false,
-          min: 0,
-          axisLine: false,
-          max: 40,
-        },
-        yAxis: {},
-        extra: {
-          bar: {
-            type: 'group',
-            width: 30,
-            meterBorde: 1,
-            meterFillColor: '#FFFFFF',
-            activeBgColor: '#000000',
-            activeBgOpacity: 0.08,
-            linearType: 'custom',
-            barBorderCircle: true,
-            seriesGap: 2,
-            categoryGap: 2,
-          },
-        },
-      },
+      pullDown: false, //是否展开下拉框
+      cWidth: '', //图表的宽度
+      cHeight: '', //图表的高度
+      pixelRatio: 1, //设备像素比
+      imgSrc: '', //图表替换成图片的路径
+      isImg: true, //是否替换图片
+      statistics: [
+        { data: 1, title: '业务员' },
+        { data: 3, title: 'B端用户' },
+        { data: 4, title: '零售用户' },
+        { data: 0, title: '未成交客户' },
+      ],
     }
   },
   created() {
-    this.getServerData()
+    console.log('onload')
+    _self = this
+    this.cWidth = uni.upx2px(630)
+    this.cHeight = uni.upx2px(440)
+    this.getMchInfo(0)
   },
   methods: {
-    getServerData() {
-      //模拟从服务器获取数据时的延时
-      setTimeout(() => {
-        //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
-        let res = {
-          categories: ['2018', '2019', '2020', '2021', '2022', '2023'],
-          series: [
+    //请求后台数据
+    getMchInfo(id) {
+      this.isImg = true
+      this.getServerData(this.statistics)
+    },
+    //将请求到的数据处理一遍
+    getServerData(data) {
+      let Column = {
+        categories: ['业务员', 'b端用户', '零售用户', '未成交客户'],
+        series: [
+          {
+            name: '今日统计分析',
+            data: [
+              {
+                value: 2,
+                color: '#6272FE',
+              },
+              {
+                value: 1,
+                color: '#FF4686',
+              },
+              {
+                value: 5,
+                color: '#FDA75B',
+              },
+              {
+                value: 4,
+                color: '#16D4A8',
+              },
+            ],
+          },
+        ],
+      }
+      this.showColumn('canvasColumn', Column)
+    },
+    //将请求到的数据赋值给图表
+    showColumn(canvasId, chartData) {
+      const ctx = uni.createCanvasContext(canvasId, _self)
+      canvaColumn = new uCharts({
+        $this: _self,
+        canvasId: canvasId,
+        type: 'column',
+        context: ctx,
+        legend: {
+          show: true,
+          position: 'top',
+          float: 'left',
+        },
+        fontSize: 11,
+        pixelRatio: _self.pixelRatio,
+        animation: true,
+        categories: chartData.categories,
+        series: chartData.series,
+        xAxis: {
+          disableGrid: true,
+        },
+        yAxis: {
+          format: (val) => {
+            return val.toFixed(0)
+          },
+          //disabled:true
+        },
+        dataLabel: true,
+        width: _self.cWidth * _self.pixelRatio,
+        height: _self.cHeight * _self.pixelRatio,
+        extra: {
+          column: {
+            type: 'group',
+            width: (_self.cWidth * _self.pixelRatio * 0.45) / chartData.categories.length,
+          },
+        },
+      })
+      canvaColumn.addEventListener('renderComplete', () => {
+        //监控图表渲染完成
+        setTimeout(function () {
+          //延迟一定时间执行
+          uni.canvasToTempFilePath(
             {
-              name: '目标值',
-              data: [35, 36, 31, 33, 13, 34],
+              //将图表转成图片
+              x: 0,
+              y: 0,
+              width: _self.cWidth * _self.pixelRatio,
+              height: _self.cHeight * _self.pixelRatio,
+              fileType: 'png',
+              canvasId: canvasId,
+              success: function (res) {
+                _self.isImg = false
+                _self.imgSrc = res.tempFilePath
+              },
+              fail: function (res) {},
             },
-            {
-              name: '完成量',
-              data: [18, 27, 21, 24, 6, 28],
-            },
-          ],
-        }
-        this.chartData = JSON.parse(JSON.stringify(res))
-      }, 500)
+            _self
+          )
+        }, 1000)
+      })
+    },
+    //点击图表的柱状，弹出详细信息  但是将图表转成图片后这个方法不可用
+    touchColumn(e) {
+      canvaColumn.showToolTip(e, {
+        format: function (item, category) {
+          if (typeof item.data === 'object') {
+            return category + ' ' + '人数' + ':' + item.data.value
+          } else {
+            return category + ' ' + '人数' + ':' + item.data
+          }
+        },
+      })
     },
   },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
-.charts-box {
+.qiun-charts {
+  width: 630upx;
+  height: 440rpx;
+}
+
+.charts {
   width: 100%;
-  height: 300px;
+  height: 100%;
+}
+
+.checked {
+  position: absolute;
+  width: 100%;
+  right: -900px;
+  top: -600px;
 }
 </style>

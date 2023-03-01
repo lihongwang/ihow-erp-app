@@ -42,7 +42,6 @@
     {
       "path": "pages/chart/index",
       "style": {
-        "navigationStyle": "custom",
         "navigationBarTitleText": "图表"
       }
     },
