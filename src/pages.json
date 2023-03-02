@@ -26,10 +26,80 @@
       }
     },
     {
-      "path": "pages/purchase/orderDetail",
+      "path": "pages/purchase/purchaseOrderDetail",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "订单详情"
+        "navigationBarTitleText": "采购订单详情"
+      }
+    },
+    {
+      "path": "pages/purchase/purchaseIn",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "采购入库"
+      }
+    },
+    {
+      "path": "pages/purchase/purchaseInDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "采购入库详情"
+      }
+    },
+    {
+      "path": "pages/purchase/purchaseExtraIn",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "零采进货"
+      }
+    },
+    {
+      "path": "pages/purchase/purchaseExtraInDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "零采进货详情"
+      }
+    },
+    {
+      "path": "pages/sale/saleOrder",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "销售订单"
+      }
+    },
+    {
+      "path": "pages/sale/saleOrderDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "销售订单详情"
+      }
+    },
+    {
+      "path": "pages/sale/saleOut",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "销售出库"
+      }
+    },
+    {
+      "path": "pages/sale/saleOutDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "销售出库详情"
+      }
+    },
+    {
+      "path": "pages/sale/saleExtraOut",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "零售出库"
+      }
+    },
+    {
+      "path": "pages/sale/saleExtraOutDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "零售出库详情"
       }
     },
     {

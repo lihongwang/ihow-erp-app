@@ -9,6 +9,7 @@
           <p>{{ title }}</p>
           <h3 class="num">
             {{ info }}
+            <span v-if="money">元</span>
           </h3>
         </div>
       </div>
@@ -18,6 +19,10 @@
 <script>
 export default {
   props: {
+    money: {
+      type: Boolean,
+      default: false,
+    },
     title: {
       type: String,
       default: '',

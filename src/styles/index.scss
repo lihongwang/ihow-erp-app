@@ -69,13 +69,87 @@
 .p-2 {
   padding: 0.5rem;
 }
-.grid3 {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  column-gap: 10px;
+@for $i from 1 through 10 {
+  .grid#{$i} {
+    display: grid;
+    grid-template-columns: repeat($i, auto);
+    column-gap: 10px;
+  }
 }
-.grid2 {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  column-gap: 10px;
+@mixin detailCard() {
+  padding: 0 !important;
+  font-size: 12px;
+  .card-header {
+    border-bottom: 1px solid rgb(226 232 240);
+    padding: 10px;
+    .header-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .card-footer {
+    padding: 5px;
+    border-top: 1px solid #ebeef5;
+    .more-btn {
+      letter-spacing: 2px;
+      &:after {
+        border: none !important;
+      }
+    }
+  }
+}
+/* #ifdef MP-WEIXIN */
+.detail-card {
+  display: flex;
+  margin: 5px 10px !important;
+  .uni-card {
+    @include detailCard();
+    margin: 0 !important;
+  }
+}
+/* #endif */
+/* #ifdef APP-PLUS || H5*/
+.detail-card {
+  @include detailCard();
+  margin: 5px 10px !important;
+}
+/* #endif */
+// 文本溢出
+@mixin line($lineNum, $width: 100%) {
+  /* 一行时 */
+  @if $lineNum == 1 {
+    // App端
+    /* #ifdef APP-PLUS */
+    lines: 1; // 1或n
+    text-overflow: ellipsis;
+    /* #endif */
+
+    // 其他端
+    /* #ifndef APP-PLUS */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: $width;
+    /* #endif */
+  } @else {
+    /* 多行时 */
+
+    // App端
+    /* #ifdef APP-PLUS */
+    lines: $lineNum; // 1或n
+    text-overflow: ellipsis;
+    /* #endif */
+
+    // 其他端
+    /* #ifndef APP-PLUS */
+    overflow: hidden;
+    -webkit-line-clamp: $lineNum;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    white-space: normal !important;
+    -webkit-box-orient: vertical;
+    /* #endif */
+  }
 }

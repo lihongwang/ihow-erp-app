@@ -4,7 +4,7 @@
       :is-back="true"
       back-icon-color="#fff"
       back-text=""
-      title="采购订单"
+      title="销售订单"
       title-color="#fff"
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"

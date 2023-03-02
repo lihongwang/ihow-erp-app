@@ -18,3 +18,9 @@ window.location.href = url;
 return;
 // #endif
 ```
+
+### css
+```css
+/* #ifndef APP-NVUE */
+/* #endif */
+```

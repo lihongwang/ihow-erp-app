@@ -6,6 +6,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
   plugins: ['vue', '@typescript-eslint'],
   rules: {
+    'no-case-declarations': 0,
     'vue/multi-word-component-names': 0,
   },
 }

@@ -26,36 +26,4 @@ import { defineProps } from 'vue'
 const props = defineProps(['title', 'subTitle'])
 console.log('card')
 </script>
-<style lang="scss">
-.card-header {
-  border-bottom: 1px solid rgb(226 232 240);
-  padding: 10px;
-  .header-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-.card-footer {
-  padding: 5px;
-  border-top: 1px solid #ebeef5;
-  :deep(.more-btn) {
-    letter-spacing: 2px;
-    &:after {
-      border: none !important;
-    }
-  }
-}
-// #ifdef MP-WEIXIN
-.detail-card > view {
-  padding: 0 !important;
-  margin: 10px !important;
-  font-size: 12px;
-}
-// #endif
-.detail-card {
-  padding: 0 !important;
-  margin: 10px !important;
-  font-size: 12px;
-}
-</style>
+<style lang="scss"></style>

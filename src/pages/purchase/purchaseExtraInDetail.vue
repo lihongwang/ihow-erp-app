@@ -88,9 +88,9 @@
 <script setup>
 import Card from '@/components/card/index'
 import Navbar from '@/components/pageNavbar'
-import { usePurchaseStore } from '@/store/modules/purchase'
+import { usePurchaseInStore } from '@/store/modules/purchaseIn'
 import { ref, onMounted } from 'vue'
-const store = usePurchaseStore()
+const store = usePurchaseInStore()
 const orderList = ref([])
 const value = ref(0)
 onMounted(() => {

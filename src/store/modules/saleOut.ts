@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { getList, getDetail } from '@/apis/purchase'
-interface PurchaseState {
+import { getOutList, getOutDetail } from '@/apis/sale'
+interface SaleOutState {
   list: any
   detail: any
 }
-export interface PurchaseListItem {
+export interface SaleOutListItem {
   title?: string
 }
-export const usePurchaseStore = defineStore({
-  id: 'app-purchase',
-  state: (): PurchaseState => ({
+export const useSaleOutStore = defineStore({
+  id: 'app-sale',
+  state: (): SaleOutState => ({
     // token
     list: [],
     detail: {},
@@ -22,7 +22,7 @@ export const usePurchaseStore = defineStore({
     },
     getById(id) {
       return new Promise((resolve) => {
-        getDetail({ id }).then((res: any) => {
+        getOutDetail({ id }).then((res: any) => {
           this.detail = res.data
           resolve(this.detail)
         })
@@ -30,7 +30,7 @@ export const usePurchaseStore = defineStore({
     },
     init(data) {
       return new Promise((resolve) => {
-        getList(data).then((res: any) => {
+        getOutList(data).then((res: any) => {
           this.list = res.list
           resolve(this.list)
         })
@@ -40,6 +40,6 @@ export const usePurchaseStore = defineStore({
 })
 
 // Need to be used outside the setup
-export function usePurchaseStoreWithOut() {
-  return usePurchaseStore(store)
+export function useSaleOutStoreWithOut() {
+  return useSaleOutStore(store)
 }

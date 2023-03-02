@@ -4,7 +4,7 @@
       :is-back="true"
       back-icon-color="#fff"
       back-text=""
-      title="采购订单"
+      title="销售订单"
       title-color="#fff"
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"
@@ -88,9 +88,9 @@
 <script setup>
 import Card from '@/components/card/index'
 import Navbar from '@/components/pageNavbar'
-import { usePurchaseStore } from '@/store/modules/purchase'
+import { useSaleExtraOutStore } from '@/store/modules/saleExtraOut'
 import { ref, onMounted } from 'vue'
-const store = usePurchaseStore()
+const store = useSaleExtraOutStore()
 const orderList = ref([])
 const value = ref(0)
 onMounted(() => {
