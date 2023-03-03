@@ -18,3 +18,10 @@ export const getExtraInList = (data) => {
 export const getExtraInDetail = (data) => {
   return http.get('common/customizeQuery/ExtraPurchaseIn.select/execute', data)
 }
+
+export const audit = (data) => {
+  return http.post('wms/goodsIn/audit', data)
+}
+export const unAudit = (data) => {
+  return http.post('wms/goodsIn/unaudit', data)
+}

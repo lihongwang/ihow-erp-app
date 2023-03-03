@@ -5,11 +5,10 @@
 <script setup>
 import { defineProps } from 'vue'
 import dayjs from 'dayjs'
-const props = defineProps(['value', 'full', 'format'])
-console.log(props)
-const dateValue = dayjs(new Date(props.value)).format(
-  props.format ? props.format : props.full ? 'YYYY-MM-DD:HH:mm:ss' : 'YYYY-MM-DD'
-)
+const props = defineProps(['value', 'full', 'format', 'params'])
+const format = props.format || props.params?.format
+const full = props.full || props.params?.full
+const dateValue = dayjs(new Date(props.value)).format(format ? format : full ? 'YYYY-MM-DD:HH:mm:ss' : 'YYYY-MM-DD')
 </script>
 
 <style></style>

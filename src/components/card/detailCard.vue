@@ -15,7 +15,7 @@
     </template>
     <view class="card-body"><slot name="body"></slot></view>
     <template #actions>
-      <view class="card-footer">
+      <view v-if="!props.noFooter" class="card-footer">
         <slot name="footer"></slot>
       </view>
     </template>
@@ -23,7 +23,6 @@
 </template>
 <script setup>
 import { defineProps } from 'vue'
-const props = defineProps(['title', 'subTitle'])
-console.log('card')
+const props = defineProps(['title', 'subTitle', 'noFooter'])
 </script>
 <style lang="scss"></style>

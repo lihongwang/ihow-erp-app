@@ -26,16 +26,14 @@
               </template>
               <template #body>
                 <view class="flex flex-col">
-                  <CardListItem title="供 应 商" :value="item.supplierName" />
-                  <CardListItem title="制单时间" :value="item.createByTime" type="date" />
-                  <CardListItem title="制 单 人" :value="item.createByName" />
-                  <CardListItem title="入库日期" :value="item.billDate" type="date" />
-                  <CardListItem title="入库数量" :value="item.totalQty" />
-                  <CardListItem title="入库金额" :value="item.totalAmount" type="price" />
-                  <CardListItem title="入库仓库" :value="item.warehouseName" />
-                  <CardListItem title="送货单号" :value="item.deliveryCode" />
-                  <CardListItem title="结算周期" :value="item.settlementDays" />
-                  <CardListItem title="备    注" :value="item.remark" />
+                  <CardListItem
+                    v-for="info in itemInfoArrayForList"
+                    :key="info.name"
+                    :title="info.title"
+                    :value="item[info.name] || item[info.aliasName]"
+                    :type="info.type"
+                    :params="info.params || {}"
+                  />
                 </view>
               </template>
               <template #footer>
@@ -57,7 +55,7 @@ import CardListItem from '@/components/card/listItem'
 import Navbar from '@/components/pageNavbar'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
-import { usePurchaseInStore } from '@/store/modules/purchaseIn'
+import { usePurchaseInStore, itemInfoArrayForList } from '@/store/modules/purchaseIn'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 const store = usePurchaseInStore()

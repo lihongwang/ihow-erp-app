@@ -10,144 +10,154 @@
       :back-text-style="{ color: '#fff' }"
     ></Navbar>
     <view v-if="itemInfo" class="page-content">
-      <uni-section title="单据详情" :right="false" :show-line="true" type="line">
-        <Card>
-          <template #header>
-            <view class="flex flex-row justify-between items-center">
-              <view class="card-title">
-                {{ '编号：' + itemInfo.code }}
+      <uni-collapse v-model="accordionVal" @change="handleChange">
+        <uni-collapse-item title="单据详情">
+          <DetailCard>
+            <template #header>
+              <view class="flex flex-row justify-between items-center">
+                <view class="card-title"> {{ itemInfo.code }} </view>
+                <view class="card-sub-title">
+                  <uni-tag
+                    :text="itemInfo.auditStatusEnum.name"
+                    :type="statusList[itemInfo.auditStatusEnum.name]"
+                  ></uni-tag>
+                </view>
               </view>
-              <view class="card-sub-title">
-                <uni-tag
-                  :text="statusList[itemInfo.status]?.text"
-                  :type="statusList[itemInfo.status]?.type || 'success'"
-                ></uni-tag>
+            </template>
+            <template #body>
+              <view class="flex flex-col">
+                <CardListItem
+                  v-for="info in itemInfoArray"
+                  :key="info.name"
+                  :title="info.title"
+                  :value="itemInfo[info.name] || itemInfo[info.aliasName]"
+                  :type="info.type"
+                  :params="info.params || {}"
+                />
               </view>
-            </view>
-          </template>
-          <template #body>
-            <view class="flex flex-col">
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">供 应 商 ：</text>
-                <text>{{ itemInfo.supplier }}</text>
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">联 系 人 ：</text>
-                <text>{{ itemInfo.contact }}</text>
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">联系电话：</text>
-                <text>{{ itemInfo.phone }}</text>
-                <text class="phone-fill" @tap="makePhoneCall"
-                  >(<uni-icons type="phone-filled"></uni-icons>点击拨打)</text
+            </template>
+            <template #footer>
+              <view gutter="16" class="flex flex-row justify-center">
+                <button
+                  size="mini"
+                  type="primary"
+                  :disabled="itemInfo.auditStatusEnum?.value == 4"
+                  @click="handleEdit(itemInfo.id)"
                 >
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">交货方式：</text>
-                <text>{{ typeList[itemInfo.type] && typeList[itemInfo.type].label }}</text>
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">产品总数：</text>
-                <text>{{ itemInfo.totalNums }}</text>
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">制单时间：</text>
-                <text>{{ itemInfo.createtime }}</text>
-              </text>
-              <text class="flex flex-row m-2 items-center justify-start">
-                <text class="font-bold">应付金额：</text>
-                <text>￥{{ itemInfo.money }}</text>
-              </text>
-            </view>
-          </template>
-        </Card>
-      </uni-section>
-
-      <uni-section title="单据明细" :right="false" :show-line="true" type="line">
-        <view v-if="itemInfo?.productlist?.length > 0">
-          <view v-for="(item, index) in itemInfo.productlist" :key="index" class="m-2">
-            <Card :title="item.info.name" :sub-title="'￥' + item.subtotal" :thumb="item.url" margin="0rpx">
-              <template #body>
-                <view class="flex flex-col">
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">采购单价：</text>
-                    <text>{{ item.price }}</text>
-                  </text>
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">采购数量：</text>
-                    <text>{{ item.nums }}</text>
-                  </text>
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">单位：</text>
-                    <text>{{ item.info.unit }}</text>
-                  </text>
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">现有库存：</text>
-                    <text>{{ item.info.inventory }}</text>
-                  </text>
-                  <text class="flex flex-row m-2 items-center justify-start">
-                    <text class="font-bold">备注：</text>
-                    <text>{{ item.remarks }}</text>
-                  </text>
+                  {{ editable ? '保存' : '编辑' }}
+                </button>
+                <button
+                  size="mini"
+                  type="primary"
+                  :disabled="itemInfo.auditStatusEnum?.value == 4"
+                  @click="handleAudit(itemInfo.id)"
+                >
+                  审核
+                </button>
+                <button
+                  size="mini"
+                  type="primary"
+                  :disabled="itemInfo.auditStatusEnum?.value == 1"
+                  @click="handleUnAudit(itemInfo.id)"
+                >
+                  反审核
+                </button>
+              </view>
+            </template>
+          </DetailCard>
+        </uni-collapse-item>
+        <uni-collapse-item :title="'单据明细 (合计' + itemInfo.goodsInDetailList?.length + '条)'">
+          <view v-for="(item, index) in itemInfo.goodsInDetailList" :key="index">
+            <DetailCard :no-footer="true">
+              <template #header>
+                <view class="flex flex-row justify-between items-center">
+                  <view class="card-title"> {{ item.batchNumber }} </view>
                 </view>
               </template>
-            </Card>
-          </view>
-        </view>
-      </uni-section>
+              <template #body>
+                <view v-if="editable" class="flex flex-col">
+                  <CardEditListItem
+                    v-for="info in detailItemInfoArray"
+                    :key="info.name"
+                    :title="info.title"
+                    :model="item"
+                    :name="info.name"
+                    :value="item[info.name] || item[info.aliasName]"
+                    :type="info.type"
+                    :params="info.params || {}"
+                  />
+                </view>
+                <view v-else class="flex flex-col">
+                  <CardListItem
+                    v-for="info in detailItemInfoArray"
+                    :key="info.name"
+                    :title="info.title"
+                    :value="item[info.name] || item[info.aliasName]"
+                    :type="info.type"
+                    :params="info.params || {}"
+                  />
+                </view>
+              </template>
+            </DetailCard> </view
+        ></uni-collapse-item>
+        <uni-collapse-item title="操作记录">
+          <Timeline :data="itemInfo.billOperationRecordList" :map="statusList" />
+        </uni-collapse-item>
+      </uni-collapse>
     </view>
   </view>
 </template>
 
 <script setup>
-import Card from '@/components/card/index'
 import Navbar from '@/components/pageNavbar'
-import { usePurchaseInStore } from '@/store/modules/purchaseIn'
+import DetailCard from '@/components/card/detailCard'
+import CardListItem from '@/components/card/listItem'
+import CardEditListItem from '@/components/card/editListItem'
+import Timeline from '@/components/timeline/timeline'
+import { usePurchaseInStore, itemInfoArray, detailItemInfoArray } from '@/store/modules/purchaseIn'
 import { onLoad } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+const editable = ref(false)
+const statusList = {
+  未审核: 'info',
+  已审核: 'success',
+  审核: 'info',
+  反审: 'success',
+}
+const accordionVal = ref(['0', '1'])
+const handleChange = () => {}
 const store = usePurchaseInStore()
-const itemInfo = store.detail || {}
-console.log(store.detail)
+const itemInfo = ref()
 onLoad((option) => {
-  store.getById(option.id)
+  fetchData(option.id)
 })
-const statusList = [
-  {
-    text: '未审核',
-    type: 'info',
-  },
-  {
-    text: '审核失败',
-    type: 'error',
-  },
-  {
-    text: '待入库',
-    type: 'warning',
-  },
-  {
-    text: '已完成',
-    type: 'success',
-  },
-]
-const typeList = [
-  {
-    label: '买家自提',
-  },
-  {
-    label: '卖家发货',
-  },
-  {
-    label: '代发',
-  },
-]
+const fetchData = async (id) => {
+  itemInfo.value = await store.getById(id)
+}
+const handleEdit = () => {
+  if (editable.value) {
+    editable.value = false
+  } else {
+    editable.value = true
+  }
+}
+const handleAudit = async (id) => {
+  await store.audit({ id })
+  setTimeout(() => {
+    fetchData(id)
+  }, 100)
+}
+const handleUnAudit = async (id) => {
+  await store.unAudit({ id })
+  setTimeout(() => {
+    fetchData(id)
+  }, 100)
+}
+
 const back = () => {
   store.resetDetail()
   uni.navigateTo({
     url: '/pages/purchase/purchaseIn',
-  })
-}
-const makePhoneCall = () => {
-  uni.makePhoneCall({
-    phoneNumber: this.itemInfo.phone, //仅为示例
   })
 }
 </script>
@@ -157,9 +167,5 @@ const makePhoneCall = () => {
   padding: 10px;
   padding-bottom: 50px;
   box-sizing: border-box;
-}
-
-.phone-fill {
-  color: #ff070b;
 }
 </style>

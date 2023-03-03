@@ -1,7 +1,13 @@
 <template>
-  <scroll-view scroll-y="true" style="height: {{height+'px'}}" @scrolltolower="onReachScrollBottom">
+  <scroll-view scroll-y="true" class="scroll-list" @scrolltolower="onReachScrollBottom">
     <slot name="content"></slot>
-    <uni-load-more v-if="data.shown" :status="data.status" :content-text="data.contentText" @click="loadMore" />
+    <uni-load-more
+      v-if="data.shown"
+      class="load-more"
+      :status="data.status"
+      :content-text="data.contentText"
+      @click="loadMore"
+    />
   </scroll-view>
 </template>
 
@@ -68,4 +74,8 @@ const loadMore = () => {
 // }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.scroll-list {
+  padding-bottom: 20px;
+}
+</style>
