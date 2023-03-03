@@ -46,6 +46,35 @@
         </template>
       </List>
     </view>
+    <view>
+      <uni-popup ref="alertDialog" type="dialog">
+        <uni-popup-dialog
+          type="info"
+          cancel-text="取消"
+          confirm-text="确定"
+          title="搜索条件"
+          @confirm="dialogConfirm"
+          @close="dialogClose"
+        >
+          <uni-forms :model="searchModel" label-width="80px">
+            <uni-forms-item label="昵称">
+              <uni-easyinput v-model="searchModel.name" class="list-val" />
+            </uni-forms-item>
+          </uni-forms>
+        </uni-popup-dialog>
+      </uni-popup>
+    </view>
+
+    <uni-fab
+      ref="fab"
+      :pattern="fabPattern"
+      :content="fabContent"
+      horizontal="left"
+      vertical="bottom"
+      direction="horizontal"
+      @trigger="trigger"
+      @fabClick="fabClick"
+    />
   </view>
 </template>
 
@@ -58,8 +87,52 @@ import List from '@/components/list/list'
 import { usePurchaseInStore, itemInfoArrayForList } from '@/store/modules/purchaseIn'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
+const alertDialog = ref()
 const store = usePurchaseInStore()
 const listRef = ref()
+const searchModel = ref({})
+const fabPattern = {
+  color: '#7A7E83',
+  backgroundColor: '#fff',
+  selectedColor: '#007AFF',
+  buttonColor: '#007AFF',
+  iconColor: '#fff',
+}
+const fabContent = [
+  {
+    iconPath: '/static/image.png',
+    selectedIconPath: '/static/image-active.png',
+    text: '新增',
+    active: false,
+  },
+  {
+    iconPath: '/static/home.png',
+    selectedIconPath: '/static/home-active.png',
+    text: '搜索',
+    active: false,
+  },
+]
+const dialogConfirm = () => {
+  console.log('点击确认')
+}
+const dialogClose = () => {
+  console.log('点击关闭')
+}
+const trigger = (e) => {
+  if (e.index == 0) {
+    uni.navigateTo({
+      url: '/pages/purchase/purchaseInAdd',
+    })
+  } else {
+    alertDialog.value.open()
+  }
+}
+const fabClick = () => {
+  uni.showToast({
+    title: '点击了悬浮按钮',
+    icon: 'none',
+  })
+}
 onLoad(() => {
   setTimeout(() => {
     fetchData()

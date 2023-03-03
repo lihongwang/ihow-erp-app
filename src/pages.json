@@ -40,6 +40,13 @@
       }
     },
     {
+      "path": "pages/purchase/purchaseInAdd",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "新增采购入库"
+      }
+    },
+    {
       "path": "pages/purchase/purchaseInDetail",
       "style": {
         "navigationStyle": "custom",
