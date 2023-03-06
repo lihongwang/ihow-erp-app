@@ -98,8 +98,9 @@
                   />
                 </view>
               </template>
-            </DetailCard> </view
-        ></uni-collapse-item>
+            </DetailCard>
+          </view>
+        </uni-collapse-item>
         <uni-collapse-item title="操作记录">
           <Timeline :data="itemInfo.billOperationRecordList" :map="statusList" />
         </uni-collapse-item>
@@ -114,7 +115,8 @@ import DetailCard from '@/components/card/detailCard'
 import CardListItem from '@/components/card/listItem'
 import CardEditListItem from '@/components/card/editListItem'
 import Timeline from '@/components/timeline/timeline'
-import { usePurchaseInStore, itemInfoArray, detailItemInfoArray } from '@/store/modules/purchaseIn'
+import { detailItemInfoArray } from '@/store/properties/purchaseIn'
+import { usePurchaseInStore, itemInfoArray } from '@/store/modules/purchaseIn'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 const editable = ref(false)

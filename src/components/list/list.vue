@@ -13,7 +13,7 @@
 
 <script setup>
 import { ref, defineEmits, defineExpose } from 'vue'
-const myEmit = defineEmits(['onFetchData'])
+const emits = defineEmits(['onFetchData'])
 const data = ref({
   status: 'more',
   shown: false,
@@ -46,7 +46,7 @@ defineExpose({
 })
 const loadMore = () => {
   data.value.status = 'loading'
-  myEmit(
+  emits(
     'onFetchData',
     {
       page: data.value.page + 1,
@@ -61,7 +61,7 @@ const loadMore = () => {
 //   const val = data.value
 //   console.log(val)
 //   if (val.flag && val.list.page != val.total) {
-//     myEmit('onFetchData', {})
+//     emits('onFetchData', {})
 //   }
 //   if (val.list.page == val.total) {
 //     uni.showLoading({
