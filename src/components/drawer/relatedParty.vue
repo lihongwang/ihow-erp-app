@@ -1,13 +1,11 @@
 <template>
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
-    <scroll-view style="height: 100%; padding: 50px 0" scroll-y="true">
-      <view class="btn-wrap flex flex-row justify-around">
-        <button size="mini" @click="closeDrawer">返回</button>
-        <button size="mini" type="primary" @click="handleConfirm">确定</button>
-      </view>
+    <view class="scroll-container">
+      <view class="top-placeholder"></view>
       <view class="drawer-content">
         <PaginationList
           ref="listRef"
+          class="pagination-list-container"
           sub-name="name"
           select-type="radio"
           :selected-items="selectedItems"
@@ -17,7 +15,11 @@
           @onFetchData="fetchData"
         />
       </view>
-    </scroll-view>
+      <view class="btn-wrap flex flex-row justify-around">
+        <button size="mini" @click="closeDrawer">返回</button>
+        <button size="mini" type="primary" @click="handleConfirm">确定</button>
+      </view>
+    </view>
   </uni-drawer>
 </template>
 
@@ -72,26 +74,34 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.btn-wrap {
-  position: fixed;
-  bottom: 0px;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  padding: 10px 0px;
-}
-::v-deep .page-wrap {
-  box-sizing: border-box;
-  position: fixed;
-  bottom: 50px;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  padding: 5px;
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #d9d9d9;
-}
-.drawer-content {
-  padding-bottom: 110px;
+::v-deep .scroll-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .top-placeholder {
+    height: 45px;
+    // #ifdef MP-WEIXIN
+    height: 70px;
+    // #endif
+  }
+  .btn-wrap {
+    height: 30px;
+    bottom: 0px;
+    background: #fff;
+    z-index: 1000;
+    width: 100%;
+    padding: 10px 0px;
+  }
+  .drawer-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pagination-list-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

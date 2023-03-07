@@ -36,7 +36,7 @@ $border-radius: 3px;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  span.indicator {
+  .indicator {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,19 +48,20 @@ $border-radius: 3px;
     width: 1rem;
     height: 1rem;
     background-color: lighten($white, 65%);
-    border: 2px solid lighten($black, 65%);
+    border: 2px solid lighten($black, 35%);
     pointer-events: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
-  span.inner {
+  .inner {
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 50%;
+    margin-left: 1px;
   }
-  &.checked span.inner {
+  &.checked .inner {
     background-color: $blue;
   }
 }

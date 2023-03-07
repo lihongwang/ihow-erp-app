@@ -21,6 +21,6 @@ return;
 
 ### css
 ```css
-/* #ifndef APP-NVUE */
-/* #endif */
+// #ifdef MP-WEIXIN
+// #endif
 ```

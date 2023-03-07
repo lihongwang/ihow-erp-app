@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { add, update, getList, getDetail, audit, unAudit, getSelectDetails } from '@/apis/purchase/purchaseIn'
+import { add, update, del, getList, getDetail, audit, unAudit, getSelectDetails } from '@/apis/purchase/purchaseIn'
 import { fixNumber } from '@/utils/data'
 interface PurchaseInState {
   list: any
@@ -95,6 +95,19 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
+    del() {
+      return new Promise((resolve) => {
+        del({
+          id: this.formData.id,
+        }).then((res: any) => {
+          resolve(res)
+          this.formData = {
+            billDate: new Date(),
+            goodsInDetailList: [],
+          }
+        })
+      })
+    },
     // 修改
     update() {
       return new Promise((resolve) => {
@@ -116,8 +129,8 @@ export const usePurchaseInStore = defineStore({
       let totalAmount = 0
       let totalQty = 0
       list.forEach((item) => {
-        totalAmount += item.amount
-        totalQty += item.qty
+        totalAmount += Number(item.amount)
+        totalQty += Number(item.qty)
       })
       return {
         totalAmount: fixNumber(totalAmount, 2),

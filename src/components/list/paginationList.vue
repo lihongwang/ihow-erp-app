@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="pagination-list">
     <view class="list">
       <view v-for="item in listData" :key="item[props.primaryKey]" class="list-item">
         <SelectItem
@@ -13,7 +13,7 @@
         />
       </view>
     </view>
-    <view class="page-wrap">
+    <view class="pagination-action-wrap">
       <uni-pagination
         :total="pagination.total"
         :page-size="pagination.pageSize"
@@ -118,7 +118,23 @@ const handlePagination = ({ current }) => {
 </script>
 
 <style lang="scss" scoped>
-.list {
-  margin-bottom: 50px;
+.pagination-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .list {
+    flex: 1;
+    min-height: 0;
+    flex-shrink: 0;
+    overflow-y: auto !important;
+  }
+  .pagination-action-wrap {
+    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+  }
 }
 </style>

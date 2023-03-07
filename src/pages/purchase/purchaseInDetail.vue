@@ -38,29 +38,8 @@
             </template>
             <template #footer>
               <view gutter="16" class="flex flex-row justify-center">
-                <button
-                  size="mini"
-                  type="primary"
-                  :disabled="formData.auditStatusEnum?.value == 4"
-                  @click="handleEdit(formData.id)"
-                >
-                  {{ editable ? '保存' : '编辑' }}
-                </button>
-                <button
-                  size="mini"
-                  type="primary"
-                  :disabled="formData.auditStatusEnum?.value == 4"
-                  @click="handleAudit(formData.id)"
-                >
-                  审核
-                </button>
-                <button
-                  size="mini"
-                  type="primary"
-                  :disabled="formData.auditStatusEnum?.value == 1"
-                  @click="handleUnAudit(formData.id)"
-                >
-                  反审核
+                <button size="mini" type="primary" :disabled="!checkEditable()" @click="handleAddDetail">
+                  添加明细
                 </button>
               </view>
             </template>
@@ -73,7 +52,7 @@
                 <view class="flex flex-row justify-between items-center">
                   <view class="card-title"> {{ `序号${index + 1} (${item.goodsName})` }} </view>
                   <view class="card-sub-title">
-                    <ConfirmBtn @onDelete="handleDeleteItem(detailItem)" />
+                    <ConfirmBtn :disabled="!checkEditable()" @onDelete="handleDeleteItem(detailItem)" />
                   </view>
                 </view>
               </template>
@@ -110,6 +89,30 @@
         </uni-collapse-item>
       </uni-collapse>
     </view>
+    <PIDrawer ref="detailDrawerRef" @onConfirm="handleDetailConfirm" />
+    <uni-popup ref="confirmDialog" type="dialog">
+      <uni-popup-dialog
+        type="warn"
+        cancel-text="取消"
+        confirm-text="确定"
+        title="确认"
+        content="确定删除？"
+        @confirm="dialogConfirm"
+        @close="dialogClose"
+      ></uni-popup-dialog>
+    </uni-popup>
+    <view :class="checkEditable() ? '' : 'un-editable'">
+      <uni-fab
+        ref="fab"
+        :pattern="fabPattern"
+        :content="getFabContent(editable)"
+        horizontal="left"
+        vertical="bottom"
+        direction="horizontal"
+        @trigger="trigger"
+        @fabClick="fabClick"
+      />
+    </view>
   </view>
 </template>
 
@@ -126,29 +129,92 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import { fixNumber } from '@/utils/data'
 const editable = ref(false)
+const accordionVal = ref(['0', '1'])
+const confirmDialog = ref()
+const handleChange = () => {}
+const store = usePurchaseInStore()
+const formData = ref(null)
+const detailDrawerRef = ref()
 const statusList = {
   未审核: 'info',
   已审核: 'success',
   审核: 'info',
   反审: 'success',
 }
-const accordionVal = ref(['0', '1'])
-const handleChange = () => {}
-const store = usePurchaseInStore()
-const formData = ref(null)
-console.log(formData)
+const getFabContent = (isEdit) => {
+  return formData.value?.auditStatusEnum?.value == 1
+    ? [
+        isEdit
+          ? {
+              iconPath: '/static/images/save-blue.png',
+              selectedIconPath: '/static/images/save-blue.png',
+              text: '保存',
+              active: false,
+            }
+          : {
+              iconPath: '/static/images/edit.png',
+              selectedIconPath: '/static/images/edit-blue.png',
+              text: '编辑',
+              active: false,
+            },
+        {
+          iconPath: '/static/images/audit.png',
+          selectedIconPath: '/static/images/audit-blue.png',
+          text: '审核',
+          active: false,
+        },
+        {
+          iconPath: '/static/images/delete-red.png',
+          selectedIconPath: '/static/images/delete-red.png',
+          text: '删除',
+          active: false,
+        },
+      ]
+    : [
+        {
+          iconPath: '/static/images/unaudit.png',
+          selectedIconPath: '/static/images/unaudit-blue.png',
+          text: '反审核',
+          active: false,
+        },
+      ]
+}
+const trigger = (e) => {
+  if (formData.value?.auditStatusEnum?.value == 1) {
+    if (e.index == 0) {
+      if (editable.value) {
+        handleSave()
+      } else {
+        editable.value = true
+      }
+    } else if (e.index == 1) {
+      handleAudit(formData.value.id)
+    } else if (e.index == 2) {
+      handleDeleteCheck()
+    }
+  } else {
+    if (e.index == 0) {
+      handleUnAudit(formData.value.id)
+    }
+  }
+}
+const fabClick = () => {
+  // uni.showToast({
+  //   title: '点击了悬浮按钮',
+  //   icon: 'none',
+  // })
+}
+const checkEditable = () => {
+  return editable.value && formData.value.auditStatusEnum?.value == 1
+}
+
 onLoad((option) => {
   fetchData(option.id)
 })
-store.$subscribe((mutation, state) => {
+store.$subscribe((mutation) => {
   const target = mutation.events.target
   if (mutation.events.key === 'qty') {
     target.amount = fixNumber(target.qty * target.price, 2)
-    console.log(target.amount)
-    setTimeout(() => {
-      console.log(state.formData)
-      formData.value = state.formData
-    }, 100)
   }
 })
 const fetchData = (id) => {
@@ -156,31 +222,79 @@ const fetchData = (id) => {
     formData.value = data
   })
 }
-const handleEdit = () => {
-  if (editable.value) {
-    editable.value = false
-  } else {
-    editable.value = true
-  }
+
+const getSelectedItems = () => {
+  return getDetails()
+}
+const handleAddDetail = () => {
+  detailDrawerRef.value.open(getSelectedItems(), {
+    warehouseId: formData.value.warehouseId,
+    relatedPartyId: formData.value.relatedPartyId,
+  })
+}
+const getDetails = () => {
+  return store.getFormData().goodsInDetailList || []
+}
+const handleDeleteItem = (tmp) => {
+  const details = getDetails()
+  formData.value = store.setFormData({
+    goodsInDetailList: details.filter((d) => d.id !== tmp.id),
+  })
 }
 const handleAudit = async (id) => {
   await store.audit({ id })
-  setTimeout(() => {
-    fetchData(id)
-  }, 100)
+  fetchData(id)
 }
 const handleUnAudit = async (id) => {
   await store.unAudit({ id })
-  setTimeout(() => {
-    fetchData(id)
-  }, 100)
+  fetchData(id)
 }
-
+const handleDelete = async () => {
+  await store.del()
+  uni.navigateTo({
+    url: '/pages/purchase/purchaseIn',
+  })
+}
+const handleDetailConfirm = ({ items }) => {
+  const details = getDetails()
+  formData.value = store.setFormData({
+    goodsInDetailList: [
+      ...items.map((d) => {
+        const { $purchaseOrderCode, id, ...rest } = d
+        return {
+          ...rest,
+          purchaseOrderCode: $purchaseOrderCode,
+          purchaseOrderDetailId: id,
+          purchaseQty: d.qty,
+          amount: fixNumber(d.qty * d.price, 2),
+        }
+      }),
+      ...details,
+    ],
+  })
+}
+const handleSave = async () => {
+  await store.update()
+  uni.navigateTo({
+    url: '/pages/purchase/purchaseIn',
+  })
+}
 const back = () => {
   store.resetState()
   uni.navigateTo({
     url: '/pages/purchase/purchaseIn',
   })
+}
+
+const handleDeleteCheck = () => {
+  confirmDialog.value.open()
+}
+const dialogConfirm = async () => {
+  await handleDelete()
+  confirmDialog.value.close()
+}
+const dialogClose = () => {
+  confirmDialog.value.close()
 }
 </script>
 

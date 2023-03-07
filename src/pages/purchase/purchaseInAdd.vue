@@ -10,14 +10,14 @@
       :back-text-style="{ color: '#fff' }"
     ></Navbar>
     <view class="page-content">
-      <uni-forms :model="item" label-width="80px">
+      <uni-forms :model="item" label-width="100px">
         <uni-forms-item label="入库日期">
           <uni-datetime-picker v-model="formData.billDate" type="date" :clear-icon="false" />
         </uni-forms-item>
-        <uni-forms-item label="供应商名称">
+        <uni-forms-item required label="供应商名称">
           <RelatedPartyItem @onSelect="handleSelectRelatedParty" />
         </uni-forms-item>
-        <uni-forms-item label="仓库">
+        <uni-forms-item required label="仓库">
           <uni-data-select v-model="formData.warehouseId" :localdata="warehouseList"></uni-data-select>
         </uni-forms-item>
         <uni-forms-item label="发货单号">
@@ -74,8 +74,10 @@
         </uni-popup-dialog>
       </uni-popup>
     </view>
-
-    <uni-fab ref="fab" horizontal="right" vertical="bottom" direction="horizontal" @fabClick="handleSave" />
+    <view class="save-btn" title="保存" @click="handleSave">
+      <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
+    </view>
+    <!-- <uni-fab ref="fab" horizontal="right" vertical="bottom" direction="horizontal" @fabClick="handleSave" /> -->
   </view>
 </template>
 
@@ -121,10 +123,17 @@ onLoad(() => {
   })
 })
 const handleAddDetail = () => {
-  detailDrawerRef.value.open(getSelectedItems(), {
-    warehouseId: formData.value.warehouseId,
-    relatedPartyId: formData.value.relatedPartyId,
-  })
+  if (!formData.value.relatedPartyId || !formData.value.warehouseId) {
+    uni.showToast({
+      title: '请先选择供应商和仓库',
+      icon: 'none',
+    })
+  } else {
+    detailDrawerRef.value.open(getSelectedItems(), {
+      warehouseId: formData.value.warehouseId,
+      relatedPartyId: formData.value.relatedPartyId,
+    })
+  }
 }
 const getDetails = () => {
   return store.getFormData().goodsInDetailList || []
@@ -157,10 +166,17 @@ const handleDetailConfirm = ({ items }) => {
   })
 }
 const handleSave = async () => {
-  await store.add()
-  uni.navigateTo({
-    url: '/pages/purchase/purchaseIn',
-  })
+  if (!formData.value.goodsInDetailList?.length) {
+    uni.showToast({
+      title: '明细不能为空',
+      icon: 'none',
+    })
+  } else {
+    await store.add()
+    uni.navigateTo({
+      url: '/pages/purchase/purchaseIn',
+    })
+  }
 }
 const back = () => {
   uni.navigateTo({
@@ -174,5 +190,28 @@ const back = () => {
   padding: 10px;
   padding-bottom: 50px;
   box-sizing: border-box;
+}
+
+.save-btn {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: calc(15px + var(--window-left));
+  bottom: calc(30px + var(--window-bottom));
+  width: 45px;
+  height: 45px;
+  background-color: #eee;
+  border-radius: 45px;
+  z-index: 11;
+  border: 1px solid #d9d9d9;
+  padding: 5px;
+  border-radius: 45px;
+  box-shadow: 0 1px 5px 2px rgb(0 0 0 / 30%);
+}
+
+.save-img {
+  width: 36px;
+  height: 36px;
 }
 </style>

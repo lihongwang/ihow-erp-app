@@ -1,6 +1,6 @@
 <template>
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
-    <scroll-view style="height: 100%; padding: 50px 0" scroll-y="true">
+    <view class="scroll-container">
       <view class="btn-wrap flex flex-row justify-around">
         <button size="mini" @click="closeDrawer">返回</button>
         <button size="mini" type="primary" @click="handleConfirm">确定</button>
@@ -16,7 +16,7 @@
           @onFetchData="fetchData"
         />
       </view>
-    </scroll-view>
+    </view>
   </uni-drawer>
 </template>
 
@@ -70,26 +70,23 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.btn-wrap {
-  position: fixed;
-  bottom: 0px;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  padding: 10px 0px;
-}
-::v-deep .page-wrap {
-  box-sizing: border-box;
-  position: fixed;
-  bottom: 50px;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  padding: 5px;
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #d9d9d9;
-}
-.drawer-content {
-  padding-bottom: 110px;
+::v-deep .scroll-container {
+  height: 100%;
+  padding: 50px 0;
+  // #ifdef MP-WEIXIN
+  padding: 70px 0;
+  // #endif
+  .btn-wrap {
+    position: fixed;
+    bottom: 0px;
+    background: #fff;
+    z-index: 1000;
+    width: 100%;
+    padding: 10px 0px;
+  }
+
+  .drawer-content {
+    padding-bottom: 110px;
+  }
 }
 </style>

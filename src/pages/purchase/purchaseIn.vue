@@ -10,11 +10,14 @@
       :back-text-style="{ color: '#fff' }"
     ></Navbar>
     <view class="page-content">
-      <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
-      <uni-search-bar placeholder="输入入库单号" bg-color="#EEEEEE" @confirm="search" />
-      <List ref="listRef" @onFetchData="fetchData">
+      <view class="search-wrap">
+        <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
+        <uni-search-bar placeholder="输入入库单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+      </view>
+
+      <List ref="listRef" class="page-list" @onFetchData="fetchData">
         <template #content>
-          <view v-if="store.list.length > 0" class="flex flex-col">
+          <view v-if="store.list.length > 0" class="list-content flex flex-col">
             <DetailCard v-for="(item, index) in store.list" :key="index">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
@@ -101,14 +104,14 @@ const fabPattern = {
 }
 const fabContent = [
   {
-    iconPath: '/static/image.png',
-    selectedIconPath: '/static/image-active.png',
+    iconPath: '/static/images/add-circle.png',
+    selectedIconPath: '/static/images/add-circle-blue.png',
     text: '新增',
     active: false,
   },
   {
-    iconPath: '/static/home.png',
-    selectedIconPath: '/static/home-active.png',
+    iconPath: '/static/images/search.png',
+    selectedIconPath: '/static/images/search-blue.png',
     text: '搜索',
     active: false,
   },
@@ -129,16 +132,21 @@ const trigger = (e) => {
   }
 }
 const fabClick = () => {
-  uni.showToast({
-    title: '点击了悬浮按钮',
-    icon: 'none',
-  })
+  // uni.showToast({
+  //   title: '点击了悬浮按钮',
+  //   icon: 'none',
+  // })
 }
 onLoad(() => {
   setTimeout(() => {
     fetchData()
   }, 100)
 })
+const handleSearch = (res) => {
+  fetchData({
+    code1: res.value,
+  })
+}
 const fetchData = (data = {}, isMore) => {
   store[isMore ? 'loadMore' : 'init']({
     ...data,
@@ -177,4 +185,30 @@ const handleClick = (id) => {
   padding-bottom: 50px;
   box-sizing: border-box;
 }
+::v-deep .search-wrap {
+  position: fixed;
+  top: 44px;
+  z-index: 1000;
+  background: #fff;
+  .tab-content {
+    padding-bottom: 0;
+  }
+}
+.page-list {
+  padding-top: 150px;
+}
+// #ifdef MP-WEIXIN
+::v-deep .search-wrap {
+  position: fixed;
+  top: 88px;
+  z-index: 1000;
+  background: #fff;
+  .tab-content {
+    padding-bottom: 0;
+  }
+}
+.page-list .list-content {
+  margin-top: 140px;
+}
+// #endif
 </style>

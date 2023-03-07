@@ -21,3 +21,6 @@ export const add = (data) => {
 export const update = (data) => {
   return http.post('wms/goodsIn/update', data)
 }
+export const del = (data) => {
+  return http.post('wms/goodsIn/delete', data)
+}

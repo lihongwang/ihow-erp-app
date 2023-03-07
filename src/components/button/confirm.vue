@@ -1,6 +1,6 @@
 <template>
   <view>
-    <button type="warn" size="mini" @click="handleDeleteItem(detailItem)">删除</button>
+    <button type="warn" size="mini" :disabled="props.disabled" @click="handleDeleteItem(detailItem)">删除</button>
     <uni-popup ref="confirmDialog" type="dialog">
       <uni-popup-dialog
         type="warn"
@@ -16,12 +16,13 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, defineProps } from 'vue'
+const props = defineProps(['disabled'])
 const emits = defineEmits(['onDelete'])
+const confirmDialog = ref()
 const handleDeleteItem = () => {
   confirmDialog.value.open()
 }
-const confirmDialog = ref()
 const dialogConfirm = () => {
   emits('onDelete')
   confirmDialog.value.close()

@@ -1,5 +1,5 @@
 <template>
-  <scroll-view scroll-y="true" class="scroll-list" @scrolltolower="onReachScrollBottom">
+  <scroll-view scroll-y="true" :class="props.class" class="scroll-list" @scrolltolower="onReachScrollBottom">
     <slot name="content"></slot>
     <uni-load-more
       v-if="data.shown"
@@ -12,7 +12,8 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineExpose } from 'vue'
+import { ref, defineProps, defineEmits, defineExpose } from 'vue'
+const props = defineProps(['class'])
 const emits = defineEmits(['onFetchData'])
 const data = ref({
   status: 'more',
@@ -37,7 +38,6 @@ const setPageInfo = (val = {}) => {
     shown: true,
     status: val.page < Math.ceil(val.total / val.pageSize) ? 'more' : 'no-more',
   }
-  console.log(data.value)
 }
 
 defineExpose({

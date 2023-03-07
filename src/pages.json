@@ -199,27 +199,27 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/home-blue.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/stock/index",
-        "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png",
+        "iconPath": "static/images/report.png",
+        "selectedIconPath": "static/images/report-blue.png",
         "text": "报表"
       },
       {
         "pagePath": "pages/chart/index",
-        "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png",
+        "iconPath": "static/images/chart.png",
+        "selectedIconPath": "static/images/chart-blue.png",
         "text": "图表"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-        "iconPath": "static/images/tab_home.png",
-        "selectedIconPath": "static/images/tab_home_s.png"
+        "iconPath": "static/images/user.png",
+        "selectedIconPath": "static/images/user-blue.png"
       }
     ]
   }
