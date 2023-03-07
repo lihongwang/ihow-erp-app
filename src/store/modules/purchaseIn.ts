@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { getList, getDetail, audit, unAudit, getSelectDetails } from '@/apis/purchase/purchaseIn'
+import { add, update, getList, getDetail, audit, unAudit, getSelectDetails } from '@/apis/purchase/purchaseIn'
+import { fixNumber } from '@/utils/data'
 interface PurchaseInState {
   list: any
-  detail: any
-  editData: any
+  formData: any
 }
 export interface PurchaseInListItem {
   title?: string
@@ -15,25 +15,21 @@ export const usePurchaseInStore = defineStore({
   state: (): PurchaseInState => ({
     // token
     list: [],
-    detail: null,
-    editData: {},
+    formData: {
+      billDate: new Date(),
+      goodsInDetailList: [],
+    },
   }),
   getters: {},
   actions: {
     resetState() {
       this.list = []
+      this.formData = {
+        billDate: new Date(),
+        goodsInDetailList: [],
+      }
     },
-    resetDetail() {
-      this.detail = null
-    },
-    getById(id) {
-      return new Promise((resolve) => {
-        getDetail({ id }).then((res: any) => {
-          this.detail = res
-          resolve(this.detail)
-        })
-      })
-    },
+    // 列表
     init(data) {
       return new Promise((resolve) => {
         getList(data).then((res: any) => {
@@ -42,6 +38,16 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
+    // 查看
+    show(id) {
+      return new Promise((resolve) => {
+        getDetail({ id }).then((res: any) => {
+          this.formData = res
+          resolve(res)
+        })
+      })
+    },
+    // 添加明细 弹框列表
     getDetails(data) {
       return new Promise((resolve) => {
         getSelectDetails(data).then((res: any) => {
@@ -49,6 +55,7 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
+    // 列表分页
     loadMore(data) {
       return new Promise((resolve) => {
         getList(data).then((res: any) => {
@@ -57,6 +64,7 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
+    // 审核
     audit(data) {
       return new Promise((resolve) => {
         audit(data).then((res: any) => {
@@ -64,6 +72,7 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
+    // 反审核
     unAudit(data) {
       return new Promise((resolve) => {
         unAudit(data).then((res: any) => {
@@ -71,13 +80,73 @@ export const usePurchaseInStore = defineStore({
         })
       })
     },
-
-    setEditData(data) {
-      this.editData = data
+    // 新增
+    add() {
+      return new Promise((resolve) => {
+        add({
+          ...this.formData,
+          ...this._getTotalInfo(),
+        }).then((res: any) => {
+          resolve(res)
+          this.formData = {
+            billDate: new Date(),
+            goodsInDetailList: [],
+          }
+        })
+      })
+    },
+    // 修改
+    update() {
+      return new Promise((resolve) => {
+        update({
+          ...this.formData,
+          ...this._getTotalInfo(),
+        }).then((res: any) => {
+          resolve(res)
+          this.formData = {
+            billDate: new Date(),
+            goodsInDetailList: [],
+          }
+        })
+      })
     },
 
-    getEditData() {
-      return this.editData
+    _getTotalInfo() {
+      const list = this.formData.goodsInDetailList
+      let totalAmount = 0
+      let totalQty = 0
+      list.forEach((item) => {
+        totalAmount += item.amount
+        totalQty += item.qty
+      })
+      return {
+        totalAmount: fixNumber(totalAmount, 2),
+        totalQty: fixNumber(totalQty, 2),
+      }
+    },
+
+    setFormData(data) {
+      this.formData = {
+        ...this.formData,
+        ...data,
+      }
+      return this.formData
+    },
+
+    getFormData() {
+      return this.formData
+    },
+
+    updateDetailData(data) {
+      this.formData = {
+        ...this.formData,
+        goodsInDetailList: [...data],
+      }
+      return this.formData
+    },
+
+    getFormDetailData() {
+      return this.formData.goodsInDetailList
     },
   },
 })

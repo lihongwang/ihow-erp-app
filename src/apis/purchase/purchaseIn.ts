@@ -15,3 +15,9 @@ export const audit = (data) => {
 export const unAudit = (data) => {
   return http.post('wms/goodsIn/unaudit', data)
 }
+export const add = (data) => {
+  return http.post('wms/goodsIn/add', data)
+}
+export const update = (data) => {
+  return http.post('wms/goodsIn/update', data)
+}

@@ -9,17 +9,17 @@
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"
     ></Navbar>
-    <view v-if="itemInfo" class="page-content">
+    <view v-if="formData" class="page-content">
       <uni-collapse v-model="accordionVal" @change="handleChange">
         <uni-collapse-item title="单据详情">
           <DetailCard>
             <template #header>
               <view class="flex flex-row justify-between items-center">
-                <view class="card-title"> {{ itemInfo.code }} </view>
+                <view class="card-title"> {{ formData.code }} </view>
                 <view class="card-sub-title">
                   <uni-tag
-                    :text="itemInfo.auditStatusEnum.name"
-                    :type="statusList[itemInfo.auditStatusEnum.name]"
+                    :text="formData.auditStatusEnum?.name"
+                    :type="statusList[formData.auditStatusEnum?.name]"
                   ></uni-tag>
                 </view>
               </view>
@@ -30,7 +30,7 @@
                   v-for="info in itemInfoArray"
                   :key="info.name"
                   :title="info.title"
-                  :value="itemInfo[info.name] || itemInfo[info.aliasName]"
+                  :value="formData[info.name] || formData[info.aliasName]"
                   :type="info.type"
                   :params="info.params || {}"
                 />
@@ -41,24 +41,24 @@
                 <button
                   size="mini"
                   type="primary"
-                  :disabled="itemInfo.auditStatusEnum?.value == 4"
-                  @click="handleEdit(itemInfo.id)"
+                  :disabled="formData.auditStatusEnum?.value == 4"
+                  @click="handleEdit(formData.id)"
                 >
                   {{ editable ? '保存' : '编辑' }}
                 </button>
                 <button
                   size="mini"
                   type="primary"
-                  :disabled="itemInfo.auditStatusEnum?.value == 4"
-                  @click="handleAudit(itemInfo.id)"
+                  :disabled="formData.auditStatusEnum?.value == 4"
+                  @click="handleAudit(formData.id)"
                 >
                   审核
                 </button>
                 <button
                   size="mini"
                   type="primary"
-                  :disabled="itemInfo.auditStatusEnum?.value == 1"
-                  @click="handleUnAudit(itemInfo.id)"
+                  :disabled="formData.auditStatusEnum?.value == 1"
+                  @click="handleUnAudit(formData.id)"
                 >
                   反审核
                 </button>
@@ -66,12 +66,15 @@
             </template>
           </DetailCard>
         </uni-collapse-item>
-        <uni-collapse-item :title="'单据明细 (合计' + itemInfo.goodsInDetailList?.length + '条)'">
-          <view v-for="(item, index) in itemInfo.goodsInDetailList" :key="index">
+        <uni-collapse-item :title="'单据明细 (合计' + formData.goodsInDetailList?.length + '条)'">
+          <view v-for="(item, index) in formData.goodsInDetailList" :key="index">
             <DetailCard :no-footer="true">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
-                  <view class="card-title"> {{ item.batchNumber }} </view>
+                  <view class="card-title"> {{ `序号${index + 1} (${item.goodsName})` }} </view>
+                  <view class="card-sub-title">
+                    <ConfirmBtn @onDelete="handleDeleteItem(detailItem)" />
+                  </view>
                 </view>
               </template>
               <template #body>
@@ -79,8 +82,9 @@
                   <CardEditListItem
                     v-for="info in detailItemInfoArray"
                     :key="info.name"
+                    :store="store"
                     :title="info.title"
-                    :model="item"
+                    :item="item"
                     :name="info.name"
                     :value="item[info.name] || item[info.aliasName]"
                     :type="info.type"
@@ -102,7 +106,7 @@
           </view>
         </uni-collapse-item>
         <uni-collapse-item title="操作记录">
-          <Timeline :data="itemInfo.billOperationRecordList" :map="statusList" />
+          <Timeline :data="formData.billOperationRecordList" :map="statusList" />
         </uni-collapse-item>
       </uni-collapse>
     </view>
@@ -112,13 +116,15 @@
 <script setup>
 import Navbar from '@/components/pageNavbar'
 import DetailCard from '@/components/card/detailCard'
+import ConfirmBtn from '@/components/button/confirm'
 import CardListItem from '@/components/card/listItem'
 import CardEditListItem from '@/components/card/editListItem'
 import Timeline from '@/components/timeline/timeline'
-import { detailItemInfoArray } from '@/store/properties/purchaseIn'
-import { usePurchaseInStore, itemInfoArray } from '@/store/modules/purchaseIn'
+import { detailItemInfoArray, itemInfoArray } from '@/store/properties/purchaseIn'
+import { usePurchaseInStore } from '@/store/modules/purchaseIn'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import { fixNumber } from '@/utils/data'
 const editable = ref(false)
 const statusList = {
   未审核: 'info',
@@ -129,12 +135,26 @@ const statusList = {
 const accordionVal = ref(['0', '1'])
 const handleChange = () => {}
 const store = usePurchaseInStore()
-const itemInfo = ref()
+const formData = ref(null)
+console.log(formData)
 onLoad((option) => {
   fetchData(option.id)
 })
-const fetchData = async (id) => {
-  itemInfo.value = await store.getById(id)
+store.$subscribe((mutation, state) => {
+  const target = mutation.events.target
+  if (mutation.events.key === 'qty') {
+    target.amount = fixNumber(target.qty * target.price, 2)
+    console.log(target.amount)
+    setTimeout(() => {
+      console.log(state.formData)
+      formData.value = state.formData
+    }, 100)
+  }
+})
+const fetchData = (id) => {
+  store.show(id).then((data) => {
+    formData.value = data
+  })
 }
 const handleEdit = () => {
   if (editable.value) {
@@ -157,7 +177,7 @@ const handleUnAudit = async (id) => {
 }
 
 const back = () => {
-  store.resetDetail()
+  store.resetState()
   uni.navigateTo({
     url: '/pages/purchase/purchaseIn',
   })

@@ -12,24 +12,27 @@
     <view class="page-content">
       <uni-forms :model="item" label-width="80px">
         <uni-forms-item label="入库日期">
-          <uni-datetime-picker v-model="item.inDate" type="date" :clear-icon="false" />
+          <uni-datetime-picker v-model="formData.billDate" type="date" :clear-icon="false" />
         </uni-forms-item>
         <uni-forms-item label="供应商名称">
           <RelatedPartyItem @onSelect="handleSelectRelatedParty" />
         </uni-forms-item>
         <uni-forms-item label="仓库">
-          <uni-data-select v-model="item.warehouseId" :localdata="warehouseList"></uni-data-select>
+          <uni-data-select v-model="formData.warehouseId" :localdata="warehouseList"></uni-data-select>
+        </uni-forms-item>
+        <uni-forms-item label="发货单号">
+          <uni-easyinput v-model="formData.deliveryCode" class="list-val" />
         </uni-forms-item>
         <uni-forms-item label="备注">
-          <uni-easyinput v-model="item.remark" class="list-val" />
+          <uni-easyinput v-model="formData.remark" class="list-val" />
         </uni-forms-item>
-        <button type="primary" @click="handleAddDetail(item.id)">添加明细</button>
+        <button type="primary" @click="handleAddDetail">添加明细</button>
         <view class="detail-list">
-          <view v-for="(detailItem, index) in details" :key="index">
+          <view v-for="(detailItem, index) in formData.goodsInDetailList" :key="index">
             <DetailCard :no-footer="true">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
-                  <view class="card-title"> {{ `序号${index} (${detailItem.goodsName})` }} </view>
+                  <view class="card-title"> {{ `序号${index + 1} (${detailItem.goodsName})` }} </view>
                   <view class="card-sub-title">
                     <ConfirmBtn @onDelete="handleDeleteItem(detailItem)" />
                   </view>
@@ -42,7 +45,7 @@
                     :key="info.name"
                     :store="store"
                     :title="info.title"
-                    :model="detailItem"
+                    :item="detailItem"
                     :name="info.name"
                     :value="detailItem[info.name] || detailItem[info.aliasName]"
                     :type="info.type"
@@ -89,53 +92,75 @@ import RelatedPartyItem from '@/components/form/relatedParty'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getWarehouseData } from '@/apis'
+import { fixNumber } from '@/utils/data'
 // Array.from({ length: 10000 }).fill((item, i) => ({ id: i, value: i }))
 const store = usePurchaseInStoreWithOut()
 const detailDlg = ref()
 const detailDrawerRef = ref()
-const item = ref({
-  inDate: new Date(),
-})
-const details = ref([])
+const formData = ref(store.getFormData())
 const warehouseList = ref([])
+store.$subscribe((mutation) => {
+  const target = mutation.events.target
+  if (mutation.events.key === 'qty') {
+    target.amount = fixNumber(target.qty * target.price, 2)
+  }
+})
 const handleSelectRelatedParty = (relatedParty) => {
-  item.value.relatedPartyId = relatedParty.id
-  item.value.relatedPartyName = relatedParty.name
+  formData.value = store.setFormData({
+    relatedPartyId: relatedParty.id,
+    relatedPartyName: relatedParty.name,
+    settlementDays: relatedParty.settlementDays,
+  })
 }
 onLoad(() => {
   getWarehouseData().then((res) => {
-    warehouseList.value = res.map((w) => ({ value: w.id, text: w.name }))
+    warehouseList.value = res.map((w) => ({
+      value: w.id,
+      text: w.name,
+    }))
   })
 })
 const handleAddDetail = () => {
   detailDrawerRef.value.open(getSelectedItems(), {
-    warehouseId: item.value.warehouseId,
-    relatedPartyId: item.value.relatedPartyId,
+    warehouseId: formData.value.warehouseId,
+    relatedPartyId: formData.value.relatedPartyId,
   })
 }
+const getDetails = () => {
+  return store.getFormData().goodsInDetailList || []
+}
 const handleDeleteItem = (tmp) => {
-  details.value = details.value.filter((d) => d.id !== tmp.id)
+  const details = getDetails()
+  formData.value = store.setFormData({
+    goodsInDetailList: details.filter((d) => d.id !== tmp.id),
+  })
 }
 const getSelectedItems = () => {
-  return details.value
+  return getDetails()
 }
 const handleDetailConfirm = ({ items }) => {
-  details.value = [
-    ...items.map((d) => {
-      return {
-        ...d,
-        purchaseQty: d.qty,
-      }
-    }),
-    ...details.value,
-  ]
-  store.setEditData(details.value)
+  const details = getDetails()
+  formData.value = store.setFormData({
+    goodsInDetailList: [
+      ...items.map((d) => {
+        const { $purchaseOrderCode, id, ...rest } = d
+        return {
+          ...rest,
+          purchaseOrderCode: $purchaseOrderCode,
+          purchaseOrderDetailId: id,
+          purchaseQty: d.qty,
+          amount: fixNumber(d.qty * d.price, 2),
+        }
+      }),
+      ...details,
+    ],
+  })
 }
-const handleSave = () => {
-  console.log(item)
-  console.log(details)
-  detailDlg.value.open()
-  // messageDlg.value.open()
+const handleSave = async () => {
+  await store.add()
+  uni.navigateTo({
+    url: '/pages/purchase/purchaseIn',
+  })
 }
 const back = () => {
   uni.navigateTo({

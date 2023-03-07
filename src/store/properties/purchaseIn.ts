@@ -67,13 +67,13 @@ export const detailItemInfo = {
   masterUnit: {
     title: '单位',
   },
-  amount: {
-    title: '入库金额',
-    type: 'money',
-  },
   price: {
     title: '单价',
     type: 'price',
+  },
+  amount: {
+    title: '入库金额',
+    type: 'money',
   },
   warehouseAreaName: {
     title: '仓位',
@@ -117,13 +117,13 @@ const selectItem = {
   masterUnit: {
     title: '单位',
   },
-  amount: {
-    title: '入库金额',
-    type: 'money',
-  },
   price: {
     title: '单价',
     type: 'price',
+  },
+  amount: {
+    title: '入库金额',
+    type: 'money',
   },
 }
 export const itemInfoArray = objectToArray(itemInfo, 'name')
