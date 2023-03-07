@@ -81,14 +81,13 @@ defineExpose({
   .top-placeholder {
     height: 45px;
     // #ifdef MP-WEIXIN
-    height: 70px;
+    height: 90px;
     // #endif
   }
   .btn-wrap {
     height: 30px;
     bottom: 0px;
     background: #fff;
-    z-index: 1000;
     width: 100%;
     padding: 10px 0px;
   }

@@ -4,7 +4,7 @@
       :is-back="true"
       back-icon-color="#fff"
       back-text=""
-      title="采购订单详情"
+      title="采购入库单详情"
       title-color="#fff"
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"
@@ -52,7 +52,7 @@
                 <view class="flex flex-row justify-between items-center">
                   <view class="card-title"> {{ `序号${index + 1} (${item.goodsName})` }} </view>
                   <view class="card-sub-title">
-                    <ConfirmBtn :disabled="!checkEditable()" @onDelete="handleDeleteItem(detailItem)" />
+                    <ConfirmBtn :disabled="!checkEditable()" @onDelete="handleDeleteItem(item)" />
                   </view>
                 </view>
               </template>
@@ -118,6 +118,7 @@
 
 <script setup>
 import Navbar from '@/components/pageNavbar'
+import PIDrawer from '@/components/drawer/purchaseInDetail'
 import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import CardListItem from '@/components/card/listItem'
@@ -252,7 +253,7 @@ const handleUnAudit = async (id) => {
 const handleDelete = async () => {
   await store.del()
   uni.navigateTo({
-    url: '/pages/purchase/purchaseIn',
+    url: '/pages/purchase/purchaseIn/index',
   })
 }
 const handleDetailConfirm = ({ items }) => {
@@ -276,13 +277,13 @@ const handleDetailConfirm = ({ items }) => {
 const handleSave = async () => {
   await store.update()
   uni.navigateTo({
-    url: '/pages/purchase/purchaseIn',
+    url: '/pages/purchase/purchaseIn/index',
   })
 }
 const back = () => {
   store.resetState()
   uni.navigateTo({
-    url: '/pages/purchase/purchaseIn',
+    url: '/pages/purchase/purchaseIn/index',
   })
 }
 

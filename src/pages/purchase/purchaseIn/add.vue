@@ -141,7 +141,7 @@ const getDetails = () => {
 const handleDeleteItem = (tmp) => {
   const details = getDetails()
   formData.value = store.setFormData({
-    goodsInDetailList: details.filter((d) => d.id !== tmp.id),
+    goodsInDetailList: details.filter((d) => d.goodsId !== tmp.goodsId),
   })
 }
 const getSelectedItems = () => {
@@ -174,13 +174,13 @@ const handleSave = async () => {
   } else {
     await store.add()
     uni.navigateTo({
-      url: '/pages/purchase/purchaseIn',
+      url: '/pages/purchase/purchaseIn/index',
     })
   }
 }
 const back = () => {
   uni.navigateTo({
-    url: '/pages/purchase/purchaseIn',
+    url: '/pages/purchase/purchaseIn/index',
   })
 }
 </script>

@@ -42,7 +42,9 @@
         <view class="collapse-item action-content">
           <view class="info-item grid3">
             <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseOrder')">采购订单</button>
-            <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseIn')">采购入库</button>
+            <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseIn/index')">
+              采购入库
+            </button>
             <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseExtraIn')">零采进货</button>
           </view>
           <view class="info-item grid3">
@@ -63,7 +65,9 @@ import { getHomeData } from '@/apis'
 import { onShow } from '@dcloudio/uni-app'
 const homeData = ref({})
 onShow(() => {
+  console.log(111)
   getHomeData().then((data) => {
+    console.log(data)
     homeData.value = data
   })
 })

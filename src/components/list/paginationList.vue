@@ -1,6 +1,6 @@
 <template>
   <view class="pagination-list">
-    <view class="list">
+    <scroll-view class="list" scroll-y="true">
       <view v-for="item in listData" :key="item[props.primaryKey]" class="list-item">
         <SelectItem
           :select-type="props.selectType"
@@ -12,13 +12,13 @@
           @onToggle="toggleCheck(item)"
         />
       </view>
-    </view>
+    </scroll-view>
     <view class="pagination-action-wrap">
       <uni-pagination
         :total="pagination.total"
         :page-size="pagination.pageSize"
         :current="pagination.current"
-        title="标题文字"
+        title="更多"
         @change="handlePagination"
       />
     </view>
@@ -113,6 +113,7 @@ const toggleCheck = (item) => {
   }
 }
 const handlePagination = ({ current }) => {
+  console.log('pagination', current)
   emits('onFetchData', { page: current - 1 })
 }
 </script>
@@ -123,10 +124,10 @@ const handlePagination = ({ current }) => {
   display: flex;
   flex-direction: column;
   .list {
+    padding: 10px 0;
     flex: 1;
     min-height: 0;
     flex-shrink: 0;
-    overflow-y: auto !important;
   }
   .pagination-action-wrap {
     box-sizing: border-box;

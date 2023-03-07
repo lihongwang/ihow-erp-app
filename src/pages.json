@@ -33,21 +33,21 @@
       }
     },
     {
-      "path": "pages/purchase/purchaseIn",
+      "path": "pages/purchase/purchaseIn/index",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "采购入库"
       }
     },
     {
-      "path": "pages/purchase/purchaseInAdd",
+      "path": "pages/purchase/purchaseIn/add",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "新增采购入库"
       }
     },
     {
-      "path": "pages/purchase/purchaseInDetail",
+      "path": "pages/purchase/purchaseIn/show",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "采购入库详情"
@@ -193,7 +193,7 @@
   },
   "tabBar": {
     "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
+    "selectedColor": "#007aff",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [

@@ -125,7 +125,7 @@ const dialogClose = () => {
 const trigger = (e) => {
   if (e.index == 0) {
     uni.navigateTo({
-      url: '/pages/purchase/purchaseInAdd',
+      url: '/pages/purchase/purchaseIn/add',
     })
   } else {
     alertDialog.value.open()
@@ -174,41 +174,35 @@ const back = () => {
 const handleClick = (id) => {
   console.log(id)
   uni.navigateTo({
-    url: '/pages/purchase/purchaseInDetail?id=' + id,
+    url: '/pages/purchase/purchaseIn/show?id=' + id,
   })
 }
 </script>
 
 <style scoped lang="scss">
-.page-content-wrap {
-  padding: 10px;
-  padding-bottom: 50px;
-  box-sizing: border-box;
-}
-::v-deep .search-wrap {
-  position: fixed;
-  top: 44px;
-  z-index: 1000;
-  background: #fff;
-  .tab-content {
-    padding-bottom: 0;
+.purchase-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .page-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    ::v-deep .search-wrap {
+      height: 140px;
+      .tab-content {
+        padding-bottom: 0;
+      }
+    }
+    ::v-deep .uni-searchbar {
+      padding-top: 0;
+    }
+    .page-list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
   }
 }
-.page-list {
-  padding-top: 150px;
-}
-// #ifdef MP-WEIXIN
-::v-deep .search-wrap {
-  position: fixed;
-  top: 88px;
-  z-index: 1000;
-  background: #fff;
-  .tab-content {
-    padding-bottom: 0;
-  }
-}
-.page-list .list-content {
-  margin-top: 140px;
-}
-// #endif
 </style>

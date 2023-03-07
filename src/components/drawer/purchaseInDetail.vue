@@ -1,20 +1,23 @@
 <template>
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
     <view class="scroll-container">
-      <view class="btn-wrap flex flex-row justify-around">
-        <button size="mini" @click="closeDrawer">返回</button>
-        <button size="mini" type="primary" @click="handleConfirm">确定</button>
-      </view>
+      <view class="top-placeholder"></view>
       <view class="drawer-content">
         <PaginationList
           ref="listRef"
+          class="pagination-list-container"
           sub-name="goodsName"
           select-type="checkbox"
+          primary-key="goodsId"
           :selected-items="selectedItems"
           :list-data="detailData"
           :properties="selectItemArrayForList"
           @onFetchData="fetchData"
         />
+      </view>
+      <view class="btn-wrap flex flex-row justify-around">
+        <button size="mini" @click="closeDrawer">返回</button>
+        <button size="mini" type="primary" @click="handleConfirm">确定</button>
       </view>
     </view>
   </uni-drawer>
@@ -72,21 +75,31 @@ defineExpose({
 <style lang="scss" scoped>
 ::v-deep .scroll-container {
   height: 100%;
-  padding: 50px 0;
-  // #ifdef MP-WEIXIN
-  padding: 70px 0;
-  // #endif
+  display: flex;
+  flex-direction: column;
+  .top-placeholder {
+    height: 45px;
+    // #ifdef MP-WEIXIN
+    height: 90px;
+    // #endif
+  }
   .btn-wrap {
-    position: fixed;
+    height: 30px;
     bottom: 0px;
     background: #fff;
-    z-index: 1000;
     width: 100%;
     padding: 10px 0px;
   }
-
   .drawer-content {
-    padding-bottom: 110px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pagination-list-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

@@ -1,13 +1,9 @@
 <template>
   <scroll-view scroll-y="true" :class="props.class" class="scroll-list" @scrolltolower="onReachScrollBottom">
     <slot name="content"></slot>
-    <uni-load-more
-      v-if="data.shown"
-      class="load-more"
-      :status="data.status"
-      :content-text="data.contentText"
-      @click="loadMore"
-    />
+    <view @click="loadMore">
+      <uni-load-more v-if="data.shown" class="load-more" :status="data.status" :content-text="data.contentText" />
+    </view>
   </scroll-view>
 </template>
 
@@ -45,7 +41,10 @@ defineExpose({
   setPageInfo,
 })
 const loadMore = () => {
+  console.log('loadMore')
+  if (data.value.status === 'no-more') return
   data.value.status = 'loading'
+
   emits(
     'onFetchData',
     {
