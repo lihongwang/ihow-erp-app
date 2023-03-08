@@ -1,11 +1,11 @@
 {
   "title": "销售出库",
   "url": {
-    "add": "/pages/purchase/purchaseExtraIn/add",
-    "edit": "/pages/purchase/purchaseExtraIn/edit?id=",
+    "add": "/pages/sale/saleOut/add",
+    "edit": "/pages/sale/saleOut/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/purchase/purchaseExtraIn/index",
-    "show": "/pages/purchase/purchaseExtraIn/show?id="
+    "index": "/pages/sale/saleOut/index",
+    "show": "/pages/sale/saleOut/show?id="
   },
   "search": {
     "searchKey": "code1"

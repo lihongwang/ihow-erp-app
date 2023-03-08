@@ -1,11 +1,11 @@
 {
   "title": "零售出库",
   "url": {
-    "add": "/pages/purchase/purchaseIn/add",
-    "edit": "/pages/purchase/purchaseIn/edit?id=",
+    "add": "/pages/sale/saleExtraOut/add",
+    "edit": "/pages/sale/saleExtraOut/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/purchase/purchaseIn/index",
-    "show": "/pages/purchase/purchaseIn/show?id="
+    "index": "/pages/sale/saleExtraOut/index",
+    "show": "/pages/sale/saleExtraOut/show?id="
   },
   "search": {
     "searchKey": "code1"
