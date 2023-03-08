@@ -1,10 +1,10 @@
 <template>
-  <view class="purchase-page page-wrapper">
+  <view class="purchase-page main-index-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
       back-text=""
-      title="采购入库单"
+      :title="titleInfo.index"
       title-color="#fff"
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"
@@ -12,7 +12,7 @@
     <view class="page-content">
       <view class="search-wrap">
         <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
-        <uni-search-bar placeholder="输入入库单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" />
       </view>
 
       <List ref="listRef" class="page-list" @onFetchData="fetchData">
@@ -23,7 +23,7 @@
                 <view class="flex flex-row justify-between items-center">
                   <view class="card-title"> {{ item.code }} </view>
                   <view class="card-sub-title">
-                    <uni-tag :text="item.auditStatusEnum.name" :type="statusList[item.auditStatusEnum.name]"></uni-tag>
+                    <Tag :name="item.auditStatusEnum.name" />
                   </view>
                 </view>
               </template>
@@ -41,7 +41,14 @@
               </template>
               <template #footer>
                 <view gutter="16" class="flex flex-row justify-center">
-                  <button size="mini" class="more-btn" @click="handleClick(item.id)">查看详情</button>
+                  <button size="mini" class="btn" :disabled="!checkEditable(item)" @click="handleEditClick(item.id)">
+                    <img src="/static/images/edit-blue.png" class="btn-img" alt="编辑" />
+                    <span>编辑</span>
+                  </button>
+                  <button size="mini" class="btn" @click="handleDetailClick(item.id)">
+                    <img src="/static/images/list-details-blue.png" class="btn-img" alt="详情" />
+                    <span>查看详情</span>
+                  </button>
                 </view>
               </template>
             </DetailCard>
@@ -50,18 +57,21 @@
       </List>
     </view>
     <view>
-      <uni-popup ref="alertDialog" type="dialog">
+      <uni-popup ref="searchDialog" type="dialog">
         <uni-popup-dialog
           type="info"
           cancel-text="取消"
           confirm-text="确定"
           title="搜索条件"
-          @confirm="dialogConfirm"
-          @close="dialogClose"
+          @confirm="handleSearchConfirm"
+          @close="handleSearchClose"
         >
-          <uni-forms :model="searchModel" label-width="80px">
-            <uni-forms-item label="昵称">
-              <uni-easyinput v-model="searchModel.name" class="list-val" />
+          <uni-forms :model="searchModel" label-width="110px">
+            <uni-forms-item label="供应商名称">
+              <uni-easyinput v-model="searchModel.supplierName1" class="list-val" />
+            </uni-forms-item>
+            <uni-forms-item label="供应商编号">
+              <uni-easyinput v-model="searchModel.supplierCode1" class="list-val" />
             </uni-forms-item>
           </uni-forms>
         </uni-popup-dialog>
@@ -82,127 +92,54 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import DetailCard from '@/components/card/detailCard'
 import CardListItem from '@/components/card/listItem'
 import Navbar from '@/components/pageNavbar'
+import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
 import { itemInfoArrayForList } from '@/store/properties/purchaseIn'
 import { usePurchaseInStore } from '@/store/modules/purchaseIn'
-import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
-const alertDialog = ref()
+import { usePage, useIndexPage } from '@/hooks'
+import pageInfo from '@/pageInfo/purchaseIn.json'
+const searchDialog = ref()
 const store = usePurchaseInStore()
 const listRef = ref()
 const searchModel = ref({})
-const fabPattern = {
-  color: '#7A7E83',
-  backgroundColor: '#fff',
-  selectedColor: '#007AFF',
-  buttonColor: '#007AFF',
-  iconColor: '#fff',
-}
-const fabContent = [
-  {
-    iconPath: '/static/images/add-circle.png',
-    selectedIconPath: '/static/images/add-circle-blue.png',
-    text: '新增',
-    active: false,
-  },
-  {
-    iconPath: '/static/images/search.png',
-    selectedIconPath: '/static/images/search-blue.png',
-    text: '搜索',
-    active: false,
-  },
-]
-const dialogConfirm = () => {
-  console.log('点击确认')
-}
-const dialogClose = () => {
-  console.log('点击关闭')
-}
-const trigger = (e) => {
-  if (e.index == 0) {
-    uni.navigateTo({
-      url: '/pages/purchase/purchaseIn/add',
-    })
-  } else {
-    alertDialog.value.open()
-  }
-}
-const fabClick = () => {
-  // uni.showToast({
-  //   title: '点击了悬浮按钮',
-  //   icon: 'none',
-  // })
-}
-onLoad(() => {
-  setTimeout(() => {
-    fetchData()
-  }, 100)
+
+// page navbar title，返回的页面
+const { back, titleInfo } = usePage({
+  pageInfo,
+  title: pageInfo.title,
+  backType: 'tab',
+  backUrl: pageInfo.url.home,
 })
-const handleSearch = (res) => {
-  fetchData({
-    code1: res.value,
-  })
-}
-const fetchData = (data = {}, isMore) => {
-  store[isMore ? 'loadMore' : 'init']({
-    ...data,
-  }).then((res) => {
-    const { setPageInfo } = listRef?.value || {}
-    setPageInfo?.({
-      shown: true,
-      page: res.page + 1,
-      pageSize: res.pageSize,
-      total: res.total,
-    })
-  })
-}
-const statusList = {
-  未审核: 'info',
-  已审核: 'success',
-}
-
-const back = () => {
-  uni.switchTab({
-    url: '/pages/home/index',
-  })
-}
-
-const handleClick = (id) => {
-  console.log(id)
-  uni.navigateTo({
-    url: '/pages/purchase/purchaseIn/show?id=' + id,
-  })
-}
+const {
+  checkEditable,
+  fabClick,
+  fabContent,
+  fabPattern,
+  fetchData,
+  handleDetailClick,
+  handleEditClick,
+  handleSearch,
+  handleSearchClose,
+  handleSearchConfirm,
+  trigger,
+} = useIndexPage({
+  addUrl: pageInfo.url.add,
+  editUrl: pageInfo.url.edit,
+  listRef,
+  searchDialog,
+  searchKey: pageInfo.search.searchKey, // searchbar 传参 默认code
+  searchModel,
+  showUrl: pageInfo.url.show,
+  store,
+})
 </script>
 
 <style scoped lang="scss">
 .purchase-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  .page-content {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    ::v-deep .search-wrap {
-      height: 140px;
-      .tab-content {
-        padding-bottom: 0;
-      }
-    }
-    ::v-deep .uni-searchbar {
-      padding-top: 0;
-    }
-    .page-list {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-    }
-  }
 }
 </style>

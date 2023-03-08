@@ -8,7 +8,7 @@
       <view class="u-status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
       <view class="u-navbar-inner" :style="[navbarInnerStyle]">
         <view v-if="isBack" class="u-back-wrap" @tap="goBack">
-          <view class="u-icon-wrap"><uni-icons type="back" size="30"></uni-icons></view>
+          <view class="u-icon-wrap"><uni-icons type="back" size="30" color="#fff"></uni-icons></view>
           <view v-if="backText" class="u-icon-wrap u-back-text u-line-1" :style="[backTextStyle]">{{ backText }}</view>
         </view>
         <view v-if="title" class="u-navbar-content-title" :style="[titleStyle]">
@@ -81,7 +81,7 @@ export default {
     // 返回箭头的颜色
     backIconColor: {
       type: String,
-      default: '#606266',
+      default: '#fff',
     },
     // 左边返回的图标
     backIconName: {
@@ -305,13 +305,5 @@ export default {
   flex: 1;
   display: flex;
   align-items: center;
-}
-
-.u-navbar-placeholder {
-  .canvas {
-    width: 100%;
-    display: block !important;
-    z-index: 9999999;
-  }
 }
 </style>

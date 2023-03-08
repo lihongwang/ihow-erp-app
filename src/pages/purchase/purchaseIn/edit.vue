@@ -1,10 +1,10 @@
 <template>
-  <view class="purchase-page main-add-page page-wrapper">
+  <view class="purchase-page main-edit-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
       back-text=""
-      :title="titleInfo.add"
+      :title="titleInfo.edit"
       title-color="#fff"
       :custom-back="back"
       :back-text-style="{ color: '#fff' }"
@@ -12,7 +12,13 @@
     <view class="page-content">
       <uni-forms :model="item" label-width="100px">
         <view class="main-form-field">
-          <uni-forms-item v-for="field in formFields" :key="field.name" :label="field.title" :required="field.required">
+          <uni-forms-item
+            v-for="field in formFields"
+            :key="field.name"
+            :disabled="field.disabled"
+            :label="field.title"
+            :required="field.required"
+          >
             <FormField
               :field="field"
               :type="field.type"
@@ -74,10 +80,10 @@ import FormField from '@/components/form/FormField'
 import CardEditListItem from '@/components/card/editListItem'
 import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
+import { useAmount, useRelatedParty, useWarehouse, usePage, useEditPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseIn.json'
-const formFields = pageInfo.add.fields
-const detailFields = pageInfo.add.detailFields
+const formFields = pageInfo.edit.fields
+const detailFields = pageInfo.edit.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
 const store = usePurchaseInStoreWithOut()
@@ -102,18 +108,12 @@ const { back, titleInfo } = usePage({
   backUrl: pageInfo.url.index,
 })
 // 页面处理逻辑
-const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = useAddPage({
+const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = useEditPage({
   back,
-  formData,
   detailDrawerRef,
-  store,
   detailKey, // 明细key
-  detailPrimaryKey: pageInfo.detail.detailPrimaryKey.add, // 明细回填key
-  detailFilterInfo: {
-    // 点添加明细，需要传递的前置条件
-    message: '请先选择供应商和仓库',
-    keys: ['relatedPartyId', 'warehouseId'],
-  },
+  detailPrimaryKey: pageInfo.detail.detailPrimaryKey.edit, // 明细回填key
+  formData,
   formatDetail: (d) => {
     // 弹出框点确定时，数据转换
     const { $purchaseOrderCode, id, ...rest } = d
@@ -125,6 +125,7 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
       amount: fixNumber(d.qty * d.price, 2),
     }
   },
+  store,
 })
 </script>
 

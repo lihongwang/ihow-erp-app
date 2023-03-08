@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { store } from './store'
 import './styles/index.scss'
+import './styles/page.scss'
 export function createApp() {
   const app = createSSRApp(App)
   dayjs.locale('zh-cn')

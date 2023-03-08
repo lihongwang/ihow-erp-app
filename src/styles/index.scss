@@ -1,6 +1,9 @@
 .uni-section-content {
   padding: 5px;
 }
+.uni-forms-item {
+  margin-bottom: 10px !important;
+}
 .uni-grid {
   .grid-item-box {
     display: flex;
@@ -112,13 +115,25 @@
   .card-footer {
     padding: 5px;
     border-top: 1px solid #ebeef5;
-    .more-btn {
-      letter-spacing: 2px;
+    .btn {
+      display: flex;
+      align-items: center;
+    }
+    .btn-img {
+      margin: 0 5px;
+      margin-top: -2px;
+    }
+    .more-btn,
+    .normal-btn {
       &:after {
         border: none !important;
       }
     }
   }
+}
+.btn-img {
+  width: 16px;
+  height: 16px;
 }
 /* #ifdef MP-WEIXIN */
 .detail-card {

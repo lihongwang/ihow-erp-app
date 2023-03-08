@@ -1,6 +1,6 @@
 <template>
   <view class="drawer-input flex flex-row justify-between">
-    <uni-easyinput disabled :value="relatedParty?.name" placeholder="请选择"></uni-easyinput>
+    <uni-easyinput disabled :value="relatedParty?.name || props.value" placeholder="请选择"></uni-easyinput>
     <button type="primary" size="mini" @click="handleClick">选择</button>
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
   </view>
@@ -8,7 +8,8 @@
 
 <script setup>
 import RPDrawer from '@/components/drawer/relatedParty'
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, defineProps } from 'vue'
+const props = defineProps(['value'])
 const emits = defineEmits(['onSelect'])
 const relatedPartyDrawerRef = ref()
 const relatedParty = ref(null)

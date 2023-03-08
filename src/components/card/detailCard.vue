@@ -1,7 +1,7 @@
 <template>
   <uni-card class="detail-card">
     <template #title>
-      <view class="card-header">
+      <view v-if="!props.noHeader" class="card-header">
         <view v-if="!$slots.header" class="header-wrapper">
           <view v-if="title" class="card-title">
             {{ props.title }}
@@ -23,6 +23,6 @@
 </template>
 <script setup>
 import { defineProps } from 'vue'
-const props = defineProps(['title', 'subTitle', 'noFooter'])
+const props = defineProps(['title', 'subTitle', 'noHeader', 'noFooter'])
 </script>
 <style lang="scss"></style>

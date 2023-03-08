@@ -47,6 +47,13 @@
       }
     },
     {
+      "path": "pages/purchase/purchaseIn/edit",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "编辑采购入库"
+      }
+    },
+    {
       "path": "pages/purchase/purchaseIn/show",
       "style": {
         "navigationStyle": "custom",
@@ -178,9 +185,9 @@
     }
   ],
   "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "皓网",
+    "navigationBarBackgroundColor": "#6366f1",
     "backgroundColor": "#F8F8F8"
   },
   "easycom": {

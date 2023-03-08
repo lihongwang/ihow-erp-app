@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { add, update, del, getList, getDetail, audit, unAudit, getSelectDetails } from '@/apis/purchase/purchaseIn'
 import { fixNumber } from '@/utils/data'
+import http from '@/utils/uniRequest'
+import pageInfo from '@/pageInfo/purchaseIn.json'
 interface PurchaseInState {
   list: any
   formData: any
@@ -9,7 +10,36 @@ interface PurchaseInState {
 export interface PurchaseInListItem {
   title?: string
 }
-
+const {
+  get: { list, show, detailPopup },
+  post: { add, update, del, audit, unAudit },
+} = pageInfo.api
+const service = {
+  add: (data) => {
+    return http.post(add, data)
+  },
+  update: (data) => {
+    return http.post(update, data)
+  },
+  del: (data) => {
+    return http.post(del, data)
+  },
+  list: (data) => {
+    return http.get(list, data)
+  },
+  show: (data) => {
+    return http.get(show, data)
+  },
+  audit: (data) => {
+    return http.post(audit, data)
+  },
+  unAudit: (data) => {
+    return http.post(unAudit, data)
+  },
+  selectDetails: (data) => {
+    return http.get(detailPopup, data)
+  },
+}
 export const usePurchaseInStore = defineStore({
   id: 'app-purchase-in',
   state: (): PurchaseInState => ({
@@ -32,7 +62,7 @@ export const usePurchaseInStore = defineStore({
     // 列表
     init(data) {
       return new Promise((resolve) => {
-        getList(data).then((res: any) => {
+        service.list(data).then((res: any) => {
           this.list = [...(res?.list || [])]
           resolve(res)
         })
@@ -41,7 +71,7 @@ export const usePurchaseInStore = defineStore({
     // 查看
     show(id) {
       return new Promise((resolve) => {
-        getDetail({ id }).then((res: any) => {
+        service.show({ id }).then((res: any) => {
           this.formData = res
           resolve(res)
         })
@@ -50,7 +80,7 @@ export const usePurchaseInStore = defineStore({
     // 添加明细 弹框列表
     getDetails(data) {
       return new Promise((resolve) => {
-        getSelectDetails(data).then((res: any) => {
+        service.selectDetails(data).then((res: any) => {
           resolve(res)
         })
       })
@@ -58,7 +88,7 @@ export const usePurchaseInStore = defineStore({
     // 列表分页
     loadMore(data) {
       return new Promise((resolve) => {
-        getList(data).then((res: any) => {
+        service.list(data).then((res: any) => {
           this.list = [...this.list, ...(res?.list || [])]
           resolve(res)
         })
@@ -67,7 +97,7 @@ export const usePurchaseInStore = defineStore({
     // 审核
     audit(data) {
       return new Promise((resolve) => {
-        audit(data).then((res: any) => {
+        service.audit(data).then((res: any) => {
           resolve(res)
         })
       })
@@ -75,7 +105,7 @@ export const usePurchaseInStore = defineStore({
     // 反审核
     unAudit(data) {
       return new Promise((resolve) => {
-        unAudit(data).then((res: any) => {
+        service.unAudit(data).then((res: any) => {
           resolve(res)
         })
       })
@@ -83,44 +113,46 @@ export const usePurchaseInStore = defineStore({
     // 新增
     add() {
       return new Promise((resolve) => {
-        add({
-          ...this.formData,
-          ...this._getTotalInfo(),
-        }).then((res: any) => {
-          resolve(res)
-          this.formData = {
-            billDate: new Date(),
-            goodsInDetailList: [],
-          }
-        })
+        service
+          .add({
+            ...this.formData,
+            ...this._getTotalInfo(),
+          })
+          .then((res: any) => {
+            resolve(res)
+            this.formData = {
+              billDate: new Date(),
+              goodsInDetailList: [],
+            }
+          })
       })
     },
     del() {
       return new Promise((resolve) => {
-        del({
-          id: this.formData.id,
-        }).then((res: any) => {
-          resolve(res)
-          this.formData = {
-            billDate: new Date(),
-            goodsInDetailList: [],
-          }
-        })
+        service
+          .del({
+            id: this.formData.id,
+          })
+          .then((res: any) => {
+            resolve(res)
+            this.formData = {
+              billDate: new Date(),
+              goodsInDetailList: [],
+            }
+          })
       })
     },
     // 修改
     update() {
       return new Promise((resolve) => {
-        update({
-          ...this.formData,
-          ...this._getTotalInfo(),
-        }).then((res: any) => {
-          resolve(res)
-          this.formData = {
-            billDate: new Date(),
-            goodsInDetailList: [],
-          }
-        })
+        service
+          .update({
+            ...this.formData,
+            ...this._getTotalInfo(),
+          })
+          .then((res: any) => {
+            resolve(res)
+          })
       })
     },
 
