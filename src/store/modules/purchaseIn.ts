@@ -59,6 +59,12 @@ export const usePurchaseInStore = defineStore({
         goodsInDetailList: [],
       }
     },
+    resetFormData() {
+      this.formData = {
+        billDate: new Date(),
+        goodsInDetailList: [],
+      }
+    },
     // 列表
     init(data) {
       return new Promise((resolve) => {

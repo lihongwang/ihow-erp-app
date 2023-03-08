@@ -82,6 +82,7 @@ const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
 const store = usePurchaseInStoreWithOut()
 const detailDrawerRef = ref()
+store.resetFormData()
 const formData = ref(store.getFormData())
 // 供应商弹框，将值添加到formData
 const handleSelectRelatedParty = (relatedParty) => {
