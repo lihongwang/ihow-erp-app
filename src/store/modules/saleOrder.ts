@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 import { store } from '@/store'
 import { fixNumber } from '@/utils/data'
 import http from '@/utils/uniRequest'
-import pageInfo from '@/pageInfo/purchaseExtraIn.json'
-interface PurchaseExtraInState {
+import pageInfo from '@/pageInfo/saleOrder.json'
+interface SaleOrderState {
   list: any
   formData: any
 }
-export interface PurchaseExtraInListItem {
+export interface SaleOrderListItem {
   title?: string
 }
 const {
@@ -42,9 +42,9 @@ const service = {
 }
 
 const _detailKey = pageInfo.detail.detailKey
-export const usePurchaseExtraInStore = defineStore({
-  id: 'app-purchase-extra-in',
-  state: (): PurchaseExtraInState => ({
+export const useSaleOrderStore = defineStore({
+  id: 'app-purchase-order',
+  state: (): SaleOrderState => ({
     // token
     list: [],
     formData: {
@@ -87,7 +87,7 @@ export const usePurchaseExtraInStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('purchaseExtraIn popupDetails')
+      console.log('saleOrder popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
@@ -207,6 +207,6 @@ export const usePurchaseExtraInStore = defineStore({
 })
 
 // Need to be used outside the setup
-export function usePurchaseExtraInStoreWithOut() {
-  return usePurchaseExtraInStore(store)
+export function useSaleOrderStoreWithOut() {
+  return useSaleOrderStore(store)
 }

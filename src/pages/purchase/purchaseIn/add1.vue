@@ -1,5 +1,5 @@
 <template>
-  <view class="purchase-page main-add-page page-wrapper">
+  <view class="purchaseIn-page main-add-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"

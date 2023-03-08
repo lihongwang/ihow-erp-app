@@ -14,6 +14,7 @@ const {
   get: { list, show, detailPopup },
   post: { add, update, del, audit, unAudit },
 } = pageInfo.api
+const _detailKey = pageInfo.detail.detailKey
 const service = {
   add: (data) => {
     return http.post(add, data)
@@ -47,7 +48,7 @@ export const usePurchaseInStore = defineStore({
     list: [],
     formData: {
       billDate: new Date(),
-      goodsInDetailList: [],
+      [_detailKey]: [],
     },
   }),
   getters: {},
@@ -56,13 +57,13 @@ export const usePurchaseInStore = defineStore({
       this.list = []
       this.formData = {
         billDate: new Date(),
-        goodsInDetailList: [],
+        [_detailKey]: [],
       }
     },
     resetFormData() {
       this.formData = {
         billDate: new Date(),
-        goodsInDetailList: [],
+        [_detailKey]: [],
       }
     },
     // 列表
@@ -84,12 +85,20 @@ export const usePurchaseInStore = defineStore({
       })
     },
     // 添加明细 弹框列表
-    getDetails(data) {
+    getPopupDetails(data) {
+      console.log('purchaseIn popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
         })
       })
+    },
+    getPopupDetailFields() {
+      return {
+        primaryKey: pageInfo.popup.primaryKey,
+        subName: pageInfo.popup.subName,
+        popupFields: pageInfo.popup.fields,
+      }
     },
     // 列表分页
     loadMore(data) {
@@ -126,10 +135,7 @@ export const usePurchaseInStore = defineStore({
           })
           .then((res: any) => {
             resolve(res)
-            this.formData = {
-              billDate: new Date(),
-              goodsInDetailList: [],
-            }
+            this.resetFormData()
           })
       })
     },
@@ -141,10 +147,7 @@ export const usePurchaseInStore = defineStore({
           })
           .then((res: any) => {
             resolve(res)
-            this.formData = {
-              billDate: new Date(),
-              goodsInDetailList: [],
-            }
+            this.resetFormData()
           })
       })
     },
@@ -163,7 +166,7 @@ export const usePurchaseInStore = defineStore({
     },
 
     _getTotalInfo() {
-      const list = this.formData.goodsInDetailList
+      const list = this.formData[_detailKey]
       let totalAmount = 0
       let totalQty = 0
       list.forEach((item) => {
@@ -191,13 +194,13 @@ export const usePurchaseInStore = defineStore({
     updateDetailData(data) {
       this.formData = {
         ...this.formData,
-        goodsInDetailList: [...data],
+        [_detailKey]: [...data],
       }
       return this.formData
     },
 
     getFormDetailData() {
-      return this.formData.goodsInDetailList
+      return this.formData[_detailKey]
     },
   },
 })

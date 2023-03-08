@@ -40,14 +40,18 @@
     <uni-section class="mb-10" title="导航" type="line">
       <view class="content-item action-content">
         <view class="info-item grid3">
-          <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseOrder')">采购订单</button>
+          <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseOrder/index')">
+            采购订单
+          </button>
           <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseIn/index')">采购入库</button>
-          <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseExtraIn')">零采进货</button>
+          <button size="mini" type="primary" @click="handleClick('/pages/purchase/purchaseExtraIn/index')">
+            零采进货
+          </button>
         </view>
         <view class="info-item grid3">
-          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleOrder')">销售订单</button>
-          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleOut')">销售出库</button>
-          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleExtraOut')">零售出库</button>
+          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleOrder/index')">销售订单</button>
+          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleOut/index')">销售出库</button>
+          <button size="mini" type="primary" @click="handleClick('/pages/sale/saleExtraOut/index')">零售出库</button>
         </view>
       </view>
     </uni-section>

@@ -19,10 +19,7 @@ export default (props: AddPageProps) => {
       value[key] = formData.value[key]
     })
     if (result) {
-      detailDrawerRef.value.open(getSelectedItems(), {
-        warehouseId: formData.value.warehouseId,
-        relatedPartyId: formData.value.relatedPartyId,
-      })
+      detailDrawerRef.value.open(getSelectedItems(), value)
     } else {
       uni.showToast({
         title: message,

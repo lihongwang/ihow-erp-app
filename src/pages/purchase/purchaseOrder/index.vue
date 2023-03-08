@@ -1,5 +1,5 @@
 <template>
-  <view class="purchaseIn-page main-index-page page-wrapper">
+  <view class="purchaseOrder-page main-index-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
@@ -99,12 +99,12 @@ import Navbar from '@/components/pageNavbar'
 import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
-import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
+import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
 import { usePage, useIndexPage } from '@/hooks'
-import pageInfo from '@/pageInfo/purchaseIn.json'
-const searchDialog = ref()
+import pageInfo from '@/pageInfo/purchaseOrder.json'
 const listFields = pageInfo.list.fields
-const store = usePurchaseInStoreWithOut()
+const searchDialog = ref()
+const store = usePurchaseOrderStoreWithOut()
 const listRef = ref()
 const searchModel = ref({})
 
@@ -140,6 +140,6 @@ const {
 </script>
 
 <style scoped lang="scss">
-.purchaseIn-page {
+.purchaseOrder-page {
 }
 </style>

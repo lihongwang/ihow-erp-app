@@ -6,12 +6,12 @@
         <PaginationList
           ref="listRef"
           class="pagination-list-container"
-          sub-name="goodsName"
+          :sub-name="subName"
           select-type="checkbox"
-          primary-key="goodsId"
+          :primary-key="primaryKey"
           :selected-items="selectedItems"
           :list-data="detailData"
-          :properties="selectItemArrayForList"
+          :properties="popupFields"
           @onFetchData="fetchData"
         />
       </view>
@@ -25,10 +25,12 @@
 
 <script setup>
 import PaginationList from '@/components/list/paginationList'
-import { selectItemArrayForList } from '@/store/properties/purchaseIn'
-import { usePurchaseInStore } from '@/store/modules/purchaseIn'
-import { ref, defineEmits, defineExpose } from 'vue'
-const store = usePurchaseInStore()
+import { ref, defineEmits, defineExpose, defineProps } from 'vue'
+
+const props = defineProps(['store'])
+
+const { primaryKey, popupFields, subName } = props.store.getPopupDetailFields()
+
 const detailData = ref()
 const drawer = ref()
 const listRef = ref()
@@ -47,7 +49,7 @@ const handleConfirm = () => {
 }
 
 const fetchData = (data) => {
-  store.getPopupDetails({ ...query.value, ...data }).then((res) => {
+  props.store.getPopupDetails({ ...query.value, ...data }).then((res) => {
     detailData.value = res.list
     const { setPageInfo } = listRef?.value || {}
     setPageInfo?.({

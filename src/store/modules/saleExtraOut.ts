@@ -1,40 +1,207 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { getExtraOutList, getExtraOutDetail } from '@/apis/sale'
-interface SaleExtraOutState {
+import { fixNumber } from '@/utils/data'
+import http from '@/utils/uniRequest'
+import pageInfo from '@/pageInfo/saleExtraOut.json'
+interface saleExtraOutState {
   list: any
-  detail: any
+  formData: any
 }
-export interface SaleExtraOutListItem {
+export interface saleExtraOutListItem {
   title?: string
 }
+const {
+  get: { list, show, detailPopup },
+  post: { add, update, del, audit, unAudit },
+} = pageInfo.api
+const service = {
+  add: (data) => {
+    return http.post(add, data)
+  },
+  update: (data) => {
+    return http.post(update, data)
+  },
+  del: (data) => {
+    return http.post(del, data)
+  },
+  list: (data) => {
+    return http.get(list, data)
+  },
+  show: (data) => {
+    return http.get(show, data)
+  },
+  audit: (data) => {
+    return http.post(audit, data)
+  },
+  unAudit: (data) => {
+    return http.post(unAudit, data)
+  },
+  selectDetails: (data) => {
+    return http.get(detailPopup, data)
+  },
+}
+
+const _detailKey = pageInfo.detail.detailKey
 export const useSaleExtraOutStore = defineStore({
-  id: 'app-sale',
-  state: (): SaleExtraOutState => ({
+  id: 'app-purchase-order',
+  state: (): saleExtraOutState => ({
     // token
     list: [],
-    detail: {},
+    formData: {
+      billDate: new Date(),
+      [_detailKey]: [],
+    },
   }),
   getters: {},
   actions: {
     resetState() {
       this.list = []
+      this.formData = {
+        billDate: new Date(),
+        [_detailKey]: [],
+      }
     },
-    getById(id) {
-      return new Promise((resolve) => {
-        getExtraOutDetail({ id }).then((res: any) => {
-          this.detail = res.data
-          resolve(this.detail)
-        })
-      })
+    resetFormData() {
+      this.formData = {
+        billDate: new Date(),
+        [_detailKey]: [],
+      }
     },
+    // 列表
     init(data) {
       return new Promise((resolve) => {
-        getExtraOutList(data).then((res: any) => {
-          this.list = res.list
-          resolve(this.list)
+        service.list(data).then((res: any) => {
+          this.list = [...(res?.list || [])]
+          resolve(res)
         })
       })
+    },
+    // 查看
+    show(id) {
+      return new Promise((resolve) => {
+        service.show({ id }).then((res: any) => {
+          this.formData = res
+          resolve(res)
+        })
+      })
+    },
+    // 添加明细 弹框列表
+    getPopupDetails(data) {
+      console.log('saleExtraOut popupDetails')
+      return new Promise((resolve) => {
+        service.selectDetails(data).then((res: any) => {
+          resolve(res)
+        })
+      })
+    },
+    getPopupDetailFields() {
+      return {
+        primaryKey: pageInfo.popup.primaryKey,
+        subName: pageInfo.popup.subName,
+        popupFields: pageInfo.popup.fields,
+      }
+    },
+    // 列表分页
+    loadMore(data) {
+      return new Promise((resolve) => {
+        service.list(data).then((res: any) => {
+          this.list = [...this.list, ...(res?.list || [])]
+          resolve(res)
+        })
+      })
+    },
+    // 审核
+    audit(data) {
+      return new Promise((resolve) => {
+        service.audit(data).then((res: any) => {
+          resolve(res)
+        })
+      })
+    },
+    // 反审核
+    unAudit(data) {
+      return new Promise((resolve) => {
+        service.unAudit(data).then((res: any) => {
+          resolve(res)
+        })
+      })
+    },
+    // 新增
+    add() {
+      return new Promise((resolve) => {
+        service
+          .add({
+            ...this.formData,
+            ...this._getTotalInfo(),
+          })
+          .then((res: any) => {
+            resolve(res)
+            this.resetFormData()
+          })
+      })
+    },
+    del() {
+      return new Promise((resolve) => {
+        service
+          .del({
+            id: this.formData.id,
+          })
+          .then((res: any) => {
+            resolve(res)
+            this.resetFormData()
+          })
+      })
+    },
+    // 修改
+    update() {
+      return new Promise((resolve) => {
+        service
+          .update({
+            ...this.formData,
+            ...this._getTotalInfo(),
+          })
+          .then((res: any) => {
+            resolve(res)
+          })
+      })
+    },
+
+    _getTotalInfo() {
+      const list = this.formData[_detailKey]
+      let totalAmount = 0
+      let totalQty = 0
+      list.forEach((item) => {
+        totalAmount += Number(item.amount)
+        totalQty += Number(item.qty)
+      })
+      return {
+        totalAmount: fixNumber(totalAmount, 2),
+        totalQty: fixNumber(totalQty, 2),
+      }
+    },
+
+    setFormData(data) {
+      this.formData = {
+        ...this.formData,
+        ...data,
+      }
+      return this.formData
+    },
+
+    getFormData() {
+      return this.formData
+    },
+
+    updateDetailData(data) {
+      this.formData = {
+        ...this.formData,
+        [_detailKey]: [...data],
+      }
+      return this.formData
+    },
+
+    getFormDetailData() {
+      return this.formData[_detailKey]
     },
   },
 })

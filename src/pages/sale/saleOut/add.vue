@@ -1,5 +1,5 @@
 <template>
-  <view class="purchaseIn-page main-add-page page-wrapper">
+  <view class="saleOut-page main-add-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
@@ -72,15 +72,15 @@ import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
-import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
+import { useSaleOutStoreWithOut } from '@/store/modules/saleOut'
 import { fixNumber } from '@/utils/data'
 import { useAmount, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
-import pageInfo from '@/pageInfo/purchaseIn.json'
+import pageInfo from '@/pageInfo/saleOut.json'
 const formFields = pageInfo.add.fields
 const detailFields = pageInfo.add.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
-const store = usePurchaseInStoreWithOut()
+const store = useSaleOutStoreWithOut()
 const detailDrawerRef = ref()
 store.resetFormData()
 const formData = ref(store.getFormData())

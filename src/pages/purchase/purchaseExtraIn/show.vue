@@ -95,9 +95,9 @@ import ListItem from '@/components/list/listItem'
 import Tag from '@/components/tag'
 import Timeline from '@/components/timeline/timeline'
 import { statusList } from '@/utils/status'
-import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
+import { usePurchaseExtraInStoreWithOut } from '@/store/modules/purchaseExtraIn'
 import { usePage, useShowPage } from '@/hooks'
-import pageInfo from '@/pageInfo/purchaseIn.json'
+import pageInfo from '@/pageInfo/purchaseExtraIn.json'
 const formFields = pageInfo.show.fields
 const detailFields = pageInfo.show.detailFields
 const detailKey = pageInfo.detail.detailKey
@@ -105,7 +105,7 @@ const detailTitleKey = pageInfo.detail.titleKey
 const accordionVal = ref(['0', '1'])
 const handleChange = () => {}
 const confirmDialog = ref()
-const store = usePurchaseInStoreWithOut()
+const store = usePurchaseExtraInStoreWithOut()
 const formData = ref(null)
 const { back, titleInfo } = usePage({
   pageInfo,

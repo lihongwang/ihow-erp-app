@@ -1,5 +1,5 @@
 <template>
-  <view class="purchase-page main-edit-page page-wrapper">
+  <view class="purchaseIn-page main-edit-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
@@ -43,7 +43,7 @@
               </template>
               <template #body>
                 <view class="flex flex-col">
-                  <CardEditListItem
+                  <EditListItem
                     v-for="info in detailFields"
                     :key="info.name"
                     :store="store"
@@ -61,7 +61,7 @@
         </view>
       </uni-forms>
     </view>
-    <PIDrawer ref="detailDrawerRef" @onConfirm="handleDetailConfirm" />
+    <PopupDetailDrawer ref="detailDrawerRef" :store="store" @onConfirm="handleDetailConfirm" />
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
@@ -72,12 +72,12 @@
 <script setup>
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
-import PIDrawer from '@/components/drawer/purchaseInDetail'
+import PopupDetailDrawer from '@/components/drawer/detail'
 import RPDrawer from '@/components/drawer/relatedParty.vue'
 import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import FormField from '@/components/form/FormField'
-import CardEditListItem from '@/components/card/editListItem'
+import EditListItem from '@/components/list/editListItem'
 import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
 import { fixNumber } from '@/utils/data'
 import { useAmount, useRelatedParty, useWarehouse, usePage, useEditPage } from '@/hooks'
@@ -114,6 +114,11 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
   detailKey, // 明细key
   detailPrimaryKey: pageInfo.detail.detailPrimaryKey.edit, // 明细回填key
   formData,
+  detailFilterInfo: {
+    // 点添加明细，需要传递的前置条件
+    message: '请先选择供应商和仓库',
+    keys: ['relatedPartyId', 'warehouseId'],
+  },
   formatDetail: (d) => {
     // 弹出框点确定时，数据转换
     const { $purchaseOrderCode, id, ...rest } = d

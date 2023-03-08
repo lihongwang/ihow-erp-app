@@ -3,6 +3,7 @@ interface ShowPageProps {
   detailDrawerRef: any
   detailKey: string
   detailPrimaryKey: string
+  detailFilterInfo: any
   editable: any
   formData: any
   formatDetail: any
@@ -10,7 +11,7 @@ interface ShowPageProps {
 }
 import { onLoad } from '@dcloudio/uni-app'
 export default (props: ShowPageProps) => {
-  const { back, detailDrawerRef, detailKey, detailPrimaryKey, formData, formatDetail, store } = props
+  const { back, detailDrawerRef, detailKey, detailPrimaryKey, detailFilterInfo, formData, formatDetail, store } = props
 
   onLoad((option: any) => {
     fetchData(option.id)
@@ -25,10 +26,12 @@ export default (props: ShowPageProps) => {
     return getDetails()
   }
   const handleAddDetail = () => {
-    detailDrawerRef.value.open(getSelectedItems(), {
-      warehouseId: formData.value.warehouseId,
-      relatedPartyId: formData.value.relatedPartyId,
+    const { keys } = detailFilterInfo
+    let value = {}
+    keys.forEach((key) => {
+      value[key] = formData.value[key]
     })
+    detailDrawerRef.value.open(getSelectedItems(), value)
   }
   const getDetails = () => {
     return store.getFormData()[detailKey] || []

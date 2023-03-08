@@ -1,5 +1,5 @@
 <template>
-  <view class="purchaseIn-page main-add-page page-wrapper">
+  <view class="purchaseExtraIn-page main-add-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
@@ -72,21 +72,21 @@ import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
-import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
+import { usePurchaseExtraInStoreWithOut } from '@/store/modules/purchaseExtraIn'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
-import pageInfo from '@/pageInfo/purchaseIn.json'
+import { useAmount, useSupplier, useWarehouse, usePage, useAddPage } from '@/hooks'
+import pageInfo from '@/pageInfo/purchaseExtraIn.json'
 const formFields = pageInfo.add.fields
 const detailFields = pageInfo.add.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
-const store = usePurchaseInStoreWithOut()
+const store = usePurchaseExtraInStoreWithOut()
 const detailDrawerRef = ref()
 store.resetFormData()
 const formData = ref(store.getFormData())
 // 供应商弹框，将值添加到formData
 const handleSelectRelatedParty = (relatedParty) => {
-  formData.value = useRelatedParty(store, relatedParty)
+  formData.value = useSupplier(store, relatedParty)
 }
 // field需要用到方法或者属性
 const fieldContext = ref({
@@ -112,17 +112,15 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
   detailPrimaryKey: pageInfo.detail.detailPrimaryKey.add, // 明细回填key
   detailFilterInfo: {
     // 点添加明细，需要传递的前置条件
-    message: '请先选择供应商和仓库',
-    keys: ['relatedPartyId', 'warehouseId'],
+    message: '请先选择供应商',
+    keys: ['supplierId'],
   },
   formatDetail: (d) => {
     // 弹出框点确定时，数据转换
-    const { $purchaseOrderCode, id, ...rest } = d
+    const { id, ...rest } = d
     return {
       ...rest,
-      purchaseOrderCode: $purchaseOrderCode,
-      purchaseOrderDetailId: id,
-      purchaseQty: d.qty,
+      goodsId: id,
       amount: fixNumber(d.qty * d.price, 2),
     }
   },

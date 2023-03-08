@@ -1,5 +1,5 @@
 {
-  "title": "采购入库单",
+  "title": "零售出库",
   "url": {
     "add": "/pages/purchase/purchaseIn/add",
     "edit": "/pages/purchase/purchaseIn/edit?id=",

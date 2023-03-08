@@ -1,5 +1,5 @@
 <template>
-  <view class="purchaseIn-page main-index-page page-wrapper">
+  <view class="saleOut-page main-index-page page-wrapper">
     <Navbar
       :is-back="true"
       back-icon-color="#fff"
@@ -99,12 +99,12 @@ import Navbar from '@/components/pageNavbar'
 import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
-import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
+import { useSaleOutStoreWithOut } from '@/store/modules/saleOut'
 import { usePage, useIndexPage } from '@/hooks'
-import pageInfo from '@/pageInfo/purchaseIn.json'
+import pageInfo from '@/pageInfo/saleOut.json'
 const searchDialog = ref()
 const listFields = pageInfo.list.fields
-const store = usePurchaseInStoreWithOut()
+const store = useSaleOutStoreWithOut()
 const listRef = ref()
 const searchModel = ref({})
 
@@ -140,6 +140,6 @@ const {
 </script>
 
 <style scoped lang="scss">
-.purchaseIn-page {
+.saleOut-page {
 }
 </style>

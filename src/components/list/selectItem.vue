@@ -25,7 +25,7 @@
       </template>
       <template #body>
         <view class="flex flex-col">
-          <CardListItem
+          <ListItem
             v-for="info in props.properties"
             :key="info.name"
             :title="info.title"
@@ -42,7 +42,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import DetailCard from '@/components/card/detailCard'
-import CardListItem from '@/components/card/listItem'
+import ListItem from '@/components/list/listItem'
 import Checkbox from '@/components/form/checkbox'
 import Radio from '@/components/form/radio'
 const props = defineProps(['item', 'properties', 'checked', 'selectType', 'subTitle'])
