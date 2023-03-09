@@ -60,6 +60,7 @@
     "sass": "^1.58.2",
     "sass-loader": "^13.2.0",
     "thorui-uni": "^2.0.0",
+    "uniapp-echarts": "^1.0.2",
     "vite-plugin-windicss": "^1.8.10",
     "vue": "^3.2.45",
     "vue-i18n": "^9.1.9",

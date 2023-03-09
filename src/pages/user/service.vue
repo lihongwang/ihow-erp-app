@@ -1,6 +1,12 @@
 <template>
   <view class="service-page page-wrapper">
-    <Navbar back-icon-color="#fff" title="消息" title-color="#fff" :back-text-style="{ color: '#fff' }" />
+    <Navbar
+      back-icon-color="#fff"
+      :title="titleInfo.index"
+      title-color="#fff"
+      :custom-back="back"
+      :back-text-style="{ color: '#fff' }"
+    />
     <view class="qiun-title">服务条款及使用协议</view>
     <!-- <view class="qiun-text-view">
 			<view class="qiun-text">欢迎您选择并使用uCharts，uCharts是一款开源的、跨平台的、基于uni-app平台的快速图表生成组件，支持H5、APP、各大小程序。</view>
@@ -43,6 +49,13 @@
 
 <script setup>
 import Navbar from '@/components/pageNavbar'
+import { usePage } from '@/hooks'
+const { back, titleInfo } = usePage({
+  pageInfo: {},
+  title: '服务条款',
+  backType: 'tab',
+  backUrl: '/pages/user/index',
+})
 </script>
 
 <style>

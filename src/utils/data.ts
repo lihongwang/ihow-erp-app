@@ -8,6 +8,7 @@ export const objectToArray = (obj: any, keyName?: string) => {
   })
   return arr
 }
+
 export const arrayToObject = (arr: any, key: string, format?: any) => {
   const obj: any = {}
   arr.forEach((a: any, i: number) => (obj[a[key]] = format ? format(a, i) : a))
@@ -74,6 +75,9 @@ export const fixNumber = (value: any, fixed = 2, defaultValue: any = 0) => {
 //   transform(firstArray);
 //   return firstArray;
 // };
+export const toMoney = (value: number | string) => {
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
 
 export const guid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

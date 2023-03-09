@@ -1,0 +1,134 @@
+{
+  "title": "销售出库",
+  "url": {
+    "add": "/pages/sale/saleOut/add",
+    "edit": "/pages/sale/saleOut/edit?id=",
+    "home": "/pages/home/index",
+    "index": "/pages/sale/saleOut/index",
+    "show": "/pages/sale/saleOut/show?id="
+  },
+  "search": {
+    "searchKey": "code1"
+  },
+  "api": {
+    "get": {
+      "list": "common/customizeQuery/ExtraPurchaseIn/execute",
+      "show": "common/customizeQuery/ExtraPurchaseIn.select/execute",
+      "detailPopup": "common/customizeQuery/PurchaseSelectGoods!/execute"
+    },
+    "post": {
+      "add": "purchase/extraPurchaseIn/add",
+      "update": "purchase/extraPurchaseIn/update",
+      "del": "purchase/extraPurchaseIn/delete",
+      "audit": "purchase/extraPurchaseIn/audit",
+      "unAudit": "purchase/extraPurchaseIn/unaudit"
+    }
+  },
+  "detail": {
+    "titleKey": "name",
+    "detailKey": "goodsInDetailList",
+    "detailPrimaryKey": {
+      "add": "id",
+      "edit": "id"
+    }
+  },
+  "popup": {
+    "primaryKey": "id",
+    "subName": "name",
+    "fields": [
+      { "name": "name", "title": "商品名称" },
+      { "name": "node", "title": "商品编号" },
+      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "qty", "title": "采购数量" },
+      { "name": "purchasedQty", "title": "采购在途数量" },
+      { "name": "remainQty", "title": "库存数量" },
+      { "name": "safeQty", "title": "安全库存" },
+      { "name": "masterUnit", "title": "单位" }
+    ]
+  },
+  "list": {
+    "fields": [
+      { "name": "supplierName", "title": "供应商", "aliasName": "relatedPartyName" },
+      { "name": "createByTime", "title": "制单时间", "type": "date", "params": { "full": true } },
+      { "name": "createByName", "title": "制单人" },
+      { "name": "billDate", "title": "采购日期", "type": "date" },
+      { "name": "totalQty", "title": "采购数量" },
+      { "name": "totalAmount", "title": "采购金额", "type": "money" }
+    ]
+  },
+  "add": {
+    "fields": [
+      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
+      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
+      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "remark", "title": "备注", "type": "input" }
+    ],
+    "detailFields": [
+      { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
+      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "purchasedQty", "title": "采购在途数量" },
+      { "name": "remainQty", "title": "库存数量" },
+      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "masterUnit", "title": "单位" },
+      { "name": "price", "title": "单价", "type": "input" },
+      { "name": "amount", "title": "采购金额" },
+      { "name": "wrinkles", "title": "纹路" },
+      { "name": "color", "title": "颜色" },
+      { "name": "purpose", "title": "用途" },
+      { "name": "packageModel", "title": "包装规格" },
+      { "name": "pecification", "title": "规格型号" },
+      { "name": "remark", "title": "备注" }
+    ]
+  },
+  "edit": {
+    "fields": [
+      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
+      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
+      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "remark", "title": "备注", "type": "input" }
+    ],
+    "detailFields": [
+      { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
+      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "purchasedQty", "title": "采购在途数量" },
+      { "name": "remainQty", "title": "库存数量" },
+      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "masterUnit", "title": "单位" },
+      { "name": "price", "title": "单价", "type": "input" },
+      { "name": "amount", "title": "采购金额" },
+      { "name": "wrinkles", "title": "纹路" },
+      { "name": "color", "title": "颜色" },
+      { "name": "purpose", "title": "用途" },
+      { "name": "packageModel", "title": "包装规格" },
+      { "name": "pecification", "title": "规格型号" },
+      { "name": "remark", "title": "备注" }
+    ]
+  },
+  "show": {
+    "fields": [
+      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
+      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
+      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "remark", "title": "备注", "type": "input" }
+    ],
+    "detailFields": [
+      { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
+      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "purchasedQty", "title": "采购在途数量" },
+      { "name": "remainQty", "title": "库存数量" },
+      { "name": "qty", "title": "采购数量" },
+      { "name": "masterUnit", "title": "单位" },
+      { "name": "price", "title": "单价" },
+      { "name": "amount", "title": "采购金额" },
+      { "name": "wrinkles", "title": "纹路" },
+      { "name": "color", "title": "颜色" },
+      { "name": "purpose", "title": "用途" },
+      { "name": "packageModel", "title": "包装规格" },
+      { "name": "pecification", "title": "规格型号" },
+      { "name": "remark", "title": "备注" }
+    ]
+  }
+}

@@ -187,10 +187,52 @@
       }
     },
     {
-      "path": "pages/stock/index",
+      "path": "pages/report/index",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "报表"
+      }
+    },
+    {
+      "path": "pages/report/reportStockDetail",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情1"
+      }
+    },
+    {
+      "path": "pages/report/reportSafeQty",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情2"
+      }
+    },
+    {
+      "path": "pages/report/saleOrderProcess",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情3"
+      }
+    },
+    {
+      "path": "pages/report/purchaseOrderProcess",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情4"
+      }
+    },
+    {
+      "path": "pages/report/reportReceivable",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情5"
+      }
+    },
+    {
+      "path": "pages/report/reportPayable",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "报表详情6"
       }
     },
     {
@@ -200,15 +242,9 @@
       }
     },
     {
-      "path": "pages/uni/index",
+      "path": "pages/chart/bar/index",
       "style": {
-        "navigationBarTitleText": "UNI-UI"
-      }
-    },
-    {
-      "path": "pages/test/index",
-      "style": {
-        "navigationBarTitleText": "Test"
+        "navigationBarTitleText": "demo"
       }
     },
     {
@@ -228,7 +264,7 @@
     {
       "path": "pages/user/about",
       "style": {
-        "navigationBarTitleText": "关于",
+        "navigationBarTitleText": "关于我们",
         "navigationStyle": "custom"
       }
     },
@@ -250,6 +286,13 @@
       "path": "pages/user/message",
       "style": {
         "navigationBarTitleText": "新消息通知",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/contact",
+      "style": {
+        "navigationBarTitleText": "联系我们",
         "navigationStyle": "custom"
       }
     }
@@ -281,7 +324,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/stock/index",
+        "pagePath": "pages/report/index",
         "iconPath": "static/images/report.png",
         "selectedIconPath": "static/images/report-blue.png",
         "text": "报表"

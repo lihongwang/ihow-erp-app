@@ -1,14 +1,20 @@
 <template>
   <view class="account-page page-wrapper">
-    <Navbar back-icon-color="#fff" title="账号管理" title-color="#fff" :back-text-style="{ color: '#fff' }" />
-    <uni-forms :model="userInfo" label-width="80px">
+    <Navbar
+      back-icon-color="#fff"
+      :title="titleInfo.index"
+      title-color="#fff"
+      :custom-back="back"
+      :back-text-style="{ color: '#fff' }"
+    />
+    <uni-forms :model="userInfo" class="account-form" label-width="80px">
       <view label="" class="hidden">
         <uni-easyinput v-model="userInfo.id" />
       </view>
       <uni-forms-item label="用户名">
         <uni-easyinput v-model="userInfo.username" disabled />
       </uni-forms-item>
-      <uni-forms-item label="头像">
+      <!-- <uni-forms-item label="头像">
         <img :src="userInfo.wechatAvatarUrl" :alt="userInfo.username" class="avatar" />
         <uni-file-picker
           v-model="userInfo.wechatAvatarUrl"
@@ -18,7 +24,7 @@
           file-mediatype="image"
           :source-type="['album']"
         ></uni-file-picker>
-      </uni-forms-item>
+      </uni-forms-item> -->
       <uni-forms-item label="昵称">
         <uni-easyinput v-model="userInfo.name" class="list-val" />
       </uni-forms-item>
@@ -37,14 +43,22 @@
       <uni-forms-item label="性别">
         <uni-data-select v-model="userInfo.gender" :localdata="list"></uni-data-select>
       </uni-forms-item>
-      <button class="login-button" @click="logout">退出登录</button>
     </uni-forms>
+    <button class="login-button" @click="logout">退出登录</button>
   </view>
 </template>
 <script setup>
 import Navbar from '@/components/pageNavbar'
 import { unBundle } from '@/apis/user'
 import { removeToken, removeUserInfo, getUserInfo } from '@/utils/auth'
+import { usePage } from '@/hooks'
+const { back, titleInfo } = usePage({
+  pageInfo: {},
+  title: '账号管理',
+  backType: 'tab',
+  backUrl: '/pages/user/index',
+})
+
 const userInfo = getUserInfo()
 console.log('userInfo', userInfo)
 const list = [
@@ -82,9 +96,17 @@ const logout = () => {
   height: 64px;
   border-radius: 50%;
 }
+
 .account-page {
   padding: 20px;
   box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .account-form {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 .login-button {
@@ -92,6 +114,5 @@ const logout = () => {
   color: #ffffff;
   border-radius: 44px;
   margin: 22px;
-  margin-top: 50px;
 }
 </style>

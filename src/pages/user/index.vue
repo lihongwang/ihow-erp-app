@@ -10,41 +10,93 @@
     >
     </Navbar>
 
-    <CellGroup class="m_top20">
-      <CellItem title="帐号管理" @click="goToPage('account')">
-        <template #icon>
-          <UserFilled color="#22c1a9" />
-        </template>
-      </CellItem>
-      <CellItem title="新消息通知" @click="goToPage('message')">
-        <template #icon>
-          <ChatSquare color="#9720dc" />
-        </template>
-      </CellItem>
-      <CellItem title="问题反馈" @click="goToPage('feedback')">
-        <template #icon>
-          <QuestionFilled color="#aaaaff" />
-        </template>
-      </CellItem>
-      <CellItem title="服务条款及协议" @click="goToPage('service')">
-        <template #icon>
-          <InfoFilled color="#aa557f" />
-        </template>
-      </CellItem>
-      <CellItem title="关于应用" @click="goToPage('about')">
-        <template #icon>
-          <Guide color="#dc6a19" />
-        </template>
-      </CellItem>
-    </CellGroup>
+    <uni-list>
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.account"
+        title="帐号管理"
+        @click="goToPage('account')"
+      />
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.message"
+        title="新消息通知"
+        @click="goToPage('message')"
+      />
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.feedback"
+        title="问题反馈"
+        @click="goToPage('feedback')"
+      />
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.service"
+        title="服务条款及协议"
+        @click="goToPage('service')"
+      />
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.about"
+        title="关于我们"
+        @click="goToPage('about')"
+      />
+      <uni-list-item
+        :show-extra-icon="true"
+        show-arrow
+        clickable
+        :extra-icon="icons.contact"
+        title="联系我们"
+        @click="goToPage('contact')"
+      />
+    </uni-list>
   </view>
 </template>
 
 <script setup>
-import CellGroup from '../../components/cell/cellGroup'
-import CellItem from '../../components/cell/cellItem'
 import Navbar from '@/components/pageNavbar'
-
+const icons = {
+  account: {
+    color: '#007aff',
+    size: '22',
+    type: 'gear-filled',
+  },
+  message: {
+    color: '#9720dc',
+    size: '22',
+    type: 'notification-filled',
+  },
+  feedback: {
+    color: '#aaaaff',
+    size: '22',
+    type: 'email-filled',
+  },
+  service: {
+    color: '#aa557f',
+    size: '22',
+    type: 'shop-filled',
+  },
+  about: {
+    color: '#dc6a19',
+    size: '22',
+    type: 'info-filled',
+  },
+  contact: {
+    color: '#4cd964',
+    size: '22',
+    type: 'contact-filled',
+  },
+}
 const goToPage = (url) => {
   // if (this.login) {
   uni.navigateTo({

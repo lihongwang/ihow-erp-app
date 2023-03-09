@@ -1,6 +1,12 @@
 <template>
   <view class="feedback-page page-wrapper">
-    <Navbar back-icon-color="#fff" title="反馈" title-color="#fff" :back-text-style="{ color: '#fff' }" />
+    <Navbar
+      back-icon-color="#fff"
+      :title="titleInfo.index"
+      title-color="#fff"
+      :custom-back="back"
+      :back-text-style="{ color: '#fff' }"
+    />
     <view class="feedback-title">
       <text>问题和意见</text>
       <text class="feedback-quick" @tap="chooseMsg">快速键入</text>
@@ -27,6 +33,14 @@
 <script setup>
 import Navbar from '@/components/pageNavbar'
 import { ref } from 'vue'
+import { usePage } from '@/hooks'
+const { back, titleInfo } = usePage({
+  pageInfo: {},
+  title: '问题反馈',
+  backType: 'tab',
+  backUrl: '/pages/user/index',
+})
+
 const msgContents = ['界面显示错乱', '启动缓慢，卡出翔了', 'UI无法直视，丑哭了', '偶发性崩溃']
 // const stars = [1, 2, 3, 4, 5]
 let sendData = ref({

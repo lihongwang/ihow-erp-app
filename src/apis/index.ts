@@ -7,3 +7,7 @@ export const getHomeData = (data) => {
 export const getWarehouseData = (data) => {
   return http.get('common/customizeQuery/SelectAvailableWarehouse!/execute', data)
 }
+
+export const getDataByCode = (code, data) => {
+  return http.get(`common/customizeQuery/${code}/execute`, data)
+}

@@ -5697,6 +5697,11 @@ typescript@^4.9.4:
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
+uniapp-echarts@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmmirror.com/uniapp-echarts/-/uniapp-echarts-1.0.2.tgz#f9f2c25d7ed965e6f7688b17d88abb84b9a41a8d"
+  integrity sha512-z8b32orT0xslOTnT4JrfPZDdTkrFBmdfycPAux1DhCyvhjdgtSxhmVmxqFh0/bWzH+cuuVgAFLoxeDe+M8p8ag==
+
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.0.tgz#301acdc525631670d39f6146e0e77ff6bbdebddc"
