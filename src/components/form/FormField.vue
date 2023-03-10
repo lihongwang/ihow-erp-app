@@ -27,9 +27,8 @@
       v-model="props.item[props.name]"
       :localdata="props.fieldContext.warehouseList"
     ></uni-data-select>
-    <uni-easyinput v-else-if="props.type === 'input'" v-model="props.item[props.name]" />
     <uni-easyinput v-else-if="props.type === 'textarea'" v-model="props.item[props.name]" type="textarea" />
-    <text v-else>{{ props.item[props.name] }}</text>
+    <uni-easyinput v-else v-model="props.item[props.name]" />
   </view>
 </template>
 

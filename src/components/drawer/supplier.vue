@@ -2,6 +2,9 @@
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
     <view class="scroll-container">
       <view class="top-placeholder"></view>
+      <view class="search">
+        <uni-search-bar placeholder="输入供应商名称" bg-color="#EEEEEE" @confirm="handleSearch" />
+      </view>
       <view class="drawer-content">
         <PaginationList
           ref="listRef"
@@ -42,6 +45,12 @@ const handleConfirm = () => {
   const items = listRef.value?.getCheckedItems() || []
   emits('onConfirm', {
     items,
+  })
+}
+
+const handleSearch = (res) => {
+  fetchData({
+    name: res.value,
   })
 }
 

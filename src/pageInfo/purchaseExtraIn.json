@@ -8,7 +8,8 @@
     "show": "/pages/purchase/purchaseExtraIn/show?id="
   },
   "search": {
-    "searchKey": "code1"
+    "searchKey": "supplierName1",
+    "fields": [{ "name": "code1", "title": "入库单号" }]
   },
   "api": {
     "get": {
@@ -26,14 +27,17 @@
   },
   "detail": {
     "titleKey": "name",
+    "titleAliasKey": "goodsName",
     "detailKey": "goodsInDetailList",
-    "detailPrimaryKey": "goodsId"
+    "detailPrimaryKey": "goodsId",
+    "detailSearchKey": "name",
+    "detailSearchPlaceholder": "请输入商品名称"
   },
   "popup": {
     "primaryKey": "id",
     "subName": "name",
     "fields": [
-       { "name": "name", "title": "商品名称" },
+      { "name": "name", "title": "商品名称" },
       { "name": "code", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
       { "name": "safeQty", "title": "安全库存" },
@@ -43,6 +47,7 @@
     ]
   },
   "list": {
+    "primaryTitleKey": "code",
     "fields": [
       { "name": "supplierName", "title": "供 应 商" },
       { "name": "code", "title": "入库单号" },
@@ -62,24 +67,24 @@
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
-      { "name": "goodsName", "title": "商品名称" },
-      { "name": "goodsCode", "title": "商品编号" },
+      { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
       { "name": "qty", "title": "入库数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价" },
+      { "name": "price", "title": "单价", "type": "input" },
       { "name": "amount", "title": "入库金额" },
-      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input" },
       { "name": "wrinkles", "title": "纹路", "type": "input" },
       { "name": "color", "title": "颜色", "type": "input" },
       { "name": "thickness", "title": "厚度", "type": "input" },
-      { "name": "width", "title": "门幅" , "type": "input"},
+      { "name": "width", "title": "门幅", "type": "input" },
       { "name": "packageModel", "title": "包装规格", "type": "input" },
       { "name": "retardantStandard", "title": "阻燃标准", "type": "input" },
       { "name": "environmentStandard", "title": "环保标准", "type": "input" },
-      { "name": "surfaceEffect", "title": "表面效果" , "type": "input"},
-      { "name": "functions", "title": "其它功能" , "type": "input"},
-      { "name": "bottomSlab", "title": "底布" , "type": "input"},
+      { "name": "surfaceEffect", "title": "表面效果", "type": "input" },
+      { "name": "functions", "title": "其它功能", "type": "input" },
+      { "name": "bottomSlab", "title": "底布", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
@@ -94,22 +99,22 @@
     "detailFields": [
       { "name": "goodsName", "title": "商品名称" },
       { "name": "goodsCode", "title": "商品编号" },
-      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "goodsAliasCode", "title": "内部编号" },
       { "name": "qty", "title": "入库数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价" },
+      { "name": "price", "title": "单价", "type": "input" },
       { "name": "amount", "title": "入库金额" },
-      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input" },
       { "name": "wrinkles", "title": "纹路", "type": "input" },
       { "name": "color", "title": "颜色", "type": "input" },
       { "name": "thickness", "title": "厚度", "type": "input" },
-      { "name": "width", "title": "门幅" , "type": "input"},
+      { "name": "width", "title": "门幅", "type": "input" },
       { "name": "packageModel", "title": "包装规格", "type": "input" },
       { "name": "retardantStandard", "title": "阻燃标准", "type": "input" },
       { "name": "environmentStandard", "title": "环保标准", "type": "input" },
-      { "name": "surfaceEffect", "title": "表面效果" , "type": "input"},
-      { "name": "functions", "title": "其它功能" , "type": "input"},
-      { "name": "bottomSlab", "title": "底布" , "type": "input"},
+      { "name": "surfaceEffect", "title": "表面效果", "type": "input" },
+      { "name": "functions", "title": "其它功能", "type": "input" },
+      { "name": "bottomSlab", "title": "底布", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
@@ -117,28 +122,28 @@
     "fields": [
       { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
       { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
-      { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
+      { "name": "warehouseName", "title": "入库仓库", "type": "warehouse", "required": true },
       { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
       { "name": "goodsName", "title": "商品名称" },
       { "name": "goodsCode", "title": "商品编号" },
-      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "goodsAliasCode", "title": "内部编号" },
       { "name": "qty", "title": "入库数量" },
       { "name": "masterUnit", "title": "单位" },
       { "name": "price", "title": "单价" },
       { "name": "amount", "title": "入库金额" },
       { "name": "warehouseAreaName", "title": "仓位" },
-      { "name": "wrinkles", "title": "纹路"},
+      { "name": "wrinkles", "title": "纹路" },
       { "name": "color", "title": "颜色" },
       { "name": "thickness", "title": "厚度" },
       { "name": "width", "title": "门幅" },
       { "name": "packageModel", "title": "包装规格" },
       { "name": "retardantStandard", "title": "阻燃标准" },
-      { "name": "environmentStandard", "title": "环保标准"},
+      { "name": "environmentStandard", "title": "环保标准" },
       { "name": "surfaceEffect", "title": "表面效果" },
-      { "name": "functions", "title": "其它功能"},
+      { "name": "functions", "title": "其它功能" },
       { "name": "bottomSlab", "title": "底布" },
       { "name": "remark", "title": "备注" }
     ]

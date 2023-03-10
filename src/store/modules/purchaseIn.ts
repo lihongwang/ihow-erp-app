@@ -86,7 +86,6 @@ export const usePurchaseInStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('purchaseIn popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
@@ -95,7 +94,6 @@ export const usePurchaseInStore = defineStore({
     },
     getPopupDetailFields() {
       return {
-        primaryKey: pageInfo.popup.primaryKey,
         subName: pageInfo.popup.subName,
         popupFields: pageInfo.popup.fields,
       }

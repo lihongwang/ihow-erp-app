@@ -8,7 +8,8 @@
     "show": "/pages/purchase/purchaseIn/show?id="
   },
   "search": {
-    "searchKey": "code1"
+    "searchKey": "supplierName1",
+    "fields": [{ "name": "code1", "title": "入库单号" }]
   },
   "api": {
     "get": {
@@ -27,7 +28,9 @@
   "detail": {
     "titleKey": "goodsName",
     "detailKey": "goodsInDetailList",
-    "detailPrimaryKey": "purchaseOrderDetailId"
+    "detailPrimaryKey": "purchaseOrderDetailId",
+    "detailSearchKey": "name",
+    "detailSearchPlaceholder": "请输入商品名称"
   },
   "popup": {
     "primaryKey": "id",
@@ -45,6 +48,7 @@
     ]
   },
   "list": {
+    "primaryTitleKey": "code",
     "fields": [
       { "name": "supplierName", "title": "供 应 商" },
       { "name": "code", "title": "入库单号" },
@@ -71,26 +75,26 @@
       { "name": "masterUnit", "title": "单位" },
       { "name": "price", "title": "单价" },
       { "name": "amount", "title": "入库金额" },
-      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
-      { "name": "$purchaseOrderCode", "title": "采购单号"},
-      { "name": "$saleOrderCode", "title": "销售订单号"},
-      { "name": "wrinkles", "title": "纹路"},
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input" },
+      { "name": "$purchaseOrderCode", "title": "采购单号" },
+      { "name": "$saleOrderCode", "title": "销售订单号" },
+      { "name": "wrinkles", "title": "纹路" },
       { "name": "color", "title": "颜色" },
       { "name": "thickness", "title": "厚度" },
       { "name": "width", "title": "门幅" },
       { "name": "packageModel", "title": "包装规格" },
       { "name": "retardantStandard", "title": "阻燃标准" },
-      { "name": "environmentStandard", "title": "环保标准"},
+      { "name": "environmentStandard", "title": "环保标准" },
       { "name": "surfaceEffect", "title": "表面效果" },
-      { "name": "functions", "title": "其它功能"},
+      { "name": "functions", "title": "其它功能" },
       { "name": "bottomSlab", "title": "底布" },
       { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
   "edit": {
     "fields": [
-      { "name": "billDate", "title": "入库日期" },
-      { "name": "relatedPartyName", "title": "供应商名称" , "type": "supplier", "required": true},
+      { "name": "billDate", "title": "入库日期", "type": "date" },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
       { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
       { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
@@ -103,27 +107,27 @@
       { "name": "masterUnit", "title": "单位" },
       { "name": "price", "title": "单价" },
       { "name": "amount", "title": "入库金额" },
-      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
-      { "name": "$purchaseOrderCode", "title": "采购单号"},
-      { "name": "$saleOrderCode", "title": "销售订单号"},
-      { "name": "wrinkles", "title": "纹路"},
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input" },
+      { "name": "$purchaseOrderCode", "title": "采购单号" },
+      { "name": "$saleOrderCode", "title": "销售订单号" },
+      { "name": "wrinkles", "title": "纹路" },
       { "name": "color", "title": "颜色" },
       { "name": "thickness", "title": "厚度" },
       { "name": "width", "title": "门幅" },
       { "name": "packageModel", "title": "包装规格" },
       { "name": "retardantStandard", "title": "阻燃标准" },
-      { "name": "environmentStandard", "title": "环保标准"},
+      { "name": "environmentStandard", "title": "环保标准" },
       { "name": "surfaceEffect", "title": "表面效果" },
-      { "name": "functions", "title": "其它功能"},
+      { "name": "functions", "title": "其它功能" },
       { "name": "bottomSlab", "title": "底布" },
       { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
   "show": {
     "fields": [
-      { "name": "billDate", "title": "入库日期" },
-      { "name": "relatedPartyName", "title": "供应商名称" , "type": "supplier", "required": true},
-      { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
+      { "name": "billDate", "title": "入库日期", "type": "date" },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
+      { "name": "warehouseName", "title": "入库仓库", "type": "warehouse", "required": true },
       { "name": "deliveryCode", "title": "送货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
@@ -136,17 +140,17 @@
       { "name": "price", "title": "单价" },
       { "name": "amount", "title": "入库金额" },
       { "name": "warehouseAreaName", "title": "仓位" },
-      { "name": "$purchaseOrderCode", "title": "采购单号"},
-      { "name": "$saleOrderCode", "title": "销售订单号"},
-      { "name": "wrinkles", "title": "纹路"},
+      { "name": "$purchaseOrderCode", "title": "采购单号" },
+      { "name": "$saleOrderCode", "title": "销售订单号" },
+      { "name": "wrinkles", "title": "纹路" },
       { "name": "color", "title": "颜色" },
       { "name": "thickness", "title": "厚度" },
       { "name": "width", "title": "门幅" },
       { "name": "packageModel", "title": "包装规格" },
       { "name": "retardantStandard", "title": "阻燃标准" },
-      { "name": "environmentStandard", "title": "环保标准"},
+      { "name": "environmentStandard", "title": "环保标准" },
       { "name": "surfaceEffect", "title": "表面效果" },
-      { "name": "functions", "title": "其它功能"},
+      { "name": "functions", "title": "其它功能" },
       { "name": "bottomSlab", "title": "底布" },
       { "name": "remark", "title": "备注" }
     ]

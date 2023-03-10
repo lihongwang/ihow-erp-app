@@ -12,7 +12,7 @@
     <view class="page-content">
       <view class="search-wrap">
         <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
-        <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <uni-search-bar placeholder="输入名称" bg-color="#EEEEEE" @confirm="handleSearch" />
       </view>
 
       <List ref="listRef" class="page-list" @onFetchData="fetchData">
@@ -42,7 +42,11 @@
               <template #footer>
                 <view gutter="16" class="flex flex-row justify-center">
                   <button size="mini" class="btn" :disabled="!checkEditable(item)" @click="handleEditClick(item.id)">
-                    <img src="/static/images/edit-blue.png" class="btn-img" alt="编辑" />
+                    <img
+                      :src="`/static/images/${checkEditable(item) ? 'edit-blue.png' : 'edit-disabled.png'}`"
+                      class="btn-img"
+                      alt="编辑"
+                    />
                     <span>编辑</span>
                   </button>
                   <button size="mini" class="btn" @click="handleDetailClick(item.id)">
@@ -105,7 +109,6 @@ import pageInfo from '@/pageInfo/purchaseIn.json'
 const searchDialog = ref()
 const listFields = pageInfo.list.fields
 const listTitle = pageInfo.list.primaryTitleKey
-console.log(listTitle)
 const store = usePurchaseInStoreWithOut()
 const listRef = ref()
 const searchModel = ref({})

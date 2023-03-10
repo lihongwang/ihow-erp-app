@@ -55,7 +55,13 @@
         </view>
       </uni-forms>
     </view>
-    <PopupDetailDrawer ref="detailDrawerRef" :store="store" @onConfirm="handleDetailConfirm" />
+    <PopupDetailDrawer
+      ref="detailDrawerRef"
+      :primary-key="detailPrimaryKey"
+      :check-key="detailCheckKey"
+      :store="store"
+      @onConfirm="handleDetailConfirm"
+    />
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
@@ -74,19 +80,21 @@ import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
 import { useSaleOutStoreWithOut } from '@/store/modules/saleOut'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
+import { useTranslateAmount, useCustomer, useWarehouse, usePage, useAddPage } from '@/hooks'
 import pageInfo from '@/pageInfo/saleOut.json'
 const formFields = pageInfo.add.fields
 const detailFields = pageInfo.add.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
+const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
+const detailCheckKey = pageInfo.detail.detailCheckKey
 const store = useSaleOutStoreWithOut()
 const detailDrawerRef = ref()
 store.resetFormData()
 const formData = ref(store.getFormData())
 // 供应商弹框，将值添加到formData
 const handleSelectRelatedParty = (relatedParty) => {
-  formData.value = useRelatedParty(store, relatedParty)
+  formData.value = useCustomer(store, relatedParty)
 }
 // field需要用到方法或者属性
 const fieldContext = ref({
@@ -95,7 +103,7 @@ const fieldContext = ref({
 // 仓库下拉列表数据获取
 useWarehouse((data) => (fieldContext.value.warehouseList = data))
 // 监听明细qty，联动计算amount
-useAmount(store)
+useTranslateAmount(store)
 // page navbar title，返回的页面
 const { back, titleInfo } = usePage({
   pageInfo,
@@ -109,20 +117,22 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
   detailDrawerRef,
   store,
   detailKey, // 明细key
-  detailPrimaryKey: pageInfo.detail.detailPrimaryKey.add, // 明细回填key
   detailFilterInfo: {
     // 点添加明细，需要传递的前置条件
-    message: '请先选择供应商和仓库',
-    keys: ['relatedPartyId', 'warehouseId'],
+    message: '请先选择客户和仓库',
+    keys: ['customerId', 'warehouseId'],
   },
   formatDetail: (d) => {
     // 弹出框点确定时，数据转换
-    const { $purchaseOrderCode, id, ...rest } = d
+    const { $saleOrderCode, uniqId, stockOutEnum, ...rest } = d
     return {
+      id: uniqId,
       ...rest,
-      purchaseOrderCode: $purchaseOrderCode,
-      purchaseOrderDetailId: id,
-      purchaseQty: d.qty,
+      $saleOrderCode,
+      saleOrderCode: $saleOrderCode,
+      stockOutEnum: stockOutEnum.value,
+      uniqId,
+      masterQty: fixNumber(Number(d.qty || 0) * Number(d.transforRate || 1), 3),
       amount: fixNumber(d.qty * d.price, 2),
     }
   },

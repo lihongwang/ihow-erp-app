@@ -87,7 +87,6 @@ export const usePurchaseOrderStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('purchaseOrder popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)

@@ -2,6 +2,9 @@
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
     <view class="scroll-container">
       <view class="top-placeholder"></view>
+      <view class="search">
+        <uni-search-bar placeholder="输入名称" bg-color="#EEEEEE" @confirm="handleSearch" />
+      </view>
       <view class="drawer-content">
         <PaginationList
           ref="listRef"
@@ -36,6 +39,11 @@ const selectedItems = ref([])
 const emits = defineEmits(['onConfirm'])
 const closeDrawer = () => {
   drawer.value.close()
+}
+const handleSearch = (res) => {
+  fetchData({
+    code: res.value,
+  })
 }
 const handleConfirm = () => {
   drawer.value.close()

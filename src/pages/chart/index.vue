@@ -2,6 +2,7 @@
   <view class="chart-page page-wrapper">
     <view class="page-content">
       <view class="charts-wrap">
+        <bar />
         <view class="chart-item">
           <uni-section class="mb-10" title="销售额与采购额对比图" type="line">
             <PurchaseSale />
@@ -29,6 +30,7 @@
 </template>
 
 <script setup>
+import bar from './bar'
 import SaleAmount from './saleAmount'
 import PurchaseSale from './purchaseSale'
 import ReportStockDays from './reportStockDays'

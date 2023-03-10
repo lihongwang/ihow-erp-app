@@ -60,3 +60,29 @@
     height: 36px;
   }
 }
+
+.report-detail-page {
+  height: 100vh;
+  .page-content {
+    height: calc(100% - 60px);
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    .uni-pagination-box {
+      height: 40px;
+    }
+    .uni-table-scroll {
+      overflow: auto;
+      flex: 1;
+      min-height: 0;
+    }
+    .table-cell {
+      width: 100%;
+      max-width: 200px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

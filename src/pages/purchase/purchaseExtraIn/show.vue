@@ -17,7 +17,7 @@
               <view class="flex flex-row justify-between items-center">
                 <view class="card-title"> {{ formData.code }} </view>
                 <view class="card-sub-title">
-                  <Tag :text="formData.auditStatusEnum?.name" />
+                  <Tag :name="formData.auditStatusEnum?.name" />
                 </view>
               </view>
             </template>
@@ -40,7 +40,9 @@
             <DetailCard :no-footer="true">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
-                  <view class="card-title"> {{ `序号${index + 1} (${item[detailTitleKey]})` }} </view>
+                  <view class="card-title">
+                    {{ `序号${index + 1} (${item[detailTitleKey] || item[detailTitleAliasKey]})` }}
+                  </view>
                 </view>
               </template>
               <template #body>
@@ -102,6 +104,7 @@ const formFields = pageInfo.show.fields
 const detailFields = pageInfo.show.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
+const detailTitleAliasKey = pageInfo.detail.titleAliasKey
 const accordionVal = ref(['0', '1'])
 const handleChange = () => {}
 const confirmDialog = ref()
@@ -113,6 +116,7 @@ const { back, titleInfo } = usePage({
   backUrl: pageInfo.url.index,
 })
 const { fabClick, getFabContent, trigger, dialogConfirm, dialogClose } = useShowPage({
+  back,
   formData,
   confirmDialog,
   editUrl: pageInfo.url.edit,

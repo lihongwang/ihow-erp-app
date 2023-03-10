@@ -64,7 +64,7 @@ const handleClick = (url) => {
   .page-content {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
+
     button {
       width: 120px;
       height: 40px;
@@ -87,6 +87,7 @@ const handleClick = (url) => {
       height: 28px;
       border-radius: 50%;
       padding: 10px;
+      margin-bottom: 10px;
     }
     &.safe-qty .btn-img {
       background: #b388ff;

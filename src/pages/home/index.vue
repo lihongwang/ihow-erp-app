@@ -10,7 +10,7 @@
     >
     </Navbar>
     <uni-notice-bar show-close show-icon scrollable text="欢迎使用皓网ERP" />
-    <view v-if="homeData" class="content-item info-content">
+    <view class="content-item info-content">
       <view class="info-item grid3">
         <InfoCard
           title="今日采购额"
@@ -124,6 +124,7 @@ const handleClick = (url) => {
         height: 28px;
         border-radius: 50%;
         padding: 10px;
+        margin-bottom: 10px;
       }
       &.purchase-in .btn-img {
         background: #303f9f;

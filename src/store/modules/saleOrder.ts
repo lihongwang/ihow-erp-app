@@ -43,7 +43,7 @@ const service = {
 
 const _detailKey = pageInfo.detail.detailKey
 export const useSaleOrderStore = defineStore({
-  id: 'app-purchase-order',
+  id: 'app-sale-order',
   state: (): SaleOrderState => ({
     // token
     list: [],
@@ -87,7 +87,6 @@ export const useSaleOrderStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('saleOrder popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
@@ -96,7 +95,6 @@ export const useSaleOrderStore = defineStore({
     },
     getPopupDetailFields() {
       return {
-        primaryKey: pageInfo.popup.primaryKey,
         subName: pageInfo.popup.subName,
         popupFields: pageInfo.popup.fields,
       }

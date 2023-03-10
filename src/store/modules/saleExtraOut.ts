@@ -43,7 +43,7 @@ const service = {
 
 const _detailKey = pageInfo.detail.detailKey
 export const useSaleExtraOutStore = defineStore({
-  id: 'app-purchase-order',
+  id: 'app-sale-extra-out',
   state: (): saleExtraOutState => ({
     // token
     list: [],
@@ -87,7 +87,6 @@ export const useSaleExtraOutStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('saleExtraOut popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
@@ -96,7 +95,6 @@ export const useSaleExtraOutStore = defineStore({
     },
     getPopupDetailFields() {
       return {
-        primaryKey: pageInfo.popup.primaryKey,
         subName: pageInfo.popup.subName,
         popupFields: pageInfo.popup.fields,
       }
@@ -129,9 +127,13 @@ export const useSaleExtraOutStore = defineStore({
     // 新增
     add() {
       return new Promise((resolve) => {
+        const { customerId, customerName, customerCode, ...rest } = this.formData
         service
           .add({
-            ...this.formData,
+            ...rest,
+            relatedPartyId: customerId,
+            relatedPartyName: customerName,
+            relatedPartyCode: customerCode,
             ...this._getTotalInfo(),
           })
           .then((res: any) => {
@@ -158,6 +160,9 @@ export const useSaleExtraOutStore = defineStore({
         service
           .update({
             ...this.formData,
+            [_detailKey]: this.formData[_detailKey].map((detail) => {
+              return { ...detail, stockOutEnum: detail.stockOutEnum?.value }
+            }),
             ...this._getTotalInfo(),
           })
           .then((res: any) => {

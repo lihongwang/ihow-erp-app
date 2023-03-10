@@ -1,14 +1,26 @@
 {
-  "title": "销售订单进度",
-  "code": "SaleOrderProcess",
-  "url": "/page/report/saleOrderProcess",
+  "title": "库存预警",
+  "code": "ReportSafeQty",
+  "url": "/page/report/reportSafeQty",
   "tableFields": [
-    { "name": "$saleOrderCode", "title": "订单号", "width": 100 },
-    { "name": "createByTime", "title": "下单日期", "width": 100, "type": "date" },
-    { "name": "deliveryDate", "title": "交货日期", "width": 100, "type": "date" },
-    { "name": "customerCode", "title": "客户编号", "width": 100 },
-    { "name": "customerName", "title": "客户名称", "width": 100 },
-    { "name": "qty", "title": "订单数量", "width": 100 }
+    { "name": "name", "title": "商品名称", "width": 100 },
+    { "name": "safeQty", "title": "安全库存", "width": 100 },
+    { "name": "remainQty", "title": "当前库存", "width": 100 },
+    { "name": "diffQty", "title": "缺货数量", "width": 100 },
+    { "name": "purchasedQty", "title": "采购在途", "width": 100 },
+    { "name": "supQty", "title": "建议补货", "width": 100 },
+    { "name": "masterUnit", "title": "单位", "width": 100 },
+    { "name": "wrinkles", "title": "纹路", "width": 100 },
+    { "name": "color", "title": "颜色", "width": 100 },
+    { "name": "thickness", "title": "厚度", "width": 100 },
+    { "name": "width", "title": "门幅", "width": 100 },
+    { "name": "packageModel", "title": "包装规格", "width": 100 },
+    { "name": "retardantStandard", "title": "阻燃标准", "width": 100 },
+    { "name": "environmentStandard", "title": "环保标准", "width": 100 },
+    { "name": "surfaceEffect", "title": "表面效果", "width": 100 },
+    { "name": "functions", "title": "其它功能", "width": 100 },
+    { "name": "bottomSlab", "title": "底坯", "width": 100 },
+    { "name": "pecification", "title": "厂家型号", "width": 100 }
   ],
-  "searchFeilds": [{ "name": "$saleOrderCode", "title": "订单号" }]
+  "searchFields": [{ "name": "goodsName1", "title": "商品名称" }]
 }

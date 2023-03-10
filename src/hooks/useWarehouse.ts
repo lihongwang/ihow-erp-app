@@ -4,7 +4,7 @@ export default (cbk) => {
   onLoad(() => {
     getWarehouseData({}).then((res: any) => {
       cbk(
-        res.map((w) => ({
+        (res || []).map((w) => ({
           value: w.id,
           text: w.name,
         }))

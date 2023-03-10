@@ -8,7 +8,8 @@
     "show": "/pages/purchase/purchaseOrder/show?id="
   },
   "search": {
-    "searchKey": "code1"
+    "searchKey": "supplierName1",
+    "fields": [{ "name": "code1", "title": "采购单号" }]
   },
   "api": {
     "get": {
@@ -29,7 +30,9 @@
   "detail": {
     "titleKey": "name",
     "detailKey": "purchaseOrderDetailList",
-    "detailPrimaryKey": "goodsId"
+    "detailPrimaryKey": "goodsId",
+    "detailSearchKey": "name",
+    "detailSearchPlaceholder": "请输入商品名称"
   },
   "popup": {
     "primaryKey": "id",
@@ -45,7 +48,6 @@
     ]
   },
   "list": {
-    "primaryTitleKey": "code",
     "fields": [
       { "name": "supplierName", "title": "供应商" },
       { "name": "code", "title": "采购单号" },
@@ -63,14 +65,14 @@
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
-      { "name": "code", "title": "商品编号" },
       { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
       { "name": "remainQty", "title": "库存数量" },
       { "name": "purchasedQty", "title": "采购在途" },
-      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "qty", "title": "采购数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价", "type": "input" },
+      { "name": "price", "title": "单价", "type": "input", "required": true },
       { "name": "amount", "title": "采购金额" },
       { "name": "wrinkles", "title": "纹路", "type": "input" },
       { "name": "color", "title": "颜色", "type": "input" },
@@ -100,9 +102,9 @@
       { "name": "aliasCode", "title": "内部编号" },
       { "name": "remainQty", "title": "库存数量" },
       { "name": "purchasedQty", "title": "采购在途" },
-      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "qty", "title": "采购数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价", "type": "input" },
+      { "name": "price", "title": "单价", "type": "input", "required": true },
       { "name": "amount", "title": "采购金额" },
       { "name": "wrinkles", "title": "纹路", "type": "input" },
       { "name": "color", "title": "颜色", "type": "input" },
@@ -114,7 +116,7 @@
       { "name": "surfaceEffect", "title": "表面效果", "type": "input" },
       { "name": "functions", "title": "其它功能", "type": "input" },
       { "name": "bottomSlab", "title": "底布", "type": "input" },
-      { "name": "remark", "title": "备注" },
+      { "name": "remark", "title": "备注", "type": "input" },
       { "name": "purpose", "title": "用途" },
       { "name": "pecification", "title": "厂家型号" }
     ]

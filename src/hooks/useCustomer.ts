@@ -1,8 +1,8 @@
 export default (store, relatedParty) => {
   return store.setFormData({
-    relatedPartyId: relatedParty.id,
-    relatedPartyCode: relatedParty.code,
-    relatedPartyName: relatedParty.name,
+    customerId: relatedParty.id,
+    customerCode: relatedParty.code,
+    customerName: relatedParty.name,
     settlementDays: relatedParty.settlementDays,
   })
 }

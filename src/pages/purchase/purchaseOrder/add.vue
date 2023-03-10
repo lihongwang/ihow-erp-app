@@ -58,6 +58,8 @@
     <PopupDetailDrawer
       ref="detailDrawerRef"
       :primary-key="detailPrimaryKey"
+      :search-key="detailSearchKey"
+      :search-placeholder="detailSearchPlaceholder"
       :store="store"
       @onConfirm="handleDetailConfirm"
     />
@@ -86,6 +88,8 @@ const detailFields = pageInfo.add.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
 const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
+const detailSearchKey = pageInfo.detail.detailSearchKey
+const detailSearchPlaceholder = pageInfo.detail.detailSearchPlaceholder
 const store = usePurchaseOrderStoreWithOut()
 const detailDrawerRef = ref()
 store.resetFormData()

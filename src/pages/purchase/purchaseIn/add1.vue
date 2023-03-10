@@ -127,6 +127,7 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
     // 弹出框点确定时，数据转换
     const { $purchaseOrderCode, id, ...rest } = d
     return {
+      id,
       ...rest,
       purchaseOrderCode: $purchaseOrderCode,
       purchaseOrderDetailId: id,

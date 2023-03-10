@@ -1,6 +1,6 @@
 <template>
   <view v-if="chartOpts" class="charts-box">
-    <uniChart :option="chartOpts" style="height: 400px" />
+    <uniChart :option="chartOpts" canvas-id="stockDaysChart" />
   </view>
 </template>
 
@@ -33,14 +33,15 @@ useChart({
         show: true,
         formatter: function (param) {
           const { name, value } = param
-          return `${name}： ${toMoney(value)} 元`
+          return `${name}： ${toMoney(value)}`
         },
       },
       grid: {
-        x: 15,
-        y: 15,
-        x2: 15,
-        y2: 15,
+        left: 20,
+        right: 20,
+        bottom: 15,
+        top: 40,
+        containLabel: true,
       },
       yAxis: [
         {
@@ -72,7 +73,7 @@ useChart({
               fontSize: '16',
             },
             formatter: function (value) {
-              return `${toMoney(fixNumber(Number(value), 2))} 元`
+              return `${toMoney(fixNumber(Number(value), 2))}`
             },
           },
         },
@@ -82,9 +83,10 @@ useChart({
           type: 'bar',
           showBackground: true,
           data: values,
-          barWidth: 18,
+          barWidth: '18px',
           itemStyle: {
             normal: {
+              color: '#d50000',
               // color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               //   {
               //     offset: 0,
@@ -95,6 +97,7 @@ useChart({
               //     color: '#d50000',
               //   },
               // ]),
+              barBorderRadius: 6,
             },
           },
         },
@@ -104,10 +107,13 @@ useChart({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
 .charts-box {
   width: 100%;
+  height: 400px;
+  // #ifdef MP-WEIXIN
   height: 300px;
+  // #endif
 }
 </style>

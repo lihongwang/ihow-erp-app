@@ -7,7 +7,7 @@
           :item="item"
           :radio-selected-item="radioSelectedItem"
           :sub-title="item[props.subName]"
-          :checked="isChecked(item.id)"
+          :checked="isChecked(item[props.checkKey])"
           :properties="props.properties"
           @onToggle="toggleCheck(item)"
         />
@@ -35,7 +35,12 @@ const props = defineProps({
     type: String,
     default: 'name',
   },
-  // 备选项主key
+  // 弹出框数据回填，一般场景是id，但是弹出框有时需要组合key比如saleOut的uniqId
+  checkKey: {
+    type: String,
+    default: 'id',
+  },
+  // 备选项主key 编辑场景 key会变化比如goodsId （id为明细的id，这时不能用id）
   primaryKey: {
     type: String,
     default: 'id',
@@ -98,13 +103,13 @@ const isChecked = (key) => {
   }
 }
 const isNewChecked = (key) => {
-  return !!checked.value.find((c) => c.id == key)
+  return !!checked.value.find((c) => c[props.checkKey] == key)
 }
 const toggleCheck = (item) => {
   // 弹出框选择用id
   if (props.selectType === 'checkbox') {
-    if (isNewChecked(item.id)) {
-      checked.value = checked.value.filter((c) => c.id != item.id)
+    if (isNewChecked(item[props.checkKey])) {
+      checked.value = checked.value.filter((c) => c[props.checkKey] != item[props.checkKey])
     } else {
       checked.value = [...checked.value, item]
     }

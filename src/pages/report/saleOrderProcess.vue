@@ -9,6 +9,19 @@
       :back-text-style="{ color: '#fff' }"
     ></Navbar>
     <view class="page-content">
+      <view class="search-wrap">
+        <FilterGroupBtn :has-status="true" :has-process-status="true" @onFetchData="fetchData" />
+        <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+      </view>
+      <view class="uni-pagination-box">
+        <uni-pagination
+          show-icon
+          :page-size="pageInfo.pageSize"
+          :current="pageInfo.page"
+          :total="pageInfo.total"
+          @change="handleChange"
+        />
+      </view>
       <uni-table
         ref="tableRef"
         :loading="loading"
@@ -22,21 +35,12 @@
         </uni-tr>
         <uni-tr v-for="(item, index) in tableData" :key="index">
           <uni-td v-for="col in tableFields" :key="col.name" align="center">
-            <view>
+            <view class="table-cell" :title="formatData(col, item)">
               {{ formatData(col, item) }}
             </view>
           </uni-td>
         </uni-tr>
       </uni-table>
-      <view class="uni-pagination-box">
-        <uni-pagination
-          show-icon
-          :page-size="pageInfo.pageSize"
-          :current="pageInfo.page"
-          :total="pageInfo.total"
-          @change="handleChange"
-        />
-      </view>
     </view>
     <uni-popup ref="searchDialog" type="dialog">
       <uni-popup-dialog
@@ -77,6 +81,7 @@
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
 import FormField from '@/components/form/FormField'
+import FilterGroupBtn from '@/components/filter/groupButton'
 import { useReportDetailPage } from '@/hooks'
 import reportPageInfo from '@/pageInfo/report/saleOrderProcess.json'
 const { title, code, searchFields, tableFields } = reportPageInfo
@@ -87,10 +92,10 @@ const tableData = ref()
 const fieldContext = ref({})
 const pageInfo = ref({
   page: 0,
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
 })
-const { fabPattern, fabContent, fabClick, trigger, handleChange, back, formatData } = useReportDetailPage({
+const { fetchData, fabPattern, fabContent, fabClick, trigger, handleChange, back, formatData } = useReportDetailPage({
   searchModel,
   searchDialog,
   code,
@@ -103,10 +108,14 @@ const { fabPattern, fabContent, fabClick, trigger, handleChange, back, formatDat
 .page-content {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px;
+
   ::v-deep table {
     table-layout: fixed;
     min-width: 1000px;
+    td,
+    th {
+      padding: 3px !important;
+    }
   }
 }
 </style>

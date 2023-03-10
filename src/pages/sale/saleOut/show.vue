@@ -17,7 +17,7 @@
               <view class="flex flex-row justify-between items-center">
                 <view class="card-title"> {{ formData.code }} </view>
                 <view class="card-sub-title">
-                  <Tag :text="formData.auditStatusEnum?.name" />
+                  <Tag :name="formData.auditStatusEnum?.name" />
                 </view>
               </view>
             </template>
@@ -113,6 +113,7 @@ const { back, titleInfo } = usePage({
   backUrl: pageInfo.url.index,
 })
 const { fabClick, getFabContent, trigger, dialogConfirm, dialogClose } = useShowPage({
+  back,
   formData,
   confirmDialog,
   editUrl: pageInfo.url.edit,

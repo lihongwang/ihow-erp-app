@@ -11,8 +11,8 @@
     ></Navbar>
     <view class="page-content">
       <view class="search-wrap">
-        <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
-        <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <FilterGroupBtn :has-status="true" :has-process-status="true" @onFetchData="fetchData" />
+        <uni-search-bar placeholder="输入名称" bg-color="#EEEEEE" @confirm="handleSearch" />
       </view>
 
       <List ref="listRef" class="page-list" @onFetchData="fetchData">
@@ -71,11 +71,14 @@
           @close="handleSearchClose"
         >
           <uni-forms :model="searchModel" label-width="110px">
-            <uni-forms-item label="供应商名称">
-              <uni-easyinput v-model="searchModel.supplierName1" class="list-val" />
-            </uni-forms-item>
-            <uni-forms-item label="供应商编号">
-              <uni-easyinput v-model="searchModel.supplierCode1" class="list-val" />
+            <uni-forms-item v-for="field in searchFields" :key="field.name" :label="field.title">
+              <FormField
+                :field="field"
+                :type="field.type"
+                :name="field.name"
+                :item="searchModel"
+                :field-context="fieldContext"
+              />
             </uni-forms-item>
           </uni-forms>
         </uni-popup-dialog>
@@ -101,6 +104,7 @@ import DetailCard from '@/components/card/detailCard'
 import ListItem from '@/components/list/listItem'
 import Navbar from '@/components/pageNavbar'
 import Tag from '@/components/tag'
+import FormField from '@/components/form/FormField'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
 import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
@@ -108,6 +112,9 @@ import { usePage, useIndexPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseOrder.json'
 const listFields = pageInfo.list.fields
 const listTitle = pageInfo.list.primaryTitleKey
+const searchFields = pageInfo.search.fields
+const fieldContext = ref({})
+console.log(searchFields)
 const searchDialog = ref()
 const store = usePurchaseOrderStoreWithOut()
 const listRef = ref()

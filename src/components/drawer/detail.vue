@@ -2,12 +2,16 @@
   <uni-drawer ref="drawer" mode="right" :mask-click="false" width="100%">
     <view class="scroll-container">
       <view class="top-placeholder"></view>
+      <view class="search">
+        <uni-search-bar :placeholder="props.searchPlaceholder" bg-color="#EEEEEE" @confirm="handleSearch" />
+      </view>
       <view class="drawer-content">
         <PaginationList
           ref="listRef"
           class="pagination-list-container"
           :sub-name="subName"
           select-type="checkbox"
+          :check-key="props.checkKey"
           :primary-key="props.primaryKey"
           :selected-items="selectedItems"
           :list-data="detailData"
@@ -25,12 +29,22 @@
 
 <script setup>
 import PaginationList from '@/components/list/paginationList'
-import { ref, defineEmits, defineExpose, defineProps } from 'vue'
+import { ref, watch, defineEmits, defineExpose, defineProps } from 'vue'
 
-const props = defineProps(['store', 'primaryKey'])
-console.log(props)
+const props = defineProps(['store', 'primaryKey', 'checkKey', 'searchKey', 'searchPlaceholder'])
+const store = ref(props.store)
+watch(
+  () => props.store,
+  (cur) => {
+    store.value = cur
+  }
+)
 const { popupFields, subName } = props.store.getPopupDetailFields()
-
+const handleSearch = (res) => {
+  fetchData({
+    [props.searchKey]: res.value,
+  })
+}
 const detailData = ref()
 const drawer = ref()
 const listRef = ref()
@@ -49,7 +63,7 @@ const handleConfirm = () => {
 }
 
 const fetchData = (data) => {
-  props.store.getPopupDetails({ ...query.value, ...data }).then((res) => {
+  store.value.getPopupDetails({ ...query.value, ...data }).then((res) => {
     detailData.value = res.list
     const { setPageInfo } = listRef?.value || {}
     setPageInfo?.({

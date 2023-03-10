@@ -61,7 +61,12 @@
         </view>
       </uni-forms>
     </view>
-    <PopupDetailDrawer ref="detailDrawerRef" :store="store" @onConfirm="handleDetailConfirm" />
+    <PopupDetailDrawer
+      ref="detailDrawerRef"
+      :primary-key="detailPrimaryKey"
+      :store="store"
+      @onConfirm="handleDetailConfirm"
+    />
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
@@ -80,18 +85,19 @@ import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
 import { useSaleExtraOutStoreWithOut } from '@/store/modules/saleExtraOut'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useSupplier, useWarehouse, usePage, useEditPage } from '@/hooks'
+import { useAmount, useCustomer, useWarehouse, usePage, useEditPage } from '@/hooks'
 import pageInfo from '@/pageInfo/saleExtraOut.json'
 const formFields = pageInfo.edit.fields
 const detailFields = pageInfo.edit.detailFields
 const detailKey = pageInfo.detail.detailKey
+const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
 const detailTitleKey = pageInfo.detail.titleKey
 const store = useSaleExtraOutStoreWithOut()
 const detailDrawerRef = ref()
 const formData = ref(store.getFormData())
 // 供应商弹框，将值添加到formData
 const handleSelectRelatedParty = (relatedParty) => {
-  formData.value = useSupplier(store, relatedParty)
+  formData.value = useCustomer(store, relatedParty)
 }
 // field需要用到方法或者属性
 const fieldContext = ref({
@@ -115,18 +121,17 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
   detailPrimaryKey: pageInfo.detail.detailPrimaryKey.edit, // 明细回填key
   detailFilterInfo: {
     // 点添加明细，需要传递的前置条件
-    message: '请先选择供应商',
-    keys: ['supplierId'],
+    message: '请先选择客户和仓库',
+    keys: ['customerId', 'warehouseId'],
   },
   formData,
   formatDetail: (d) => {
     // 弹出框点确定时，数据转换
-    const { $saleExtraOutCode, id, ...rest } = d
+    const { id, stockOutEnum, ...rest } = d
     return {
+      id,
       ...rest,
-      saleExtraOutCode: $saleExtraOutCode,
-      saleExtraOutDetailId: id,
-      purchaseQty: d.qty,
+      stockOutEnum: stockOutEnum.value,
       amount: fixNumber(d.qty * d.price, 2),
     }
   },
