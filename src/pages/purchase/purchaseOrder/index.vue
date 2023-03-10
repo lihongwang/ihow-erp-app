@@ -21,7 +21,7 @@
             <DetailCard v-for="(item, index) in store.list" :key="index">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
-                  <view class="card-title"> {{ item.code }} </view>
+                  <view class="card-title"> {{ item[listTitle] }} </view>
                   <view class="card-sub-title">
                     <Tag :name="item.auditStatusEnum.name" />
                   </view>
@@ -42,7 +42,11 @@
               <template #footer>
                 <view gutter="16" class="flex flex-row justify-center">
                   <button size="mini" class="btn" :disabled="!checkEditable(item)" @click="handleEditClick(item.id)">
-                    <img src="/static/images/edit-blue.png" class="btn-img" alt="编辑" />
+                    <img
+                      :src="`/static/images/${checkEditable(item) ? 'edit-blue.png' : 'edit-disabled.png'}`"
+                      class="btn-img"
+                      alt="编辑"
+                    />
                     <span>编辑</span>
                   </button>
                   <button size="mini" class="btn" @click="handleDetailClick(item.id)">
@@ -103,6 +107,7 @@ import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
 import { usePage, useIndexPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseOrder.json'
 const listFields = pageInfo.list.fields
+const listTitle = pageInfo.list.primaryTitleKey
 const searchDialog = ref()
 const store = usePurchaseOrderStoreWithOut()
 const listRef = ref()

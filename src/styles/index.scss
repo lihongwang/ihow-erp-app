@@ -127,12 +127,12 @@
       margin: 0 5px;
       margin-top: -2px;
     }
-    .more-btn,
-    .normal-btn {
-      &:after {
-        border: none !important;
-      }
-    }
+  }
+}
+.more-btn,
+.normal-btn {
+  &:after {
+    border: none !important;
   }
 }
 .btn-img {

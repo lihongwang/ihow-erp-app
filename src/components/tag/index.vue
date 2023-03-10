@@ -6,6 +6,8 @@
 import { defineProps } from 'vue'
 import { statusList } from '@/utils/status'
 const props = defineProps(['name'])
+console.log(props.name)
+console.log(statusList[props.name])
 </script>
 
 <style></style>

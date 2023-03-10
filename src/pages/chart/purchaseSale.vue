@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import uniChart from 'uniapp-echarts/components/uni-chart/uni-chart'
-// #ifdef VUE2 || MP-WEIXIN
-const echarts = require('uniapp-echarts/static/echarts.min.js')
-// #endif
-import 'uniapp-echarts/static/echarts.min.js'
+import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart'
+// import '@/components/uniapp-echarts/static/echarts.min.js'
+// // #ifdef MP-WEIXIN
+// const echarts = require('../../../components/uniapp-echarts/static/echarts.min.js')
+// // #endif
 import { ref } from 'vue'
 import { useChart } from '@/hooks'
 import { toMoney } from '@/utils/data'
@@ -101,16 +101,16 @@ useChart({
           barWidth: '16px',
           itemStyle: {
             normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: '#ef6c00',
-                },
-                {
-                  offset: 1,
-                  color: '#ffe0b2',
-                },
-              ]),
+              // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              //   {
+              //     offset: 0,
+              //     color: '#ef6c00',
+              //   },
+              //   {
+              //     offset: 1,
+              //     color: '#ffe0b2',
+              //   },
+              // ]),
               barBorderRadius: 6,
             },
           },
@@ -123,16 +123,16 @@ useChart({
           barWidth: '16px',
           itemStyle: {
             normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: '#29acff',
-                },
-                {
-                  offset: 1,
-                  color: '#4bdfff',
-                },
-              ]),
+              // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              //   {
+              //     offset: 0,
+              //     color: '#29acff',
+              //   },
+              //   {
+              //     offset: 1,
+              //     color: '#4bdfff',
+              //   },
+              // ]),
               barBorderRadius: 6,
             },
           },
@@ -148,5 +148,6 @@ useChart({
 /* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
 .charts-box {
   width: 100%;
+  height: 300px;
 }
 </style>

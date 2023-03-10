@@ -1,7 +1,7 @@
 <template>
   <view class="flex flex-row m-1 items-center justify-start">
     <text class="font-bold">{{ props.title }}：</text>
-    <FormatDate v-if="props.type == 'date'" :value="props.value" :params="props.params" />
+    <FormatDate v-if="props.type == 'date' && props.value" :value="props.value" :params="props.params" />
     <FormatEnum v-else-if="props.type == 'enum'" :value="props.value" :params="props.params" />
     <FormatPrice v-else-if="props.type == 'price'" :price="props.value" :params="props.params" />
     <text v-else-if="props.value">{{ props.value }}</text>

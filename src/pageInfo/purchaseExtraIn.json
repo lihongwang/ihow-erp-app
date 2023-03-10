@@ -17,117 +17,129 @@
       "detailPopup": "common/customizeQuery/PurchaseSelectGoods!/execute"
     },
     "post": {
-      "add": "purchase/extraPurchaseIn/add",
-      "update": "purchase/extraPurchaseIn/update",
-      "del": "purchase/extraPurchaseIn/delete",
-      "audit": "purchase/extraPurchaseIn/audit",
-      "unAudit": "purchase/extraPurchaseIn/unaudit"
+      "add": "wms/goodsIn/addExtraPurchaseIn",
+      "update": "wms/goodsIn/updateExtraPurchaseIn",
+      "del": "wms/goodsIn/deleteExtraPurchaseIn",
+      "audit": "wms/goodsIn/auditExtraPurchaseIn",
+      "unAudit": "wms/goodsIn/unauditExtraPurchaseIn"
     }
   },
   "detail": {
     "titleKey": "name",
     "detailKey": "goodsInDetailList",
-    "detailPrimaryKey": {
-      "add": "id",
-      "edit": "id"
-    }
+    "detailPrimaryKey": "goodsId"
   },
   "popup": {
     "primaryKey": "id",
     "subName": "name",
     "fields": [
-      { "name": "name", "title": "商品名称" },
-      { "name": "node", "title": "商品编号" },
+       { "name": "name", "title": "商品名称" },
+      { "name": "code", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
-      { "name": "qty", "title": "采购数量" },
-      { "name": "purchasedQty", "title": "采购在途数量" },
-      { "name": "remainQty", "title": "库存数量" },
       { "name": "safeQty", "title": "安全库存" },
+      { "name": "remainQty", "title": "当前库存" },
+      { "name": "purchasedQty", "title": "采购在途" },
       { "name": "masterUnit", "title": "单位" }
     ]
   },
   "list": {
     "fields": [
-      { "name": "supplierName", "title": "供应商", "aliasName": "relatedPartyName" },
-      { "name": "createByTime", "title": "制单时间", "type": "date", "params": { "full": true } },
-      { "name": "createByName", "title": "制单人" },
-      { "name": "billDate", "title": "采购日期", "type": "date" },
-      { "name": "totalQty", "title": "采购数量" },
-      { "name": "totalAmount", "title": "采购金额", "type": "money" }
+      { "name": "supplierName", "title": "供 应 商" },
+      { "name": "code", "title": "入库单号" },
+      { "name": "billDate", "title": "入库日期", "type": "date" },
+      { "name": "warehouseName", "title": "入库仓库" },
+      { "name": "totalQty", "title": "入库数量" },
+      { "name": "totalAmount", "title": "入库金额", "type": "money" },
+      { "name": "createByName", "title": "制 单 人" }
     ]
   },
   "add": {
     "fields": [
-      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
-      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
-      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
+      { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
+      { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
-      { "name": "name", "title": "商品名称" },
-      { "name": "code", "title": "商品编号" },
+      { "name": "goodsName", "title": "商品名称" },
+      { "name": "goodsCode", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
-      { "name": "purchasedQty", "title": "采购在途数量" },
-      { "name": "remainQty", "title": "库存数量" },
-      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "qty", "title": "入库数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价", "type": "input" },
-      { "name": "amount", "title": "采购金额" },
-      { "name": "wrinkles", "title": "纹路" },
-      { "name": "color", "title": "颜色" },
-      { "name": "purpose", "title": "用途" },
-      { "name": "packageModel", "title": "包装规格" },
-      { "name": "pecification", "title": "规格型号" },
-      { "name": "remark", "title": "备注" }
+      { "name": "price", "title": "单价" },
+      { "name": "amount", "title": "入库金额" },
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
+      { "name": "wrinkles", "title": "纹路", "type": "input" },
+      { "name": "color", "title": "颜色", "type": "input" },
+      { "name": "thickness", "title": "厚度", "type": "input" },
+      { "name": "width", "title": "门幅" , "type": "input"},
+      { "name": "packageModel", "title": "包装规格", "type": "input" },
+      { "name": "retardantStandard", "title": "阻燃标准", "type": "input" },
+      { "name": "environmentStandard", "title": "环保标准", "type": "input" },
+      { "name": "surfaceEffect", "title": "表面效果" , "type": "input"},
+      { "name": "functions", "title": "其它功能" , "type": "input"},
+      { "name": "bottomSlab", "title": "底布" , "type": "input"},
+      { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
   "edit": {
     "fields": [
-      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
-      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
-      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
+      { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
+      { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
-      { "name": "name", "title": "商品名称" },
-      { "name": "code", "title": "商品编号" },
+      { "name": "goodsName", "title": "商品名称" },
+      { "name": "goodsCode", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
-      { "name": "purchasedQty", "title": "采购在途数量" },
-      { "name": "remainQty", "title": "库存数量" },
-      { "name": "qty", "title": "采购数量", "type": "input" },
+      { "name": "qty", "title": "入库数量", "type": "input", "required": true },
       { "name": "masterUnit", "title": "单位" },
-      { "name": "price", "title": "单价", "type": "input" },
-      { "name": "amount", "title": "采购金额" },
-      { "name": "wrinkles", "title": "纹路" },
-      { "name": "color", "title": "颜色" },
-      { "name": "purpose", "title": "用途" },
-      { "name": "packageModel", "title": "包装规格" },
-      { "name": "pecification", "title": "规格型号" },
-      { "name": "remark", "title": "备注" }
+      { "name": "price", "title": "单价" },
+      { "name": "amount", "title": "入库金额" },
+      { "name": "warehouseAreaName", "title": "仓位", "type": "input"  },
+      { "name": "wrinkles", "title": "纹路", "type": "input" },
+      { "name": "color", "title": "颜色", "type": "input" },
+      { "name": "thickness", "title": "厚度", "type": "input" },
+      { "name": "width", "title": "门幅" , "type": "input"},
+      { "name": "packageModel", "title": "包装规格", "type": "input" },
+      { "name": "retardantStandard", "title": "阻燃标准", "type": "input" },
+      { "name": "environmentStandard", "title": "环保标准", "type": "input" },
+      { "name": "surfaceEffect", "title": "表面效果" , "type": "input"},
+      { "name": "functions", "title": "其它功能" , "type": "input"},
+      { "name": "bottomSlab", "title": "底布" , "type": "input"},
+      { "name": "remark", "title": "备注", "type": "input" }
     ]
   },
   "show": {
     "fields": [
-      { "name": "billDate", "title": "采购日期", "type": "date", "required": true },
-      { "name": "supplierName", "title": "供应商名称", "type": "relatedParty", "required": true },
-      { "name": "deliveryDate", "title": "交货日期", "type": "date" },
+      { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "supplier", "required": true },
+      { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
+      { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [
-      { "name": "name", "title": "商品名称" },
-      { "name": "code", "title": "商品编号" },
+      { "name": "goodsName", "title": "商品名称" },
+      { "name": "goodsCode", "title": "商品编号" },
       { "name": "aliasCode", "title": "内部编号" },
-      { "name": "purchasedQty", "title": "采购在途数量" },
-      { "name": "remainQty", "title": "库存数量" },
-      { "name": "qty", "title": "采购数量" },
+      { "name": "qty", "title": "入库数量" },
       { "name": "masterUnit", "title": "单位" },
       { "name": "price", "title": "单价" },
-      { "name": "amount", "title": "采购金额" },
-      { "name": "wrinkles", "title": "纹路" },
+      { "name": "amount", "title": "入库金额" },
+      { "name": "warehouseAreaName", "title": "仓位" },
+      { "name": "wrinkles", "title": "纹路"},
       { "name": "color", "title": "颜色" },
-      { "name": "purpose", "title": "用途" },
+      { "name": "thickness", "title": "厚度" },
+      { "name": "width", "title": "门幅" },
       { "name": "packageModel", "title": "包装规格" },
-      { "name": "pecification", "title": "规格型号" },
+      { "name": "retardantStandard", "title": "阻燃标准" },
+      { "name": "environmentStandard", "title": "环保标准"},
+      { "name": "surfaceEffect", "title": "表面效果" },
+      { "name": "functions", "title": "其它功能"},
+      { "name": "bottomSlab", "title": "底布" },
       { "name": "remark", "title": "备注" }
     ]
   }

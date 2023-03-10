@@ -8,7 +8,7 @@
           class="pagination-list-container"
           :sub-name="subName"
           select-type="checkbox"
-          :primary-key="primaryKey"
+          :primary-key="props.primaryKey"
           :selected-items="selectedItems"
           :list-data="detailData"
           :properties="popupFields"
@@ -27,9 +27,9 @@
 import PaginationList from '@/components/list/paginationList'
 import { ref, defineEmits, defineExpose, defineProps } from 'vue'
 
-const props = defineProps(['store'])
-
-const { primaryKey, popupFields, subName } = props.store.getPopupDetailFields()
+const props = defineProps(['store', 'primaryKey'])
+console.log(props)
+const { popupFields, subName } = props.store.getPopupDetailFields()
 
 const detailData = ref()
 const drawer = ref()

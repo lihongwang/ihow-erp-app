@@ -96,7 +96,6 @@ export const usePurchaseOrderStore = defineStore({
     },
     getPopupDetailFields() {
       return {
-        primaryKey: pageInfo.popup.primaryKey,
         subName: pageInfo.popup.subName,
         popupFields: pageInfo.popup.fields,
       }

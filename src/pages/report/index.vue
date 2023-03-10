@@ -10,26 +10,40 @@
     <view class="page-content">
       <uni-section title="库存报表" :right="false" :show-line="true" type="line">
         <view class="info-item grid2">
-          <button size="mini" type="primary" @click="handleClick('/pages/report/reportStockDetail')">
-            库存汇总报表
-          </button>
-          <button size="mini" type="primary" @click="handleClick('/pages/report/reportSafeQty')">库存预警报表</button>
+          <view class="info-btn-wrap stock-detail" @click="handleClick('/pages/report/reportStockDetail')">
+            <img class="btn-img" src="/static/images/table-total.png" alt="库存汇总报表" />
+            <button size="mini" class="normal-btn">库存汇总报表</button>
+          </view>
+
+          <view class="info-btn-wrap safe-qty" @click="handleClick('/pages/report/reportSafeQty')">
+            <img class="btn-img" src="/static/images/warning.png" alt="库存预警报表" />
+            <button size="mini" class="normal-btn">库存预警报表</button>
+          </view>
         </view>
       </uni-section>
       <uni-section title="进度报表" :right="false" :show-line="true" type="line">
         <view class="info-item grid2">
-          <button size="mini" type="primary" @click="handleClick('/pages/report/saleOrderProcess')">
-            销售订单进度
-          </button>
-          <button size="mini" type="primary" @click="handleClick('/pages/report/purchaseOrderProcess')">
-            采购订单进度
-          </button>
+          <view class="info-btn-wrap sale-order-process" @click="handleClick('/pages/report/saleOrderProcess')">
+            <img class="btn-img" src="/static/images/sale.png" alt="销售订单进度" />
+            <button size="mini" class="normal-btn">销售订单进度</button>
+          </view>
+
+          <view class="info-btn-wrap purchase-order-process" @click="handleClick('/pages/report/purchaseOrderProcess')">
+            <img class="btn-img" src="/static/images/purchase.png" alt="采购订单进度" />
+            <button size="mini" class="normal-btn">采购订单进度</button>
+          </view>
         </view>
       </uni-section>
       <uni-section title="财务报表" :right="false" :show-line="true" type="line">
         <view class="info-item grid2">
-          <button size="mini" type="primary" @click="handleClick('/pages/report/reportReceivable')">应收款明细</button>
-          <button size="mini" type="primary" @click="handleClick('/pages/report/reportPayable')">应付款明细</button>
+          <view class="info-btn-wrap receivable" @click="handleClick('/pages/report/reportReceivable')">
+            <img class="btn-img" src="/static/images/receive.png" alt="应收款明细" />
+            <button size="mini" class="normal-btn">应收款明细</button>
+          </view>
+          <view class="info-btn-wrap payable" @click="handleClick('/pages/report/reportPayable')">
+            <img class="btn-img" src="/static/images/pay.png" alt="应付款明细" />
+            <button size="mini" class="normal-btn">应付款明细</button>
+          </view>
         </view></uni-section
       >
     </view>
@@ -46,16 +60,49 @@ const handleClick = (url) => {
 </script>
 
 <style lang="scss" scoped>
-.page-content {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  button {
-    width: 150px;
-    height: 50px;
+.report-page {
+  .page-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    button {
+      width: 120px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .info-item {
+    margin-top: 20px;
+  }
+  .info-btn-wrap {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    .btn-img {
+      background: #303f9f;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      padding: 10px;
+    }
+    &.safe-qty .btn-img {
+      background: #b388ff;
+    }
+    &.sale-order-process .btn-img {
+      background: #448aff;
+    }
+    &.purchase-order-process .btn-img {
+      background: #0277bd;
+    }
+    &.receivable .btn-img {
+      background: #00838f;
+    }
+    &.payable .btn-img {
+      background: #33691e;
+    }
   }
 }
 </style>

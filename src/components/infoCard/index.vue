@@ -6,39 +6,23 @@
           <i class="ti ti-users text-3xl"></i>
         </div>
         <div class="right">
-          <p>{{ title }}</p>
+          <p>{{ props.title }}</p>
           <h3 class="num">
-            {{ info }}
-            <span v-if="money">元</span>
+            {{ props.info }}
+            <span v-if="props.money || props.extra" class="extra">{{ props.extra || '元' }}</span>
           </h3>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
-export default {
-  props: {
-    money: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-    info: {
-      type: String,
-      default: '',
-    },
-  },
-  setup() {},
-  data() {},
-}
+<script setup>
+import { defineProps } from 'vue'
+const props = defineProps(['money', 'title', 'info', 'extra'])
 </script>
 <style scoped lang="scss">
 .item-wrap {
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 0.5rem;
   background-color: rgba(243, 244, 246, 1);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -66,11 +50,15 @@ export default {
     flex-direction: column;
     h3 {
       font-weight: 600;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       line-height: 2rem;
     }
+    .extra {
+      font-weight: 400;
+    }
     p {
-      font-weight: 500;
+      font-weight: 400;
+      font-size: 14px;
       color: rgba(156, 163, 175, 1);
     }
   }

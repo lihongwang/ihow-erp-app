@@ -62,10 +62,10 @@ import ReportGoodsSaleOutRank from './reportGoodsSaleOutRank'
 .chart-item {
   width: 100%;
   // .sale-amount {
-  //   height: 500px;
+  //   height: 400px;
   // }
   // .report-stock {
-  //   height: 500px;
+  //   height: 400px;
   // }
 }
 </style>

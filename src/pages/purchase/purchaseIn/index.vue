@@ -21,7 +21,7 @@
             <DetailCard v-for="(item, index) in store.list" :key="index">
               <template #header>
                 <view class="flex flex-row justify-between items-center">
-                  <view class="card-title"> {{ item.code }} </view>
+                  <view class="card-title"> {{ item[listTitle] }} </view>
                   <view class="card-sub-title">
                     <Tag :name="item.auditStatusEnum.name" />
                   </view>
@@ -104,6 +104,8 @@ import { usePage, useIndexPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseIn.json'
 const searchDialog = ref()
 const listFields = pageInfo.list.fields
+const listTitle = pageInfo.list.primaryTitleKey
+console.log(listTitle)
 const store = usePurchaseInStoreWithOut()
 const listRef = ref()
 const searchModel = ref({})

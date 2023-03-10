@@ -1,13 +1,13 @@
 <template>
   <view class="pagination-list">
     <scroll-view class="list" scroll-y="true">
-      <view v-for="item in listData" :key="item[props.primaryKey]" class="list-item">
+      <view v-for="item in listData" :key="item.id" class="list-item">
         <SelectItem
           :select-type="props.selectType"
           :item="item"
           :radio-selected-item="radioSelectedItem"
           :sub-title="item[props.subName]"
-          :checked="isChecked(item[props.primaryKey])"
+          :checked="isChecked(item.id)"
           :properties="props.properties"
           @onToggle="toggleCheck(item)"
         />
@@ -90,6 +90,7 @@ defineExpose({
   },
 })
 const isChecked = (key) => {
+  // edit 回显 primaryKey
   if (props.selectType === 'checkbox') {
     return !!props.selectedItems.find((c) => c[props.primaryKey] == key)
   } else if (props.selectType === 'radio') {
@@ -97,13 +98,13 @@ const isChecked = (key) => {
   }
 }
 const isNewChecked = (key) => {
-  return !!checked.value.find((c) => c[props.primaryKey] == key)
+  return !!checked.value.find((c) => c.id == key)
 }
 const toggleCheck = (item) => {
-  const key = props.primaryKey
+  // 弹出框选择用id
   if (props.selectType === 'checkbox') {
-    if (isNewChecked(item[key])) {
-      checked.value = checked.value.filter((c) => c[key] != item[key])
+    if (isNewChecked(item.id)) {
+      checked.value = checked.value.filter((c) => c.id != item.id)
     } else {
       checked.value = [...checked.value, item]
     }

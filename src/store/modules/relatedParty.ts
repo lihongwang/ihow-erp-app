@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { getList } from '@/apis/relatedParty'
+import { getList, getCustomerList, getSupplierList } from '@/apis/relatedParty'
 interface RelatedPartyState {
   list: any
   detail: any
@@ -23,6 +23,22 @@ export const useRelatedPartyStore = defineStore({
     init(data) {
       return new Promise((resolve) => {
         getList(data).then((res: any) => {
+          this.list = res.list
+          resolve(res)
+        })
+      })
+    },
+    initCustomer(data) {
+      return new Promise((resolve) => {
+        getCustomerList(data).then((res: any) => {
+          this.list = res.list
+          resolve(res)
+        })
+      })
+    },
+    initSupplier(data) {
+      return new Promise((resolve) => {
+        getSupplierList(data).then((res: any) => {
           this.list = res.list
           resolve(res)
         })

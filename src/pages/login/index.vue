@@ -96,11 +96,25 @@ const wxLogin = (params) => {
 //   })
 // }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .login-page {
-  height: calc(100vh - 100px);
+  height: 100vh;
   position: relative;
-
+  color: #606266;
+  &:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-image: url('/static/images/background/fog.jpg');
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+  }
   .mpwx-login {
     height: 100%;
 

@@ -5,11 +5,10 @@ interface AddPageProps {
   store: any
   detailFilterInfo: any
   detailKey: string
-  detailPrimaryKey: string
   formatDetail: any
 }
 export default (props: AddPageProps) => {
-  const { back, formData, detailDrawerRef, store, detailFilterInfo, detailKey, detailPrimaryKey, formatDetail } = props
+  const { back, formData, detailDrawerRef, store, detailFilterInfo, detailKey, formatDetail } = props
   const handleAddDetail = () => {
     const { keys, message } = detailFilterInfo
     let result = true
@@ -33,7 +32,7 @@ export default (props: AddPageProps) => {
   const handleDeleteItem = (tmp) => {
     const details = getDetails()
     formData.value = store.setFormData({
-      [detailKey]: details.filter((d) => d[detailPrimaryKey] !== tmp[detailPrimaryKey]),
+      [detailKey]: details.filter((d) => d.id !== tmp.id),
     })
   }
   const getSelectedItems = () => {

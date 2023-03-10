@@ -1,17 +1,5 @@
 import { objectToArray } from '@/utils/data'
 export const itemInfo = {
-  relatedPartyTypeEnum: {
-    title: '类型',
-    type: 'string',
-    'x-decorator': 'FormItem',
-    'x-component': 'Input',
-  },
-  categoryName: {
-    title: '分类名称',
-    type: 'string',
-    'x-decorator': 'FormItem',
-    'x-component': 'Input',
-  },
   code: {
     title: '单位编号',
     type: 'string',
@@ -30,8 +18,8 @@ export const itemInfo = {
     'x-decorator': 'FormItem',
     'x-component': 'Input',
   },
-  address: {
-    title: '详细地址',
+  settlementDays: {
+    title: '结算周期',
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Input',

@@ -64,8 +64,8 @@ const loginRules = {
   },
 }
 const loginModel = reactive({
-  companyCode: 'ALIBABA',
-  username: 'admin',
+  companyCode: 'ZHONGHUA',
+  username: '15979000884',
   password: 'a123456',
 })
 </script>

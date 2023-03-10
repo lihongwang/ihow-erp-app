@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import uniChart from 'uniapp-echarts/components/uni-chart/uni-chart'
-// #ifdef VUE2 || MP-WEIXIN
-const echarts = require('uniapp-echarts/static/echarts.min.js')
-// #endif
-import 'uniapp-echarts/static/echarts.min.js'
+import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart'
+// import '@/components/uniapp-echarts/static/echarts.min.js'
+// // #ifdef MP-WEIXIN
+// const echarts = require('../../../components/uniapp-echarts/static/echarts.min.js')
+// // #endif
 import { fixNumber, toMoney } from '@/utils/data'
 import { ref } from 'vue'
 import { useChart } from '@/hooks'
@@ -90,16 +90,16 @@ useChart({
           barWidth: 18,
           itemStyle: {
             normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                {
-                  offset: 0,
-                  color: '#ffe0b2',
-                },
-                {
-                  offset: 1,
-                  color: '#ef6c00',
-                },
-              ]),
+              // color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              //   {
+              //     offset: 0,
+              //     color: '#ffe0b2',
+              //   },
+              //   {
+              //     offset: 1,
+              //     color: '#ef6c00',
+              //   },
+              // ]),
             },
           },
         },
@@ -113,5 +113,6 @@ useChart({
 /* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
 .charts-box {
   width: 100%;
+  height: 400px;
 }
 </style>

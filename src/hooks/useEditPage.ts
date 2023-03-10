@@ -2,7 +2,6 @@ interface ShowPageProps {
   back: () => void
   detailDrawerRef: any
   detailKey: string
-  detailPrimaryKey: string
   detailFilterInfo: any
   editable: any
   formData: any
@@ -11,7 +10,7 @@ interface ShowPageProps {
 }
 import { onLoad } from '@dcloudio/uni-app'
 export default (props: ShowPageProps) => {
-  const { back, detailDrawerRef, detailKey, detailPrimaryKey, detailFilterInfo, formData, formatDetail, store } = props
+  const { back, detailDrawerRef, detailKey, detailFilterInfo, formData, formatDetail, store } = props
 
   onLoad((option: any) => {
     fetchData(option.id)
@@ -39,7 +38,7 @@ export default (props: ShowPageProps) => {
   const handleDeleteItem = (tmp) => {
     const details = getDetails()
     formData.value = store.setFormData({
-      [detailKey]: details.filter((d) => d[detailPrimaryKey] !== tmp[detailPrimaryKey]),
+      [detailKey]: details.filter((d) => d.id !== tmp.id),
     })
   }
 

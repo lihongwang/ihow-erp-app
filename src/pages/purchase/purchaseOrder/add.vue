@@ -55,7 +55,12 @@
         </view>
       </uni-forms>
     </view>
-    <PopupDetailDrawer ref="detailDrawerRef" :store="store" @onConfirm="handleDetailConfirm" />
+    <PopupDetailDrawer
+      ref="detailDrawerRef"
+      :primary-key="detailPrimaryKey"
+      :store="store"
+      @onConfirm="handleDetailConfirm"
+    />
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
@@ -80,6 +85,7 @@ const formFields = pageInfo.add.fields
 const detailFields = pageInfo.add.detailFields
 const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
+const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
 const store = usePurchaseOrderStoreWithOut()
 const detailDrawerRef = ref()
 store.resetFormData()
@@ -109,7 +115,6 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
   detailDrawerRef,
   store,
   detailKey, // 明细key
-  detailPrimaryKey: pageInfo.detail.detailPrimaryKey.add, // 明细回填key
   detailFilterInfo: {
     // 点添加明细，需要传递的前置条件
     message: '请先选择供应商',
@@ -119,6 +124,7 @@ const { handleAddDetail, handleDeleteItem, handleDetailConfirm, handleSave } = u
     // 弹出框点确定时，数据转换
     const { id, ...rest } = d
     return {
+      id,
       ...rest,
       goodsId: id,
       amount: fixNumber(d.qty * d.price, 2),
