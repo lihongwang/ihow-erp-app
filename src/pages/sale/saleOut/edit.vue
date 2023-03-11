@@ -47,6 +47,7 @@
                     v-for="info in detailFields"
                     :key="info.name"
                     :store="store"
+                    :field="info"
                     :title="info.title"
                     :item="detailItem"
                     :name="info.name"
@@ -86,7 +87,7 @@ import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
 import { useSaleOutStoreWithOut } from '@/store/modules/saleOut'
 import { fixNumber } from '@/utils/data'
-import { useTranslateAmount, useCustomer, useWarehouse, usePage, useEditPage } from '@/hooks'
+import { useSubscribe, useCustomer, useWarehouse, usePage, useEditPage } from '@/hooks'
 import pageInfo from '@/pageInfo/saleOut.json'
 const formFields = pageInfo.edit.fields
 const detailFields = pageInfo.edit.detailFields
@@ -108,7 +109,15 @@ const fieldContext = ref({
 // 仓库下拉列表数据获取
 useWarehouse((data) => (fieldContext.value.warehouseList = data))
 // 监听明细qty，联动计算amount
-useTranslateAmount(store)
+useSubscribe(store, (mutation, target) => {
+  if (mutation.events.key === 'qty') {
+    target.amount = fixNumber(target.qty * target.price, 2)
+    target.masterQty = fixNumber(Number(target.qty || 0) * Number(target.transforRate || 1), 3)
+  }
+  if (mutation.events.key === 'warehouseId') {
+    formData.value = store.updateDetailData([])
+  }
+})
 // page navbar title，返回的页面
 const { back, titleInfo } = usePage({
   pageInfo,

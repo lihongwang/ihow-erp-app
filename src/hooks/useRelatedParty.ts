@@ -4,5 +4,6 @@ export default (store, relatedParty) => {
     relatedPartyCode: relatedParty.code,
     relatedPartyName: relatedParty.name,
     settlementDays: relatedParty.settlementDays,
+    [store.detailKey]: [],
   })
 }

@@ -2,28 +2,28 @@
   <view class="chart-page page-wrapper">
     <view class="page-content">
       <view class="charts-wrap">
-        <uni-collapse>
+        <uni-collapse v-model="accordionVal">
           <uni-collapse-item title="销售额与采购额对比图">
             <view class="chart-item">
-              <PurchaseSale />
+              <PurchaseSale :refresh="refresh" />
             </view>
           </uni-collapse-item>
 
           <uni-collapse-item title="本年客户销售额排名">
             <view class="chart-item">
-              <SaleAmount />
+              <SaleAmount :refresh="refresh" />
             </view>
           </uni-collapse-item>
 
           <uni-collapse-item title="本年商品销售排名">
             <view class="chart-item">
-              <ReportGoodsSaleOutRank />
+              <ReportGoodsSaleOutRank :refresh="refresh" />
             </view>
           </uni-collapse-item>
 
           <uni-collapse-item title="库龄统计">
             <view class="chart-item report-stock">
-              <ReportStockDays />
+              <ReportStockDays :refresh="refresh" />
             </view>
           </uni-collapse-item>
         </uni-collapse>
@@ -33,10 +33,17 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import SaleAmount from './saleAmount'
 import PurchaseSale from './purchaseSale'
 import ReportStockDays from './reportStockDays'
 import ReportGoodsSaleOutRank from './reportGoodsSaleOutRank'
+import { onShow } from '@dcloudio/uni-app'
+const accordionVal = ref(['0', '1', '2', '3'])
+const refresh = ref(false)
+onShow(() => {
+  refresh.value = !refresh.value
+})
 </script>
 
 <style lang="scss">

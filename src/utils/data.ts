@@ -1,5 +1,3 @@
-import each from 'lodash/each'
-import union from 'lodash/union'
 import { create, all } from 'mathjs'
 export const objectToArray = (obj: any, keyName?: string) => {
   const arr: any = []
@@ -13,15 +11,6 @@ export const arrayToObject = (arr: any, key: string, format?: any) => {
   const obj: any = {}
   arr.forEach((a: any, i: number) => (obj[a[key]] = format ? format(a, i) : a))
   return obj
-}
-
-export const flatData = (data: any, childKey = 'children') => {
-  let result: any = []
-  each(data, (d: any) => {
-    result.push({ ...d })
-    d[childKey] && (result = union(result, flatData(d[childKey], childKey)))
-  })
-  return result
 }
 
 const math = create(all, {

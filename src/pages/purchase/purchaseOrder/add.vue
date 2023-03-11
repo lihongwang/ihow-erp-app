@@ -41,6 +41,7 @@
                     v-for="info in detailFields"
                     :key="info.name"
                     :store="store"
+                    :field="info"
                     :title="info.title"
                     :item="detailItem"
                     :name="info.name"
@@ -63,7 +64,6 @@
       :store="store"
       @onConfirm="handleDetailConfirm"
     />
-    <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
     </view>
@@ -74,14 +74,13 @@
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
 import PopupDetailDrawer from '@/components/drawer/detail'
-import RPDrawer from '@/components/drawer/relatedParty.vue'
 import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
 import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useSupplier, useWarehouse, usePage, useAddPage } from '@/hooks'
+import { useSubscribe, useSupplier, useWarehouse, usePage, useAddPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseOrder.json'
 const formFields = pageInfo.add.fields
 const detailFields = pageInfo.add.detailFields
@@ -105,7 +104,7 @@ const fieldContext = ref({
 // 仓库下拉列表数据获取
 useWarehouse((data) => (fieldContext.value.warehouseList = data))
 // 监听明细qty，联动计算amount
-useAmount(store)
+useSubscribe(store)
 // page navbar title，返回的页面
 const { back, titleInfo } = usePage({
   pageInfo,

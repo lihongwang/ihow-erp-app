@@ -10,16 +10,19 @@
     <RelatedPartyItem
       v-else-if="props.type === 'relatedParty'"
       :value="props.item[props.name]"
+      :item="props.item"
       @onSelect="props.fieldContext.handleSelectRelatedParty"
     />
     <Suppliertem
       v-else-if="props.type === 'supplier'"
       :value="props.item[props.name]"
+      :item="props.item"
       @onSelect="props.fieldContext.handleSelectRelatedParty"
     />
     <CustomerItem
       v-else-if="props.type === 'customer'"
       :value="props.item[props.name]"
+      :item="props.item"
       @onSelect="props.fieldContext.handleSelectRelatedParty"
     />
     <uni-data-select
@@ -27,8 +30,7 @@
       v-model="props.item[props.name]"
       :localdata="props.fieldContext.warehouseList"
     ></uni-data-select>
-    <uni-easyinput v-else-if="props.type === 'textarea'" v-model="props.item[props.name]" type="textarea" />
-    <uni-easyinput v-else v-model="props.item[props.name]" />
+    <uni-easyinput v-else v-model="props.item[props.name]" :type="props.field.inputType" />
   </view>
 </template>
 

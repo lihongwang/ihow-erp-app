@@ -44,6 +44,7 @@
                     v-for="info in detailItemInfoArray"
                     :key="info.name"
                     :store="store"
+                    :field="info"
                     :title="info.title"
                     :item="detailItem"
                     :name="info.name"
@@ -92,7 +93,7 @@ import RelatedPartyItem from '@/components/form/relatedParty'
 import { detailItemInfoArray } from '@/store/properties/purchaseIn'
 import { usePurchaseInStoreWithOut } from '@/store/modules/purchaseIn'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
+import { useSubscribe, useRelatedParty, useWarehouse, usePage, useAddPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseIn.json'
 console.log(JSON.stringify(detailItemInfoArray))
 const store = usePurchaseInStoreWithOut()
@@ -103,7 +104,7 @@ const warehouseList = ref([])
 // 仓库下拉列表数据获取
 useWarehouse((data) => (warehouseList.value = data))
 // 监听明细qty，联动计算amount
-useAmount(store)
+useSubscribe(store)
 // page navbar title，返回的页面
 const { back, titleInfo } = usePage({
   pageInfo,

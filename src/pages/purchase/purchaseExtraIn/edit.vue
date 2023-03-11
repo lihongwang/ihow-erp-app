@@ -49,6 +49,7 @@
                     v-for="info in detailFields"
                     :key="info.name"
                     :store="store"
+                    :field="info"
                     :title="info.title"
                     :item="detailItem"
                     :name="info.name"
@@ -87,7 +88,7 @@ import FormField from '@/components/form/FormField'
 import EditListItem from '@/components/list/editListItem'
 import { usePurchaseExtraInStoreWithOut } from '@/store/modules/purchaseExtraIn'
 import { fixNumber } from '@/utils/data'
-import { useAmount, useSupplier, useWarehouse, usePage, useEditPage } from '@/hooks'
+import { useSubscribe, useSupplier, useWarehouse, usePage, useEditPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseExtraIn.json'
 const formFields = pageInfo.edit.fields
 const detailFields = pageInfo.edit.detailFields
@@ -109,7 +110,7 @@ const fieldContext = ref({
 // 仓库下拉列表数据获取
 useWarehouse((data) => (fieldContext.value.warehouseList = data))
 // 监听明细qty，联动计算amount
-useAmount(store)
+useSubscribe(store)
 // page navbar title，返回的页面
 const { back, titleInfo } = usePage({
   pageInfo,

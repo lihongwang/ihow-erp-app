@@ -52,6 +52,12 @@ const props = defineProps(['money', 'title', 'info', 'extra'])
       font-weight: 600;
       font-size: 1.2rem;
       line-height: 2rem;
+      height: 30px;
+      width: 100%;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .extra {
       font-weight: 400;

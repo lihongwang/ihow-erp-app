@@ -9,7 +9,7 @@
 <script setup>
 import RPDrawer from '@/components/drawer/customer'
 import { ref, defineEmits, defineProps } from 'vue'
-const props = defineProps(['value'])
+const props = defineProps(['value', 'item'])
 const emits = defineEmits(['onSelect'])
 const relatedPartyDrawerRef = ref()
 const relatedParty = ref(null)
@@ -18,7 +18,14 @@ const handleRelatedPartyConfirm = ({ items }) => {
   emits('onSelect', items[0])
 }
 const getSelectedItems = () => {
-  return relatedParty.value ? [relatedParty.value] : []
+  return relatedParty.value
+    ? [relatedParty.value]
+    : [
+        {
+          id: props.item?.customerId || props.item?.relatedPartyId,
+          name: props.item?.customerName || props.item?.relatedPartyName,
+        },
+      ]
 }
 const handleClick = () => {
   relatedPartyDrawerRef.value.open(getSelectedItems())

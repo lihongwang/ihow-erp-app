@@ -51,22 +51,25 @@ export default (props: ReportProps) => {
   })
 
   const fetchData = (data = {}) => {
+    console.log(data)
     getDataByCode(code, {
-      ...data,
       ...searchModel.value,
       pageSize: pageInfo.value.pageSize,
       page: pageInfo.value.page,
+      ...data,
     }).then((res: any) => {
       tableData.value = res.list
       pageInfo.value = {
-        page: res.page,
+        page: res.page + 1,
         total: res.total,
         pageSize: res.pageSize,
       }
     })
   }
-  const handleChange = () => {
-    fetchData()
+  const handleChange = ({ current }) => {
+    fetchData({
+      page: current - 1,
+    })
   }
   const back = () => {
     uni.switchTab({

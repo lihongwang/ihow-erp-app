@@ -11,17 +11,19 @@ import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart
 // const echarts = require('../../../components/uniapp-echarts/static/echarts.min.js')
 // // #endif
 import { fixNumber, toMoney } from '@/utils/data'
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { useChart } from '@/hooks'
+const props = defineProps(['refresh'])
 const chartOpts = ref()
 useChart({
+  props,
   code: 'ReportStockDays',
   format: (data) => {
     const values = []
     const labels = []
     const listData = data?.list || []
     listData.forEach((item) => {
-      values.push(item.remainQty)
+      values.push(9000)
       labels.push(item.stockDays)
     })
     chartOpts.value = {
@@ -29,17 +31,7 @@ useChart({
       xAxis: {
         show: false,
       },
-      tooltip: {
-        show: true,
-        formatter: function (param) {
-          const { name, value } = param
-          return `${name}： ${toMoney(value)}`
-        },
-        textStyle: {
-          color: '#666666',
-          fontSize: '30',
-        },
-      },
+
       grid: {
         x: 15,
         y: 15,
@@ -54,11 +46,10 @@ useChart({
             verticalAlign: 'bottom',
             align: 'left',
             padding: [0, 0, 15, 10], //文字与柱状图的距离
-            rich: {},
             textStyle: {
               color: '#333',
               fontWeight: 'normal',
-              fontSize: '50px',
+              fontSize: '18px',
             },
           },
           data: labels,
@@ -75,7 +66,7 @@ useChart({
             textStyle: {
               color: '#333',
               fontWeight: 'bold',
-              fontSize: '50px',
+              fontSize: '18px',
             },
             formatter: function (value) {
               return `${toMoney(fixNumber(Number(value), 2))}`
@@ -88,7 +79,14 @@ useChart({
           type: 'bar',
           showBackground: true,
           data: values,
-          barWidth: '34px',
+          barWidth: '18px',
+          label: {
+            normal: {
+              fontWeight: 'bold',
+              rich: {},
+              fontSize: '18px',
+            },
+          },
           itemStyle: {
             normal: {
               color: '#d50000',

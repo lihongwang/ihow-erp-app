@@ -10,11 +10,15 @@ import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart
 // // #ifdef MP-WEIXIN
 // const echarts = require('../../../components/uniapp-echarts/static/echarts.min.js')
 // // #endif
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { useChart } from '@/hooks'
-import { toMoney } from '@/utils/data'
+import { toMoney, fixNumber } from '@/utils/data'
+const props = defineProps(['refresh'])
+
 const chartOpts = ref()
+
 useChart({
+  props,
   code: 'PurchaseSale!',
   format: (data = []) => {
     const salesData = []
@@ -28,7 +32,7 @@ useChart({
         trigger: 'item',
         formatter: function (param) {
           const { name, value } = param
-          return `${name}： ${toMoney(value)} 元`
+          return `${name}： ${toMoney(fixNumber(value / 10000, 2))} 万元`
         },
         axisPointer: {
           // 坐标轴指示器，坐标轴触发有效
@@ -36,18 +40,20 @@ useChart({
         },
       },
       grid: {
-        left: 20,
-        right: 20,
-        bottom: 15,
-        top: 40,
+        x: 15,
+        y: 35,
+        x2: 25,
+        y2: 15,
         containLabel: true,
       },
       legend: {
         data: ['销售额', '采购额'],
         left: '45%',
-        top: 50,
+        top: 10,
         textStyle: {
-          color: '#666666',
+          color: '#333',
+          fontWeight: 'bold',
+          fontSize: '18px',
         },
         itemWidth: 15,
         itemHeight: 10,
@@ -55,6 +61,7 @@ useChart({
       },
       xAxis: {
         name: '月',
+        nameGap: 5,
         type: 'category',
         data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         axisLine: {
@@ -64,14 +71,21 @@ useChart({
         },
         axisLabel: {
           textStyle: {
-            color: '#666666',
+            color: '#333',
+            fontWeight: 'bold',
+            fontSize: '18px',
           },
         },
       },
 
       yAxis: [
         {
-          name: '元',
+          show: true,
+          name: '万元',
+          nameGap: 10,
+          nameTextStyle: {
+            padding: [0, 0, 5, -35],
+          },
           type: 'value',
           // axisLine: {
           //   show: false,
@@ -79,12 +93,14 @@ useChart({
           //     color: "#cdd5e2",
           //   },
           // },
-          splitLine: {
-            show: false,
-          },
           axisLabel: {
             textStyle: {
-              color: '#666666',
+              color: '#333',
+              fontWeight: 'bold',
+              fontSize: '18px',
+            },
+            formatter: function (value) {
+              return `${toMoney(fixNumber(Number(value) / 10000, 2))}`
             },
           },
           axisLine: {
@@ -98,9 +114,10 @@ useChart({
         {
           name: '销售额',
           type: 'bar',
-          barWidth: '16px',
+          barWidth: '12px',
           itemStyle: {
             normal: {
+              color: '#ef6c00',
               // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               //   {
               //     offset: 0,
@@ -120,7 +137,7 @@ useChart({
         {
           name: '采购额',
           type: 'bar',
-          barWidth: '18px',
+          barWidth: '12px',
           itemStyle: {
             normal: {
               color: '#29acff',

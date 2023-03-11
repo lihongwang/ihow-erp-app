@@ -5,6 +5,7 @@ export default (store, relatedParty) => {
         supplierCode: relatedParty.code,
         supplierName: relatedParty.name,
         settlementDays: relatedParty.settlementDays,
+        [store.detailKey]: [],
       })
     : store.getFormData()
 }

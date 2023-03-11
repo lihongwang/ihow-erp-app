@@ -11,14 +11,16 @@ import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart
 // const echarts = require('../../../components/uniapp-echarts/static/echarts.min.js')
 // // #endif
 import { fixNumber, toMoney } from '@/utils/data'
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { useChart } from '@/hooks'
+const props = defineProps(['refresh'])
 const chartOpts = ref()
 useChart({
+  props,
   code: 'SaleAmount!',
   format: (data) => {
-    const values = []
-    const labels = []
+    const values = [1, 2, 3, 4, 5, 6, 7]
+    const labels = [1, 2, 3, 4, 5, 6, 7]
     const listData = data?.list || []
     listData
       .sort((a, b) => a.saleAmount - b.saleAmount)
@@ -40,11 +42,10 @@ useChart({
         },
       },
       grid: {
-        left: 20,
-        right: 20,
-        bottom: 15,
-        top: 40,
-        containLabel: true,
+        x: 15,
+        y: 15,
+        x2: 15,
+        y2: 15,
       },
       yAxis: [
         {
@@ -57,7 +58,7 @@ useChart({
             textStyle: {
               color: '#333',
               fontWeight: 'normal',
-              fontSize: '14',
+              fontSize: '18px',
             },
           },
           data: labels,
@@ -73,7 +74,7 @@ useChart({
             textStyle: {
               color: '#333',
               fontWeight: 'bold',
-              fontSize: '16',
+              fontSize: '18px',
             },
             formatter: function (value) {
               return `${toMoney(fixNumber(Number(value), 2))} 元`

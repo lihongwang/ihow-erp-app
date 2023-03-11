@@ -15,7 +15,9 @@ export const useRelatedPartyStore = defineStore({
     list: [],
     detail: {},
   }),
-  getters: {},
+  getters: {
+    detailKey: () => _detailKey,
+  },
   actions: {
     resetState() {
       this.list = []

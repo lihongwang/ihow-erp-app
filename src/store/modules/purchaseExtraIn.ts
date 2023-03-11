@@ -52,7 +52,9 @@ export const usePurchaseExtraInStore = defineStore({
       [_detailKey]: [],
     },
   }),
-  getters: {},
+  getters: {
+    detailKey: () => _detailKey,
+  },
   actions: {
     resetState() {
       this.list = []
