@@ -69,7 +69,6 @@
       :store="store"
       @onConfirm="handleDetailConfirm"
     />
-    <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
     <view class="save-btn" title="保存" @click="handleSave">
       <img class="save-img" src="/static/images/save-blue.png" alt="保存" />
     </view>
@@ -80,7 +79,6 @@
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
 import PopupDetailDrawer from '@/components/drawer/detail'
-import RPDrawer from '@/components/drawer/relatedParty.vue'
 import DetailCard from '@/components/card/detailCard'
 import ConfirmBtn from '@/components/button/confirm'
 import FormField from '@/components/form/FormField'
