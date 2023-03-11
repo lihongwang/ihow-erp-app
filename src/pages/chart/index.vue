@@ -2,35 +2,37 @@
   <view class="chart-page page-wrapper">
     <view class="page-content">
       <view class="charts-wrap">
-        <bar />
-        <view class="chart-item">
-          <uni-section class="mb-10" title="销售额与采购额对比图" type="line">
-            <PurchaseSale />
-          </uni-section>
-        </view>
+        <uni-collapse>
+          <uni-collapse-item title="销售额与采购额对比图">
+            <view class="chart-item">
+              <PurchaseSale />
+            </view>
+          </uni-collapse-item>
 
-        <view class="chart-item">
-          <uni-section class="mb-10 sale-amount" title="本年客户销售额排名" type="line">
-            <SaleAmount />
-          </uni-section>
-        </view>
-        <view class="chart-item">
-          <uni-section class="mb-10" title="本年商品销售排名" type="line">
-            <ReportGoodsSaleOutRank />
-          </uni-section>
-        </view>
-        <view class="chart-item report-stock">
-          <uni-section class="mb-10" title="库龄统计" type="line">
-            <ReportStockDays />
-          </uni-section>
-        </view>
+          <uni-collapse-item title="本年客户销售额排名">
+            <view class="chart-item">
+              <SaleAmount />
+            </view>
+          </uni-collapse-item>
+
+          <uni-collapse-item title="本年商品销售排名">
+            <view class="chart-item">
+              <ReportGoodsSaleOutRank />
+            </view>
+          </uni-collapse-item>
+
+          <uni-collapse-item title="库龄统计">
+            <view class="chart-item report-stock">
+              <ReportStockDays />
+            </view>
+          </uni-collapse-item>
+        </uni-collapse>
       </view>
     </view>
   </view>
 </template>
 
 <script setup>
-import bar from './bar'
 import SaleAmount from './saleAmount'
 import PurchaseSale from './purchaseSale'
 import ReportStockDays from './reportStockDays'

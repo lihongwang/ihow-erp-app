@@ -35,13 +35,16 @@ useChart({
           const { name, value } = param
           return `${name}： ${toMoney(value)}`
         },
+        textStyle: {
+          color: '#666666',
+          fontSize: '30',
+        },
       },
       grid: {
-        left: 20,
-        right: 20,
-        bottom: 15,
-        top: 40,
-        containLabel: true,
+        x: 15,
+        y: 15,
+        x2: 15,
+        y2: 15,
       },
       yAxis: [
         {
@@ -51,10 +54,11 @@ useChart({
             verticalAlign: 'bottom',
             align: 'left',
             padding: [0, 0, 15, 10], //文字与柱状图的距离
+            rich: {},
             textStyle: {
               color: '#333',
               fontWeight: 'normal',
-              fontSize: '14',
+              fontSize: '50px',
             },
           },
           data: labels,
@@ -67,10 +71,11 @@ useChart({
             verticalAlign: 'bottom',
             align: 'right',
             padding: [0, 10, 15, 0], //数据与图形的距离
+            rich: {},
             textStyle: {
               color: '#333',
               fontWeight: 'bold',
-              fontSize: '16',
+              fontSize: '50px',
             },
             formatter: function (value) {
               return `${toMoney(fixNumber(Number(value), 2))}`
@@ -83,7 +88,7 @@ useChart({
           type: 'bar',
           showBackground: true,
           data: values,
-          barWidth: '18px',
+          barWidth: '34px',
           itemStyle: {
             normal: {
               color: '#d50000',
