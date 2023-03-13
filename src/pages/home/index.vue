@@ -11,28 +11,26 @@
     </Navbar>
     <uni-notice-bar show-close show-icon scrollable text="欢迎使用皓网ERP" />
     <view class="content-item info-content">
-      <view class="info-item grid3">
-        <InfoCard
-          title="今日采购额"
-          :money="true"
-          extra="万元"
-          :info="formatMoney(homeData?.totayPurchaseAmount || 223)"
-        />
-        <InfoCard title="本月采购额" :money="true" extra="万元" :info="formatMoney(homeData?.monthPurchaseAmount)" />
-        <InfoCard title="本年采购额" :money="true" extra="万元" :info="formatMoney(homeData?.yearPurchaseAmount)" />
-      </view>
-      <view class="info-item grid3">
-        <InfoCard title="今日销售额" :money="true" extra="万元" :info="formatMoney(homeData?.todaySaleAmount)" />
-        <InfoCard title="本月销售额" :money="true" extra="万元" :info="formatMoney(homeData?.monthSaleAmount)" />
-        <InfoCard title="本年销售额" :money="true" extra="万元" :info="formatMoney(homeData?.yearSaleAmount)" />
+      <view class="info-item grid2">
+        <InfoText title="今日销售" :money="true" extra="万元" :info="formatMoney(homeData?.todaySaleAmount)" />
+        <InfoText title="今日采购" :money="true" extra="万元" :info="formatMoney(homeData?.totayPurchaseAmount)" />
       </view>
       <view class="info-item grid2">
-        <InfoCard title="未完成采购订单" :info="homeData?.unfinishedPurchaseOrder" />
-        <InfoCard title="未完成销售订单" :info="homeData?.unfinishedSaleOrder" />
+        <InfoText title="本月销售" :money="true" extra="万元" :info="formatMoney(homeData?.monthSaleAmount)" />
+        <InfoText title="本月采购" :money="true" extra="万元" :info="formatMoney(homeData?.monthPurchaseAmount)" />
       </view>
       <view class="info-item grid2">
-        <InfoCard title="当前库存数量" :info="homeData?.currentStockQty" />
-        <InfoCard title="当前库存金额" :money="true" extra="万元" :info="formatMoney(homeData?.currentStockAmount)" />
+        <InfoText title="本年销售" :money="true" extra="万元" :info="formatMoney(homeData?.yearSaleAmount)" />
+        <InfoText title="本年采购" :money="true" extra="万元" :info="formatMoney(homeData?.yearPurchaseAmount)" />
+      </view>
+
+      <view class="info-item grid2">
+        <InfoText title="采购未完成" :info="homeData?.unfinishedPurchaseOrder" extra="笔" />
+        <InfoText title="销售未完成" :info="homeData?.unfinishedSaleOrder" extra="笔" />
+      </view>
+      <view class="info-item grid2">
+        <InfoText title="库存数量" :info="homeData?.currentStockQty" />
+        <InfoText title="库存金额" :money="true" extra="万元" :info="formatMoney(homeData?.currentStockAmount)" />
       </view>
     </view>
     <uni-section class="mb-10" title="采购" type="line">
@@ -76,7 +74,7 @@
 <script setup>
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
-import InfoCard from '@/components/infoCard'
+import InfoText from '@/components/infoCard/infoText'
 import { getHomeData } from '@/apis'
 import { onShow } from '@dcloudio/uni-app'
 import { toMoney, fixNumber } from '@/utils/data'
@@ -98,6 +96,9 @@ const handleClick = (url) => {
 
 <style lang="scss" scoped>
 .home-page {
+  .info-content {
+    padding-top: 10px !important;
+  }
   .info-content,
   .action-content {
     box-sizing: border-box;

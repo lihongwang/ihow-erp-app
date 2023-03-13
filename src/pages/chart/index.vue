@@ -26,6 +26,11 @@
               <ReportStockDays :refresh="refresh" />
             </view>
           </uni-collapse-item>
+          <uni-collapse-item title="利润分析">
+            <view class="chart-item report-profit">
+              <ReportProfit :refresh="refresh" />
+            </view>
+          </uni-collapse-item>
         </uni-collapse>
       </view>
     </view>
@@ -37,6 +42,7 @@ import { ref } from 'vue'
 import SaleAmount from './saleAmount'
 import PurchaseSale from './purchaseSale'
 import ReportStockDays from './reportStockDays'
+import ReportProfit from './reportProfit'
 import ReportGoodsSaleOutRank from './reportGoodsSaleOutRank'
 import { onShow } from '@dcloudio/uni-app'
 const accordionVal = ref(['0', '1', '2', '3'])

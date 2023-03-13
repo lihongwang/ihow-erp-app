@@ -12,8 +12,9 @@ export default (props: ChartProps) => {
   watch(
     () => props.props.refresh,
     () => {
-      getDataByCode(code, params).then(format)
+      setTimeout(() => {
+        getDataByCode(code, params).then(format)
+      }, 100)
     }
   )
-  getDataByCode(code, params).then(format)
 }

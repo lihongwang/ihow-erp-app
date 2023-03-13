@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <view class="flex flex-row items-center justify-start">
+  <view class="w-full flex flex-row items-center justify-start">
     <uni-datetime-picker
       v-if="props.type === 'date'"
       v-model="props.item[props.name]"
@@ -28,6 +28,7 @@
     <uni-data-select
       v-else-if="props.type == 'warehouse'"
       v-model="props.item[props.name]"
+      class="w-full select-item"
       :localdata="props.fieldContext.warehouseList"
     ></uni-data-select>
     <uni-easyinput v-else v-model="props.item[props.name]" :type="props.field.inputType" />

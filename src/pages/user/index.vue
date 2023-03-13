@@ -100,7 +100,7 @@ const icons = {
 const goToPage = (url) => {
   // if (this.login) {
   uni.navigateTo({
-    url: url,
+    url: `/subPages/user/${url}`,
   })
   // } else {
   // uni.navigateTo({

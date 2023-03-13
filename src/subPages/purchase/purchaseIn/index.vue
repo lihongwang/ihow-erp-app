@@ -56,15 +56,21 @@
               </template>
               <template #footer>
                 <view gutter="16" class="flex flex-row justify-center">
-                  <button size="mini" class="btn" :disabled="!checkEditable(item)" @click="handleEditClick(item.id)">
+                  <button
+                    size="mini"
+                    class="btn normal-btn"
+                    :disabled="!checkEditable(item)"
+                    @click="handleEditClick(item.id)"
+                  >
                     <img
                       :src="`/static/images/${checkEditable(item) ? 'edit-blue.png' : 'edit-disabled.png'}`"
-                      class="btn-img"
+                      class="btn-img normal-btn"
                       alt="编辑"
                     />
                     <span>编辑</span>
                   </button>
-                  <button size="mini" class="btn" @click="handleDetailClick(item.id)">
+                  <view class="btn-divider"></view>
+                  <button size="mini" class="btn border-left-btn normal-btn" @click="handleDetailClick(item.id)">
                     <img src="/static/images/list-details-blue.png" class="btn-img" alt="详情" />
                     <span>查看详情</span>
                   </button>

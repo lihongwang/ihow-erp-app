@@ -8,6 +8,9 @@
   font-weight: bold;
   font-size: 16px !important;
 }
+.uni-forms-item__content {
+  min-width: 0;
+}
 .uni-grid {
   .grid-item-box {
     display: flex;
@@ -33,6 +36,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.w-full {
+  width: 100%;
 }
 .row-center {
   display: flex;
@@ -100,7 +106,7 @@
 @for $i from 1 through 10 {
   .grid#{$i} {
     display: grid;
-    grid-template-columns: repeat($i, auto);
+    grid-template-columns: repeat($i, 1fr);
     column-gap: 10px;
   }
 }
@@ -139,6 +145,9 @@
 .btn-img {
   width: 16px;
   height: 16px;
+}
+.btn-divider {
+  border-left: 1px solid #d9d9d9;
 }
 /* #ifdef MP-WEIXIN */
 .detail-card {

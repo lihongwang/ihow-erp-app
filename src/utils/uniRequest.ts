@@ -27,6 +27,7 @@ const request = (obj) => {
       method: obj.method,
       data: obj.data,
       header: {
+        'Endpoint-Client': 'MINIAPP',
         'content-type': 'application/json',
         'X-AUTH-TOKEN': getToken(),
         ...obj.header,

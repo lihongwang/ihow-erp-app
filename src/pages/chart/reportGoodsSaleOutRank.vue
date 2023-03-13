@@ -24,12 +24,14 @@ useChart({
     const values = []
     const labels = []
     const listData = data?.list || []
+    let len
+    if (listData.length < 9) len = listData.length
     listData
       .sort((a, b) => a.outAmount - b.outAmount)
       .slice(0, 9)
-      .forEach((item) => {
+      .forEach((item, index) => {
         values.push(item.outAmount)
-        labels.push(item.goodsName)
+        labels.push(`No.${(len || 9) - index} ${item.goodsName}`)
       })
     chartOpts.value = {
       backgroundColor: '#fff',

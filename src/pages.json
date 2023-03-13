@@ -79,48 +79,6 @@
         "navigationBarTitleText": "我的",
         "navigationStyle": "custom"
       }
-    },
-    {
-      "path": "pages/user/account",
-      "style": {
-        "navigationBarTitleText": "帐号管理",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/user/about",
-      "style": {
-        "navigationBarTitleText": "关于我们",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/user/feedback",
-      "style": {
-        "navigationBarTitleText": "问题反馈",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/user/service",
-      "style": {
-        "navigationBarTitleText": "服务条款及协议",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/user/message",
-      "style": {
-        "navigationBarTitleText": "新消息通知",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/user/contact",
-      "style": {
-        "navigationBarTitleText": "联系我们",
-        "navigationStyle": "custom"
-      }
     }
   ],
   "subPackages": [
@@ -293,6 +251,48 @@
           "style": {
             "navigationStyle": "custom",
             "navigationBarTitleText": "零售出库详情"
+          }
+        },
+        {
+          "path": "user/account",
+          "style": {
+            "navigationBarTitleText": "帐号管理",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "user/about",
+          "style": {
+            "navigationBarTitleText": "关于我们",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "user/feedback",
+          "style": {
+            "navigationBarTitleText": "问题反馈",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "user/service",
+          "style": {
+            "navigationBarTitleText": "服务条款及协议",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "user/message",
+          "style": {
+            "navigationBarTitleText": "新消息通知",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "user/contact",
+          "style": {
+            "navigationBarTitleText": "联系我们",
+            "navigationStyle": "custom"
           }
         }
       ]
