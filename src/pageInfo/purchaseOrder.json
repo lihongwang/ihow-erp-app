@@ -48,6 +48,7 @@
     ]
   },
   "list": {
+    "primaryTitleKey": "code",
     "fields": [
       { "name": "supplierName", "title": "供应商" },
       { "name": "code", "title": "采购单号" },

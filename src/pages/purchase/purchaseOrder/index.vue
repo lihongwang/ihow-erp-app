@@ -103,8 +103,8 @@ import { ref } from 'vue'
 import DetailCard from '@/components/card/detailCard'
 import ListItem from '@/components/list/listItem'
 import Navbar from '@/components/pageNavbar'
-import Tag from '@/components/tag'
 import FormField from '@/components/form/FormField'
+import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
 import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
@@ -114,7 +114,6 @@ const listFields = pageInfo.list.fields
 const listTitle = pageInfo.list.primaryTitleKey
 const searchFields = pageInfo.search.fields
 const fieldContext = ref({})
-console.log(searchFields)
 const searchDialog = ref()
 const store = usePurchaseOrderStoreWithOut()
 const listRef = ref()

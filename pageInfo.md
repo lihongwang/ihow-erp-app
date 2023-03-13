@@ -50,14 +50,30 @@
   },
   "add": {
     "fields": [ // 新增 主表form字段
-     { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
+      { "name": "billDate", "title": "入库日期", "type": "date", "required": true },
       { "name": "relatedPartyName", "title": "供应商名称", "type": "relatedParty", "required": true },
+      { "name": "relatedPartyName", "title": "供应商名称", "type": "customer", "required": true },
       { "name": "warehouseId", "title": "入库仓库", "type": "warehouse", "required": true },
       { "name": "deliveryCode", "title": "发货单号", "type": "input" },
       { "name": "remark", "title": "备注", "type": "input" }
     ],
     "detailFields": [ // 新增 从表明细字段
-     
+      { "name": "batchNumber", "title": "批次号" },
+      { "name": "goodsName", "title": "商品名称" },
+      { "name": "goodsCode", "title": "商品编号" },
+      { "name": "aliasCode", "title": "内部编号" },
+      { "name": "purchaseQty", "title": "采购数量" },
+      { "name": "qty", "title": "入库数量", "type": "input" },
+      { "name": "masterUnit", "title": "单位" },
+      { "name": "price", "title": "单价" },
+      { "name": "amount", "title": "入库金额" },
+      { "name": "warehouseAreaName", "title": "仓位" },
+      { "name": "wrinkles", "title": "纹路" },
+      { "name": "color", "title": "颜色" },
+      { "name": "purpose", "title": "用途" },
+      { "name": "packageModel", "title": "包装规格" },
+      { "name": "pecification", "title": "规格型号" },
+      { "name": "remark", "title": "备注" }
     ]
   },
   "edit": {

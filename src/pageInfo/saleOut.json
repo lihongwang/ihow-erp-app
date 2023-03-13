@@ -52,6 +52,7 @@
     ]
   },
   "list": {
+    "primaryTitleKey": "code",
     "fields": [
       { "name": "customerName", "title": "客户" },
       { "name": "code", "title": "出库单号" },

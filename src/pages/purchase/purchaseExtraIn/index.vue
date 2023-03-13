@@ -71,11 +71,14 @@
           @close="handleSearchClose"
         >
           <uni-forms :model="searchModel" label-width="110px">
-            <uni-forms-item label="供应商名称">
-              <uni-easyinput v-model="searchModel.supplierName1" class="list-val" />
-            </uni-forms-item>
-            <uni-forms-item label="供应商编号">
-              <uni-easyinput v-model="searchModel.supplierCode1" class="list-val" />
+            <uni-forms-item v-for="field in searchFields" :key="field.name" :label="field.title">
+              <FormField
+                :field="field"
+                :type="field.type"
+                :name="field.name"
+                :item="searchModel"
+                :field-context="fieldContext"
+              />
             </uni-forms-item>
           </uni-forms>
         </uni-popup-dialog>
@@ -100,6 +103,7 @@ import { ref } from 'vue'
 import DetailCard from '@/components/card/detailCard'
 import ListItem from '@/components/list/listItem'
 import Navbar from '@/components/pageNavbar'
+import FormField from '@/components/form/FormField'
 import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
 import List from '@/components/list/list'
@@ -108,6 +112,8 @@ import { usePage, useIndexPage } from '@/hooks'
 import pageInfo from '@/pageInfo/purchaseExtraIn.json'
 const listFields = pageInfo.list.fields
 const listTitle = pageInfo.list.primaryTitleKey
+const searchFields = pageInfo.search.fields
+const fieldContext = ref({})
 const searchDialog = ref()
 const store = usePurchaseExtraInStoreWithOut()
 const listRef = ref()
