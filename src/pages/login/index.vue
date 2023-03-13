@@ -34,7 +34,6 @@ import { appLogin, bundle } from '@/apis/user'
 const unbundled = ref(false)
 const wxLogined = ref(false)
 const submit = (value) => {
-  console.log(value)
   let method = appLogin
   // #ifdef MP-WEIXIN
   method = bundle
@@ -67,7 +66,6 @@ const submit = (value) => {
 }
 const getInfo = async () => {
   const res = await getUserProfile()
-  console.log(res)
   if (res.errMsg === 'getUserProfile:ok') {
     wxLogin({
       signature: res.signature,

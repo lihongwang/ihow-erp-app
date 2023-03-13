@@ -1,11 +1,11 @@
 {
   "title": "销售订单",
   "url": {
-    "add": "/pages/sale/saleOrder/add",
-    "edit": "/pages/sale/saleOrder/edit?id=",
+    "add": "/subPages/sale/saleOrder/add",
+    "edit": "/subPages/sale/saleOrder/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/sale/saleOrder/index",
-    "show": "/pages/sale/saleOrder/show?id="
+    "index": "/subPages/sale/saleOrder/index",
+    "show": "/subPages/sale/saleOrder/show?id="
   },
   "search": {
     "searchKey": "customerName1",

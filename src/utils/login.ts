@@ -1,19 +1,15 @@
 import { throttle, currentPage } from './tools'
 // 获取登录凭证（code）
 export function getWeixinCode() {
-  console.log('getWeixinCode: in')
   return new Promise((resolve, reject) => {
     uni.getProvider({
       service: 'oauth',
       success: function (res) {
-        console.log('getWeixinCode: success')
-        console.log(res)
         //微信端
         if (~(res.provider as any).indexOf('weixin')) {
           //微信登录
           uni.login({
             success(res) {
-              console.log(`iniLogin: ${res.code}`)
               resolve(res.code)
             },
             fail(res) {

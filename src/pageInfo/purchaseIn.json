@@ -1,11 +1,11 @@
 {
   "title": "采购入库单",
   "url": {
-    "add": "/pages/purchase/purchaseIn/add",
-    "edit": "/pages/purchase/purchaseIn/edit?id=",
+    "add": "/subPages/purchase/purchaseIn/add",
+    "edit": "/subPages/purchase/purchaseIn/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/purchase/purchaseIn/index",
-    "show": "/pages/purchase/purchaseIn/show?id="
+    "index": "/subPages/purchase/purchaseIn/index",
+    "show": "/subPages/purchase/purchaseIn/show?id="
   },
   "search": {
     "searchKey": "supplierName1",

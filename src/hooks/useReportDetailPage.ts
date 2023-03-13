@@ -5,11 +5,14 @@ interface ReportProps {
   code: any
   pageInfo: any
   tableData: any
+  hasSearched: any
+  searchKey: string
+  filterModel: any
   searchModel: any
   searchDialog: any
 }
 export default (props: ReportProps) => {
-  const { searchDialog, code, searchModel, pageInfo, tableData } = props
+  const { searchDialog, code, filterModel, hasSearched, searchKey, searchModel, pageInfo, tableData } = props
   const fabPattern = {
     color: '#7A7E83',
     backgroundColor: '#fff',
@@ -51,8 +54,8 @@ export default (props: ReportProps) => {
   })
 
   const fetchData = (data = {}) => {
-    console.log(data)
-    getDataByCode(code, {
+    return getDataByCode(code, {
+      ...filterModel.value,
       ...searchModel.value,
       pageSize: pageInfo.value.pageSize,
       page: pageInfo.value.page,
@@ -65,6 +68,10 @@ export default (props: ReportProps) => {
         pageSize: res.pageSize,
       }
     })
+  }
+  const fetchFilterData = (data = {}) => {
+    filterModel.value = data
+    return fetchData({ page: 0 })
   }
   const handleChange = ({ current }) => {
     fetchData({
@@ -82,7 +89,44 @@ export default (props: ReportProps) => {
     if (info.type === 'date') return data[info.name] ? dayjs(new Date(data[info.name])).format('YYYY-MM-DD') : ''
     return data[info.name]
   }
+  const handleSearch = (res) => {
+    fetchData({
+      [searchKey]: res.value,
+      page: 0,
+    })
+  }
+  const handleSearchClose = () => {
+    searchDialog.value.close()
+  }
+  const handleSearchConfirm = () => {
+    fetchData({ page: 0 }).then(() => {
+      searchDialog.value.close()
+      hasSearched.value = true
+    })
+  }
+  const getSearchModelKeys = () => {
+    const keys: any = []
+    Object.keys(searchModel.value).forEach((key) => {
+      if (searchModel.value[key]) keys.push(key)
+    })
+    return keys
+  }
+  const emptySearch = () => {
+    Object.keys(searchModel.value).forEach((key) => {
+      searchModel.value[key] = ''
+    })
+    hasSearched.value = false
+    fetchData({
+      page: 0,
+    })
+  }
   return {
+    emptySearch,
+    getSearchModelKeys,
+    handleSearch,
+    handleSearchClose,
+    handleSearchConfirm,
+    fetchFilterData,
     fetchData,
     fabPattern,
     fabContent,

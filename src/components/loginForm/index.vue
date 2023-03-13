@@ -30,7 +30,6 @@ const submit = (formRef) => {
   formRef
     .validate()
     .then((value) => {
-      console.log(value)
       loading.value = true
       try {
         myEmit('onSubmit', value)

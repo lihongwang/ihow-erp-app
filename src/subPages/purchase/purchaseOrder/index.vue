@@ -11,8 +11,23 @@
     ></Navbar>
     <view class="page-content">
       <view class="search-wrap">
-        <FilterGroupBtn :has-status="true" :has-process-status="true" @onFetchData="fetchData" />
-        <uni-search-bar placeholder="输入名称" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <FilterGroupBtn :has-status="true" :has-process-status="true" @onFetchData="fetchFilterData" />
+        <uni-search-bar
+          v-model="searchValue"
+          placeholder="输入名称"
+          bg-color="#EEEEEE"
+          @confirm="handleSearch"
+          @cancel="clearSearch"
+          @clear="clearSearch"
+        />
+        <SearchValue
+          v-if="hasSearched"
+          :keys="getSearchModelKeys()"
+          :search-fields="searchFields"
+          :search-model="searchModel"
+          class="tag-view"
+          @emptySearch="emptySearch"
+        />
       </view>
 
       <List ref="listRef" class="page-list" @onFetchData="fetchData">
@@ -106,6 +121,7 @@ import Navbar from '@/components/pageNavbar'
 import FormField from '@/components/form/FormField'
 import Tag from '@/components/tag'
 import FilterGroupBtn from '@/components/filter/groupButton'
+import SearchValue from '@/components/filter/searchValue'
 import List from '@/components/list/list'
 import { usePurchaseOrderStoreWithOut } from '@/store/modules/purchaseOrder'
 import { usePage, useIndexPage } from '@/hooks'
@@ -115,6 +131,9 @@ const listTitle = pageInfo.list.primaryTitleKey
 const searchFields = pageInfo.search.fields
 const fieldContext = ref({})
 const searchDialog = ref()
+const searchValue = ref()
+const filterModel = ref({})
+const hasSearched = ref(false)
 const store = usePurchaseOrderStoreWithOut()
 const listRef = ref()
 const searchModel = ref({})
@@ -128,17 +147,24 @@ const { back, titleInfo } = usePage({
 })
 const {
   checkEditable,
+  emptySearch,
+  getSearchModelKeys,
   fabClick,
   fabContent,
   fabPattern,
   fetchData,
+  fetchFilterData,
   handleDetailClick,
   handleEditClick,
   handleSearch,
+  clearSearch,
   handleSearchClose,
   handleSearchConfirm,
   trigger,
 } = useIndexPage({
+  searchValue,
+  filterModel,
+  hasSearched,
   addUrl: pageInfo.url.add,
   editUrl: pageInfo.url.edit,
   listRef,

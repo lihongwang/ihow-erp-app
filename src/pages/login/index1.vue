@@ -46,11 +46,9 @@ const loginRules = {
 const loginModel: any = reactive({})
 const loading = ref(false)
 const submit = (formRef) => {
-  console.log(formRef)
   formRef
     .validate()
     .then((value) => {
-      console.log(value)
       loading.value = true
       userStore.login(value).then((res) => {
         loading.value = false

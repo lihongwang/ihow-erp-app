@@ -13,6 +13,13 @@ export const arrayToObject = (arr: any, key: string, format?: any) => {
   return obj
 }
 
+export const uniqueArray = (arr, key) => {
+  const out: any = []
+  arr.forEach((a) => {
+    if (!out.find((o) => o[key] === a[key])) out.push(a)
+  })
+  return out
+}
 const math = create(all, {
   epsilon: 1e-12,
   matrix: 'Matrix',

@@ -27,7 +27,6 @@ const getPageInfo = () => {
   return data.value
 }
 const setPageInfo = (val = {}) => {
-  console.log('setPageInfo')
   data.value = {
     ...data.value,
     ...val,

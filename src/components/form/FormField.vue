@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <view class="flex flex-row m-1 items-center justify-start">
+  <view class="flex flex-row items-center justify-start">
     <uni-datetime-picker
       v-if="props.type === 'date'"
       v-model="props.item[props.name]"

@@ -24,7 +24,6 @@
 <script setup>
 import { defineProps } from 'vue'
 const props = defineProps(['title', 'subTitle', 'noFooter'])
-console.log(props)
 </script>
 <style lang="scss">
 .card-header {

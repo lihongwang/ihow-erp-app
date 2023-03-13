@@ -38,15 +38,15 @@
     <uni-section class="mb-10" title="采购" type="line">
       <view class="content-item action-content">
         <view class="info-item grid3">
-          <view class="info-btn-wrap purchase-order" @click="handleClick('/pages/purchase/purchaseOrder/index')">
+          <view class="info-btn-wrap purchase-order" @click="handleClick('/subPages/purchase/purchaseOrder/index')">
             <img class="btn-img" src="/static/images/purchaseOrder.png" alt="采购订单" />
             <button class="normal-btn" size="mini">采购订单</button>
           </view>
-          <view class="info-btn-wrap purchase-in" @click="handleClick('/pages/purchase/purchaseIn/index')">
+          <view class="info-btn-wrap purchase-in" @click="handleClick('/subPages/purchase/purchaseIn/index')">
             <img class="btn-img" src="/static/images/warehouseIn.png" alt="采购入库" />
             <button class="normal-btn" size="mini">采购入库</button>
           </view>
-          <view class="info-btn-wrap purchase-extra" @click="handleClick('/pages/purchase/purchaseExtraIn/index')">
+          <view class="info-btn-wrap purchase-extra" @click="handleClick('/subPages/purchase/purchaseExtraIn/index')">
             <img class="btn-img" src="/static/images/purchase.png" alt="零采进货" />
             <button class="normal-btn" size="mini">零采进货</button>
           </view>
@@ -56,15 +56,15 @@
     <uni-section class="mb-10" title="销售" type="line">
       <view class="content-item action-content sale">
         <view class="info-item grid3">
-          <view class="info-btn-wrap sale-order" @click="handleClick('/pages/sale/saleOrder/index')">
+          <view class="info-btn-wrap sale-order" @click="handleClick('/subPages/sale/saleOrder/index')">
             <img class="btn-img" src="/static/images/saleOrder.png" alt="销售订单" />
             <button class="normal-btn" size="mini">销售订单</button>
           </view>
-          <view class="info-btn-wrap sale-out" @click="handleClick('/pages/sale/saleOut/index')">
+          <view class="info-btn-wrap sale-out" @click="handleClick('/subPages/sale/saleOut/index')">
             <img class="btn-img" src="/static/images/saleOut.png" alt="销售出库" />
             <button class="normal-btn" size="mini">销售出库</button>
           </view>
-          <view class="info-btn-wrap sale-extra" @click="handleClick('/pages/sale/saleExtraOut/index')">
+          <view class="info-btn-wrap sale-extra" @click="handleClick('/subPages/sale/saleExtraOut/index')">
             <img class="btn-img" src="/static/images/sale.png" alt="零售出库" />
             <button class="normal-btn" size="mini">零售出库</button>
           </view>

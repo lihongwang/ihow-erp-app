@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { fixNumber } from '@/utils/data'
+import { fixNumber, uniqueArray } from '@/utils/data'
 import http from '@/utils/uniRequest'
 import pageInfo from '@/pageInfo/saleOut.json'
 interface SaleOutState {
@@ -95,7 +95,6 @@ export const useSaleOutStore = defineStore({
     },
     // 添加明细 弹框列表
     getPopupDetails(data) {
-      console.log('saleOut popupDetails')
       return new Promise((resolve) => {
         service.selectDetails(data).then((res: any) => {
           resolve(res)
@@ -115,7 +114,7 @@ export const useSaleOutStore = defineStore({
     loadMore(data) {
       return new Promise((resolve) => {
         service.list(data).then((res: any) => {
-          this.list = [...this.list, ...(res?.list || [])]
+          this.list = uniqueArray([...this.list, ...(res?.list || [])], 'id')
           resolve(res)
         })
       })

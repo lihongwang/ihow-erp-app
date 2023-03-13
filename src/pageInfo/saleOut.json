@@ -1,11 +1,11 @@
 {
   "title": "销售出库",
   "url": {
-    "add": "/pages/sale/saleOut/add",
-    "edit": "/pages/sale/saleOut/edit?id=",
+    "add": "/subPages/sale/saleOut/add",
+    "edit": "/subPages/sale/saleOut/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/sale/saleOut/index",
-    "show": "/pages/sale/saleOut/show?id="
+    "index": "/subPages/sale/saleOut/index",
+    "show": "/subPages/sale/saleOut/show?id="
   },
   "search": {
     "searchKey": "customerName1",

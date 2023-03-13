@@ -1,11 +1,11 @@
 {
   "title": "采购订单",
   "url": {
-    "add": "/pages/purchase/purchaseOrder/add",
-    "edit": "/pages/purchase/purchaseOrder/edit?id=",
+    "add": "/subPages/purchase/purchaseOrder/add",
+    "edit": "/subPages/purchase/purchaseOrder/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/purchase/purchaseOrder/index",
-    "show": "/pages/purchase/purchaseOrder/show?id="
+    "index": "/subPages/purchase/purchaseOrder/index",
+    "show": "/subPages/purchase/purchaseOrder/show?id="
   },
   "search": {
     "searchKey": "supplierName1",

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { fixNumber } from '@/utils/data'
+import { fixNumber, uniqueArray } from '@/utils/data'
 import http from '@/utils/uniRequest'
 import pageInfo from '@/pageInfo/purchaseIn.json'
 interface PurchaseInState {
@@ -113,7 +113,7 @@ export const usePurchaseInStore = defineStore({
     loadMore(data) {
       return new Promise((resolve) => {
         service.list(data).then((res: any) => {
-          this.list = [...this.list, ...(res?.list || [])]
+          this.list = uniqueArray([...this.list, ...(res?.list || [])], 'id')
           resolve(res)
         })
       })

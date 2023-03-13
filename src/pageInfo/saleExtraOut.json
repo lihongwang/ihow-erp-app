@@ -1,11 +1,11 @@
 {
   "title": "零售出库",
   "url": {
-    "add": "/pages/sale/saleExtraOut/add",
-    "edit": "/pages/sale/saleExtraOut/edit?id=",
+    "add": "/subPages/sale/saleExtraOut/add",
+    "edit": "/subPages/sale/saleExtraOut/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/sale/saleExtraOut/index",
-    "show": "/pages/sale/saleExtraOut/show?id="
+    "index": "/subPages/sale/saleExtraOut/index",
+    "show": "/subPages/sale/saleExtraOut/show?id="
   },
   "search": {
     "searchKey": "customerName1",

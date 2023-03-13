@@ -22,5 +22,5 @@
     { "name": "bottomSlab", "title": "底坯", "width": 100 },
     { "name": "pecification", "title": "厂家型号", "width": 100 }
   ],
-  "searchFields": [{ "name": "goodsName1", "title": "商品名称" }]
+  "searchFields": [{ "name": "name", "title": "商品名称" }]
 }

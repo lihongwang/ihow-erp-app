@@ -3,14 +3,29 @@ interface IndexPageProps {
   searchDialog: any
   store: any
   listRef: any
+  hasSearched: any
+  searchValue: any
   searchKey: string
+  filterModel: any
   addUrl: string
   editUrl: string
   showUrl: string
 }
 import { onLoad } from '@dcloudio/uni-app'
 export default (props: IndexPageProps) => {
-  const { searchDialog, searchModel, store, listRef, searchKey = 'code', addUrl, editUrl, showUrl } = props
+  const {
+    searchDialog,
+    searchModel,
+    store,
+    listRef,
+    filterModel,
+    hasSearched,
+    searchKey = 'code',
+    searchValue,
+    addUrl,
+    editUrl,
+    showUrl,
+  } = props
   onLoad(() => {
     fetchData()
   })
@@ -51,10 +66,14 @@ export default (props: IndexPageProps) => {
     }
   }
   const fetchData = (data = {}, isMore?: boolean) => {
+    const opts = {
+      ...filterModel.value,
+      ...searchModel.value,
+      ...data,
+    }
+    if (searchValue.value) opts[searchKey] = searchValue.value
     return new Promise((resolve) => {
-      store[isMore ? 'loadMore' : 'init']({
-        ...data,
-      }).then((res) => {
+      store[isMore ? 'loadMore' : 'init'](opts).then((res) => {
         const { setPageInfo } = listRef?.value || {}
         setPageInfo?.({
           shown: true,
@@ -66,21 +85,46 @@ export default (props: IndexPageProps) => {
       })
     })
   }
-
+  const fetchFilterData = (data = {}) => {
+    filterModel.value = data
+    return fetchData({ page: 0 })
+  }
   const checkEditable = (data) => {
     return data?.auditStatusEnum?.value == 1
   }
   const handleSearch = (res) => {
+    searchValue.value = res.value
     fetchData({
-      [searchKey]: res.value,
+      page: 0,
     })
+  }
+  const clearSearch = () => {
+    searchValue.value = ''
+    fetchData({ page: 0 })
   }
   const handleSearchClose = () => {
     searchDialog.value.close()
   }
   const handleSearchConfirm = () => {
-    fetchData(searchModel.value).then(() => {
+    fetchData({ page: 0 }).then(() => {
       searchDialog.value.close()
+      hasSearched.value = true
+    })
+  }
+  const getSearchModelKeys = () => {
+    const keys: any = []
+    Object.keys(searchModel.value).forEach((key) => {
+      if (searchModel.value[key]) keys.push(key)
+    })
+    return keys
+  }
+  const emptySearch = () => {
+    Object.keys(searchModel.value).forEach((key) => {
+      searchModel.value[key] = ''
+    })
+    hasSearched.value = false
+    fetchData({
+      page: 0,
     })
   }
   const handleDetailClick = (id) => {
@@ -102,8 +146,12 @@ export default (props: IndexPageProps) => {
     fetchData,
     handleEditClick,
     handleSearch,
+    clearSearch,
+    emptySearch,
+    getSearchModelKeys,
     handleSearchClose,
     handleSearchConfirm,
+    fetchFilterData,
     handleDetailClick,
   }
 }

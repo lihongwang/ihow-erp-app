@@ -54,7 +54,6 @@ import { onShow } from '@dcloudio/uni-app'
 const menuStore = useMenuStore()
 const menuList = ref([])
 onShow(() => {
-  console.log('home show')
   menuStore.init().then((menus) => {
     menuList.value = menus
   })

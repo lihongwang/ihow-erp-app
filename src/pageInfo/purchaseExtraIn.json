@@ -1,11 +1,11 @@
 {
   "title": "零采进货",
   "url": {
-    "add": "/pages/purchase/purchaseExtraIn/add",
-    "edit": "/pages/purchase/purchaseExtraIn/edit?id=",
+    "add": "/subPages/purchase/purchaseExtraIn/add",
+    "edit": "/subPages/purchase/purchaseExtraIn/edit?id=",
     "home": "/pages/home/index",
-    "index": "/pages/purchase/purchaseExtraIn/index",
-    "show": "/pages/purchase/purchaseExtraIn/show?id="
+    "index": "/subPages/purchase/purchaseExtraIn/index",
+    "show": "/subPages/purchase/purchaseExtraIn/show?id="
   },
   "search": {
     "searchKey": "supplierName1",

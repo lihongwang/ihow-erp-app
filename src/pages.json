@@ -19,174 +19,6 @@
       }
     },
     {
-      "path": "pages/purchase/purchaseOrder/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "采购订单"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseOrder/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增采购订单"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseOrder/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑采购订单"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseOrder/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "采购订单详情"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseIn/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "采购入库"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseIn/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增采购入库"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseIn/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑采购入库"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseIn/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "采购入库详情"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseExtraIn/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "零采进货"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseExtraIn/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增零采进货"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseExtraIn/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑零采进货"
-      }
-    },
-    {
-      "path": "pages/purchase/purchaseExtraIn/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "零采进货详情"
-      }
-    },
-    {
-      "path": "pages/sale/saleOrder/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "销售订单"
-      }
-    },
-    {
-      "path": "pages/sale/saleOrder/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增销售订单"
-      }
-    },
-    {
-      "path": "pages/sale/saleOrder/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑销售订单"
-      }
-    },
-    {
-      "path": "pages/sale/saleOrder/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "销售订单详情"
-      }
-    },
-    {
-      "path": "pages/sale/saleOut/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "销售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleOut/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增销售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleOut/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑销售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleOut/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "销售出库详情"
-      }
-    },
-    {
-      "path": "pages/sale/saleExtraOut/index",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "零售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleExtraOut/add",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "新增零售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleExtraOut/edit",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "编辑零售出库"
-      }
-    },
-    {
-      "path": "pages/sale/saleExtraOut/show",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "零售出库详情"
-      }
-    },
-    {
       "path": "pages/report/index",
       "style": {
         "navigationStyle": "custom",
@@ -289,6 +121,181 @@
         "navigationBarTitleText": "联系我们",
         "navigationStyle": "custom"
       }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "subPages",
+      "pages": [
+        {
+          "path": "purchase/purchaseOrder/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "采购订单"
+          }
+        },
+        {
+          "path": "purchase/purchaseOrder/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增采购订单"
+          }
+        },
+        {
+          "path": "purchase/purchaseOrder/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑采购订单"
+          }
+        },
+        {
+          "path": "purchase/purchaseOrder/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "采购订单详情"
+          }
+        },
+        {
+          "path": "purchase/purchaseIn/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "采购入库"
+          }
+        },
+        {
+          "path": "purchase/purchaseIn/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增采购入库"
+          }
+        },
+        {
+          "path": "purchase/purchaseIn/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑采购入库"
+          }
+        },
+        {
+          "path": "purchase/purchaseIn/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "采购入库详情"
+          }
+        },
+        {
+          "path": "purchase/purchaseExtraIn/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "零采进货"
+          }
+        },
+        {
+          "path": "purchase/purchaseExtraIn/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增零采进货"
+          }
+        },
+        {
+          "path": "purchase/purchaseExtraIn/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑零采进货"
+          }
+        },
+        {
+          "path": "purchase/purchaseExtraIn/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "零采进货详情"
+          }
+        },
+        {
+          "path": "sale/saleOrder/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "销售订单"
+          }
+        },
+        {
+          "path": "sale/saleOrder/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增销售订单"
+          }
+        },
+        {
+          "path": "sale/saleOrder/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑销售订单"
+          }
+        },
+        {
+          "path": "sale/saleOrder/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "销售订单详情"
+          }
+        },
+        {
+          "path": "sale/saleOut/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "销售出库"
+          }
+        },
+        {
+          "path": "sale/saleOut/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增销售出库"
+          }
+        },
+        {
+          "path": "sale/saleOut/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑销售出库"
+          }
+        },
+        {
+          "path": "sale/saleOut/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "销售出库详情"
+          }
+        },
+        {
+          "path": "sale/saleExtraOut/index",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "零售出库"
+          }
+        },
+        {
+          "path": "sale/saleExtraOut/add",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "新增零售出库"
+          }
+        },
+        {
+          "path": "sale/saleExtraOut/edit",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "编辑零售出库"
+          }
+        },
+        {
+          "path": "sale/saleExtraOut/show",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "零售出库详情"
+          }
+        }
+      ]
     }
   ],
   "globalStyle": {

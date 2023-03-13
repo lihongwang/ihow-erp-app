@@ -87,21 +87,16 @@ function intercept(response) {
 export const weixinLogin = throttle(_weixinLogin, 1000)
 //小程序静默授权
 async function _weixinLogin() {
-  console.log('_weixinLogin:in')
   const code: any = await getWeixinCode()
-  console.log('_weixinLogin:', code)
   const res: any = await getSystemToken(code)
-  console.log(res)
   const { onLoad, onShow } = currentPage()
   // 微信账号已经绑定用户
   if (res.bundled) {
     setToken(res.token)
     onLoad?.()
     onShow?.()
-    console.log('logined')
   } else {
     // 未绑定用户，跳转到登录页面
-    console.log('weixinLogin: weixin login')
     uni.navigateTo({
       url: '/pages/login/index',
     })
@@ -125,7 +120,6 @@ const http = {
     }),
 }
 export const getSystemToken = (code: any) => {
-  console.log('getSystemToken:')
   return new Promise((resolve, reject) => {
     // uni.request({
     //   url: `${config.baseURL}wechat/miniapp/api/anon/userAccess?code=${code}`, //仅为示例，并非真实接口地址。
@@ -135,14 +129,11 @@ export const getSystemToken = (code: any) => {
     //   },
     // })
     try {
-      console.log('getSystemToken: promise')
       http
         .get('wechat/miniapp/api/anon/userAccess', {
           code,
         })
         .then((res: any) => {
-          console.log('getSystemToken success:')
-          console.log(res)
           resolve(res)
         })
         .catch((err) => {

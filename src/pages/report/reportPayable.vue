@@ -10,8 +10,16 @@
     ></Navbar>
     <view class="page-content">
       <view class="search-wrap">
-        <FilterGroupBtn :has-status="true" @onFetchData="fetchData" />
-        <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <!-- <FilterGroupBtn :has-status="true" @onFetchData="fetchFilterData" /> -->
+        <!-- <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" /> -->
+        <SearchValue
+          v-if="hasSearched"
+          :keys="getSearchModelKeys()"
+          :search-fields="searchFields"
+          :search-model="searchModel"
+          class="tag-view"
+          @emptySearch="emptySearch"
+        />
       </view>
       <view class="uni-pagination-box">
         <uni-pagination
@@ -81,11 +89,14 @@
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
 import FormField from '@/components/form/FormField'
-import FilterGroupBtn from '@/components/filter/groupButton'
+// import FilterGroupBtn from '@/components/filter/groupButton'
+import SearchValue from '@/components/filter/searchValue'
 import { useReportDetailPage } from '@/hooks'
-import reportPageInfo from '@/pageInfo/report/saleOrderProcess.json'
+import reportPageInfo from '@/pageInfo/report/reportPayable.json'
 const { title, code, searchFields, tableFields } = reportPageInfo
 const searchDialog = ref()
+const filterModel = ref({})
+const hasSearched = ref(false)
 const searchModel = ref({})
 const tableRef = ref()
 const tableData = ref()
@@ -95,7 +106,23 @@ const pageInfo = ref({
   pageSize: 20,
   total: 0,
 })
-const { fetchData, fabPattern, fabContent, fabClick, trigger, handleChange, back, formatData } = useReportDetailPage({
+const {
+  // handleSearch,
+  emptySearch,
+  getSearchModelKeys,
+  handleSearchClose,
+  handleSearchConfirm,
+  // fetchFilterData,
+  fabPattern,
+  fabContent,
+  fabClick,
+  trigger,
+  handleChange,
+  back,
+  formatData,
+} = useReportDetailPage({
+  filterModel,
+  hasSearched,
   searchModel,
   searchDialog,
   code,

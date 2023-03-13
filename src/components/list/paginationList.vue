@@ -126,7 +126,6 @@ const toggleCheck = (item) => {
   }
 }
 const handlePagination = ({ current }) => {
-  console.log('pagination', current)
   emits('onFetchData', { page: current - 1 })
 }
 </script>

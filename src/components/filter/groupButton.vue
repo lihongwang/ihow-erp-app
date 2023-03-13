@@ -46,56 +46,59 @@ const filter = ref('all')
 const status = ref(0)
 const processStatus = ref(0)
 const myEmit = defineEmits(['onFetchData'])
-const selectFilter = (type) => {
-  filter.value = type
+const getValue = () => {
   let opts = {}
   if (status.value) opts.auditStatusEnum = status.value
   if (processStatus.value) opts.processStatusEnum = processStatus.value
+
+  switch (filter.value) {
+    case 'today':
+      const startOfDay = dayjs(new Date()).format('YYYY-MM-DD hh:mm')
+      opts = {
+        ...opts,
+        fromBillDate: startOfDay,
+        toBillDate: startOfDay,
+      }
+      break
+    case 'week':
+      const startOfWeek = dayjs().startOf('week').format('YYYY-MM-DD hh:mm')
+      const endOfWeek = dayjs().endOf('week').format('YYYY-MM-DD hh:mm')
+      opts = {
+        ...opts,
+        fromBillDate: startOfWeek,
+        toBillDate: endOfWeek,
+      }
+      break
+    case 'month':
+      const startOfMonth = dayjs().startOf('month').format('YYYY-MM-DD hh:mm')
+      const endOfMonth = dayjs().endOf('month').format('YYYY-MM-DD hh:mm')
+      opts = {
+        ...opts,
+        fromBillDate: startOfMonth,
+        toBillDate: endOfMonth,
+      }
+      break
+    case 'year':
+      const startOfYear = dayjs().startOf('year').format('YYYY-MM-DD hh:mm')
+      const endOfYear = dayjs().endOf('year').format('YYYY-MM-DD hh:mm')
+      opts = {
+        ...opts,
+        fromBillDate: startOfYear,
+        toBillDate: endOfYear,
+      }
+      break
+    default:
+      break
+  }
+  return opts
+}
+const selectFilter = (type) => {
   if (type === 'all') {
     processStatus.value = 0
     status.value = 0
-  } else {
-    switch (type) {
-      case 'today':
-        const startOfDay = dayjs(new Date()).format('YYYY-MM-DD hh:mm')
-        opts = {
-          ...opts,
-          fromBillDate: startOfDay,
-          toBillDate: startOfDay,
-        }
-        break
-      case 'week':
-        const startOfWeek = dayjs().startOf('week').format('YYYY-MM-DD hh:mm')
-        const endOfWeek = dayjs().endOf('week').format('YYYY-MM-DD hh:mm')
-        opts = {
-          ...opts,
-          fromBillDate: startOfWeek,
-          toBillDate: endOfWeek,
-        }
-        break
-      case 'month':
-        const startOfMonth = dayjs().startOf('month').format('YYYY-MM-DD hh:mm')
-        const endOfMonth = dayjs().endOf('month').format('YYYY-MM-DD hh:mm')
-        opts = {
-          ...opts,
-          fromBillDate: startOfMonth,
-          toBillDate: endOfMonth,
-        }
-        break
-      case 'year':
-        const startOfYear = dayjs().startOf('year').format('YYYY-MM-DD hh:mm')
-        const endOfYear = dayjs().endOf('year').format('YYYY-MM-DD hh:mm')
-        opts = {
-          ...opts,
-          fromBillDate: startOfYear,
-          toBillDate: endOfYear,
-        }
-        break
-      default:
-        break
-    }
   }
-  myEmit('onFetchData', opts)
+  filter.value = type
+  myEmit('onFetchData', getValue())
 }
 const selectStatus = (num) => {
   // 再次点击
@@ -108,7 +111,7 @@ const selectStatus = (num) => {
     opts.auditStatusEnum = tmpNum
   }
   status.value = tmpNum
-  myEmit('onFetchData', opts)
+  myEmit('onFetchData', getValue())
 }
 const selectProcessStatus = (num) => {
   // 再次点击
@@ -121,7 +124,7 @@ const selectProcessStatus = (num) => {
     opts.processStatusEnum = tmpNum
   }
   processStatus.value = tmpNum
-  myEmit('onFetchData', opts)
+  myEmit('onFetchData', getValue())
 }
 </script>
 
