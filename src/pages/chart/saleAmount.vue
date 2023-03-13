@@ -1,6 +1,8 @@
 <template>
   <view v-if="chartOpts" class="charts-box">
-    <uniChart :option="chartOpts" canvas-id="saleAmountChart" />
+    <uniChart :option="chartOpts" canvas-id="saleAmountChart" class="chart-item-wrap">
+      <view class="placeholder"></view>
+    </uniChart>
   </view>
 </template>
 
@@ -19,8 +21,8 @@ useChart({
   props,
   code: 'SaleAmount!',
   format: (data) => {
-    const values = [1, 2, 3, 4, 5, 6, 7]
-    const labels = [1, 2, 3, 4, 5, 6, 7]
+    const values = []
+    const labels = []
     const listData = data?.list || []
     listData
       .sort((a, b) => a.saleAmount - b.saleAmount)

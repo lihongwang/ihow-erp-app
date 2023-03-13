@@ -1,6 +1,8 @@
 <template>
   <view v-if="chartOpts" class="charts-box">
-    <uniChart :option="chartOpts" canvas-id="stockDaysChart" />
+    <uniChart :option="chartOpts" canvas-id="stockDaysChart" class="chart-item-wrap">
+      <view class="placeholder"></view>
+    </uniChart>
   </view>
 </template>
 
@@ -23,7 +25,7 @@ useChart({
     const labels = []
     const listData = data?.list || []
     listData.forEach((item) => {
-      values.push(9000)
+      values.push(item.remainQty)
       labels.push(item.stockDays)
     })
     chartOpts.value = {

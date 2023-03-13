@@ -23,6 +23,7 @@ const props = defineProps(['money', 'title', 'info', 'extra'])
 <style scoped lang="scss">
 .item-wrap {
   padding: 5px 10px;
+  min-height: 50px;
   border-radius: 0.5rem;
   background-color: rgba(243, 244, 246, 1);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);

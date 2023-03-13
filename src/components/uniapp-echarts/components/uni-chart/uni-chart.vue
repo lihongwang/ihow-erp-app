@@ -35,6 +35,7 @@
     @touchend="touchEnd"
   />
   <!-- #endif -->
+  <slot></slot>
 </template>
 
 <script>

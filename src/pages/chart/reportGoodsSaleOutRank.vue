@@ -1,6 +1,8 @@
 <template>
   <view v-if="chartOpts" class="charts-box">
-    <uniChart :option="chartOpts" canvas-id="reportGoodsChart" />
+    <uniChart :option="chartOpts" canvas-id="reportGoodsChart" class="chart-item-wrap">
+      <view class="placeholder"></view>
+    </uniChart>
   </view>
 </template>
 
