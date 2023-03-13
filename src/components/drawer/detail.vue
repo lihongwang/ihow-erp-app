@@ -39,7 +39,7 @@ watch(
     store.value = cur
   }
 )
-const { popupFields, subName } = props.store.getPopupDetailFields()
+const { popupFields, subName, transfer } = props.store.getPopupMapping()
 const handleSearch = (res) => {
   fetchData({
     [props.searchKey]: res.value,
@@ -64,7 +64,7 @@ const handleConfirm = () => {
 
 const fetchData = (data) => {
   store.value.getPopupDetails({ ...query.value, ...data }).then((res) => {
-    detailData.value = res.list
+    detailData.value = res.list.map(transfer)
     const { setPageInfo } = listRef?.value || {}
     setPageInfo?.({
       shown: true,

@@ -1,17 +1,20 @@
 <template>
   <view>
-    <DetailCard :no-footer="true">
+    <DetailCard :no-footer="true" @click="handleCheck">
       <template #header>
         <view class="flex flex-row justify-between items-center">
           <view class="card-title">
             <Checkbox
               v-if="props.selectType == 'checkbox'"
+              ref="actionRef"
               class="item-checkbox"
               :checked="props.checked"
+              :disabled="props.disabled"
               @onToggle="toggleCheck('checkbox')"
             />
             <Radio
               v-else-if="props.selectType == 'radio'"
+              ref="actionRef"
               class="item-radio"
               :checked="props.checked"
               @onToggle="toggleCheck('radio')"
@@ -40,15 +43,19 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, ref } from 'vue'
 import DetailCard from '@/components/card/detailCard'
 import ListItem from '@/components/list/listItem'
 import Checkbox from '@/components/form/checkbox'
 import Radio from '@/components/form/radio'
-const props = defineProps(['item', 'properties', 'checked', 'selectType', 'subTitle'])
+const actionRef = ref()
+const props = defineProps(['item', 'properties', 'checked', 'disabled', 'selectType', 'subTitle'])
 const emits = defineEmits(['onToggle'])
 const toggleCheck = (type) => {
   emits('onToggle', type)
+}
+const handleCheck = () => {
+  actionRef.value.toggleCheck()
 }
 </script>
 

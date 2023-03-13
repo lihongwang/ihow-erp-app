@@ -7,6 +7,7 @@
           :item="item"
           :radio-selected-item="radioSelectedItem"
           :sub-title="item[props.subName]"
+          :disabled="isDisabled(item[props.checkKey])"
           :checked="isChecked(item[props.checkKey])"
           :properties="props.properties"
           @onToggle="toggleCheck(item)"
@@ -97,9 +98,15 @@ defineExpose({
 const isChecked = (key) => {
   // edit 回显 primaryKey
   if (props.selectType === 'checkbox') {
-    return !!props.selectedItems.find((c) => c[props.primaryKey] == key)
+    return !!props.selectedItems.find((c) => c[props.primaryKey] == key && !c._original)
   } else if (props.selectType === 'radio') {
     return !!radioSelectedItem.value.find((c) => c[props.primaryKey] == key)
+  }
+}
+const isDisabled = (key) => {
+  // edit 回显 primaryKey
+  if (props.selectType === 'checkbox') {
+    return !!props.selectedItems.find((c) => c[props.primaryKey] == key && c._original)
   }
 }
 const isNewChecked = (key) => {

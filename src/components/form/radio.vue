@@ -9,13 +9,16 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, defineExpose } from 'vue'
 const props = defineProps(['checked'])
 const emits = defineEmits(['onToggle'])
 
 const toggleCheck = () => {
   emits('onToggle')
 }
+defineExpose({
+  toggleCheck,
+})
 </script>
 
 <style lang="scss" scoped>

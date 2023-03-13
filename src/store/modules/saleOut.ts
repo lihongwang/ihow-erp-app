@@ -82,8 +82,14 @@ export const useSaleOutStore = defineStore({
     show(id) {
       return new Promise((resolve) => {
         service.show({ id }).then((res: any) => {
-          this.formData = res
-          resolve(res)
+          this.formData = {
+            ...res,
+            [this.detailKey]: res[this.detailKey].map((d) => ({
+              ...d,
+              _original: true,
+            })),
+          }
+          resolve(this.formData)
         })
       })
     },
@@ -96,8 +102,11 @@ export const useSaleOutStore = defineStore({
         })
       })
     },
-    getPopupDetailFields() {
+    getPopupMapping() {
       return {
+        transfer: (data) => {
+          return { ...data, [pageInfo.detail.detailPrimaryKey]: data.id }
+        },
         subName: pageInfo.popup.subName,
         popupFields: pageInfo.popup.fields,
       }

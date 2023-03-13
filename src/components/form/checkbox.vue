@@ -1,6 +1,9 @@
 <template>
   <view>
-    <label v-if="props.checked" class="checked disabled checkbox blue" @click="toggleCheck">
+    <label v-if="props.disabled" class="checked disabled checkbox blue" @click="toggleCheck">
+      <span class="indicator"></span>
+    </label>
+    <label v-else-if="props.checked" class="checked checkbox blue" @click="toggleCheck">
       <span class="indicator"></span>
     </label>
     <label v-else :class="checked ? 'checked' : ''" class="checkbox blue" @click="toggleCheck">
@@ -11,14 +14,17 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue'
-const props = defineProps(['checked'])
+import { defineProps, defineEmits, defineExpose, ref } from 'vue'
+const props = defineProps(['checked', 'disabled'])
 const emits = defineEmits(['onToggle'])
 const checked = ref(false)
 const toggleCheck = () => {
   checked.value = !checked.value
   emits('onToggle')
 }
+defineExpose({
+  toggleCheck,
+})
 </script>
 
 <style lang="scss" scoped>
