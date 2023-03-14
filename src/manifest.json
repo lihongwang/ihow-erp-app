@@ -66,6 +66,7 @@
       "postcss": false,
       "es6": false
     },
+    "lazyCodeLoading": "requiredComponents",
     "optimization": { "subPackages": true },
     "usingComponents": true,
     "permission": {}
