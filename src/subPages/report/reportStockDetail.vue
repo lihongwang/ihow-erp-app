@@ -10,7 +10,7 @@
     ></Navbar>
     <view class="page-content">
       <view class="search-wrap">
-        <FilterGroupBtn :has-status="true" @onFetchData="fetchFilterData" />
+        <!-- <FilterGroupBtn :has-status="true" @onFetchData="fetchFilterData" /> -->
         <!-- <uni-search-bar placeholder="输入单号" bg-color="#EEEEEE" @confirm="handleSearch" /> -->
         <SearchValue
           v-if="hasSearched"
@@ -89,9 +89,9 @@
 import { ref } from 'vue'
 import Navbar from '@/components/pageNavbar'
 import FormField from '@/components/form/FormField'
-import FilterGroupBtn from '@/components/filter/groupButton'
+// import FilterGroupBtn from '@/components/filter/groupButton'
 import SearchValue from '@/components/filter/searchValue'
-import { useReportDetailPage } from '@/hooks'
+import { useReportDetailPage, useWarehouse } from '@/hooks'
 import reportPageInfo from '@/pageInfo/report/reportStockDetail.json'
 const { title, code, searchFields, tableFields } = reportPageInfo
 const searchDialog = ref()
@@ -106,13 +106,14 @@ const pageInfo = ref({
   pageSize: 20,
   total: 0,
 })
+useWarehouse((data) => (fieldContext.value.warehouseList = data))
 const {
   // handleSearch,
   emptySearch,
   getSearchModelKeys,
   handleSearchClose,
   handleSearchConfirm,
-  fetchFilterData,
+  // fetchFilterData,
   fabPattern,
   fabContent,
   fabClick,

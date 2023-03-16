@@ -1,6 +1,6 @@
 <template>
-  <view>
-    <DetailCard :no-footer="true" @click="handleCheck">
+  <view @click="handleCheck">
+    <DetailCard :no-footer="true">
       <template #header>
         <view class="flex flex-row justify-between items-center">
           <view class="card-title">

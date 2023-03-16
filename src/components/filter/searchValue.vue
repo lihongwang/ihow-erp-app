@@ -42,7 +42,7 @@ const getContent = (item) => {
     }
   }
   .action {
-    width: 36px;
+    width: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
