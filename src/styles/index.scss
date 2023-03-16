@@ -135,6 +135,12 @@
     }
   }
 }
+.choose-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3px !important;
+}
 .more-btn,
 .normal-btn {
   background-color: #fff !important;

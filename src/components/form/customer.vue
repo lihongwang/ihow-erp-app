@@ -1,7 +1,7 @@
 <template>
   <view class="drawer-input flex flex-row justify-between">
     <uni-easyinput disabled :value="relatedParty?.name || props.value" placeholder="请选择"></uni-easyinput>
-    <button type="primary" size="mini" @click="handleClick">选择</button>
+    <button type="primary" size="mini" class="choose-btn" @click="handleClick">选择</button>
     <RPDrawer ref="relatedPartyDrawerRef" @onConfirm="handleRelatedPartyConfirm" />
   </view>
 </template>
