@@ -44,9 +44,14 @@ import PurchaseSale from './purchaseSale'
 import ReportStockDays from './reportStockDays'
 import ReportProfit from './reportProfit'
 import ReportGoodsSaleOutRank from './reportGoodsSaleOutRank'
-import { onShow } from '@dcloudio/uni-app'
-const accordionVal = ref(['0', '1', '2', '3'])
+import { onShow, onReady } from '@dcloudio/uni-app'
+const accordionVal = ref(['0', '1', '2', '3', '4'])
 const refresh = ref(false)
+onReady(() => {
+  setTimeout(() => {
+    refresh.value = !refresh.value
+  }, 1000)
+})
 onShow(() => {
   refresh.value = !refresh.value
 })

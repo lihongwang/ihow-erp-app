@@ -102,7 +102,7 @@ const logout = () => {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  .account-form {
+  ::v-deep .uni-forms {
     flex: 1;
     min-height: 0;
   }

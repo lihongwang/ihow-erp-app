@@ -10,7 +10,7 @@
     <view class="message">
       <view class="empty-box">
         <text>没有任何消息</text>
-        <img src="/static/images/empty.png" alt="没有任何消息" />
+        <img class="empty-img" src="/static/images/empty.png" alt="没有任何消息" />
       </view>
     </view>
   </view>
@@ -32,6 +32,11 @@ const { back, titleInfo } = usePage({
   display: flex;
   align-items: center;
   justify-content: center;
+  .empty-img {
+    width: 100px;
+    height: 81px;
+    margin-top: 20px;
+  }
 }
 .empty-box {
   margin-top: 50px;
