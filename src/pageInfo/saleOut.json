@@ -30,7 +30,7 @@
     "detailKey": "goodsOutDetailList",
     "detailPrimaryKey": "id",
     "detailCheckKey": "uniqId",
-    "detailSearchKey": "name",
+    "detailSearchKey": "goodsName",
     "detailSearchPlaceholder": "请输入商品名称"
   },
   "popup": {

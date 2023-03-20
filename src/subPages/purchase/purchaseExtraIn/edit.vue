@@ -67,6 +67,9 @@
     <PopupDetailDrawer
       ref="detailDrawerRef"
       :primary-key="detailPrimaryKey"
+      :check-key="detailCheckKey"
+      :search-key="detailSearchKey"
+      :search-placeholder="detailSearchPlaceholder"
       :store="store"
       @onConfirm="handleDetailConfirm"
     />
@@ -96,6 +99,9 @@ const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
 const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
 const detailTitleAliasKey = pageInfo.detail.titleAliasKey
+const detailCheckKey = pageInfo.detail.detailCheckKey
+const detailSearchKey = pageInfo.detail.detailSearchKey
+const detailSearchPlaceholder = pageInfo.detail.detailSearchPlaceholder
 const store = usePurchaseExtraInStoreWithOut()
 const detailDrawerRef = ref()
 const formData = ref(store.getFormData())

@@ -67,6 +67,8 @@
       :primary-key="detailPrimaryKey"
       :check-key="detailCheckKey"
       :store="store"
+      :search-key="detailSearchKey"
+      :search-placeholder="detailSearchPlaceholder"
       @onConfirm="handleDetailConfirm"
     />
     <view class="save-btn" title="保存" @click="handleSave">
@@ -93,6 +95,8 @@ const detailKey = pageInfo.detail.detailKey
 const detailTitleKey = pageInfo.detail.titleKey
 const detailPrimaryKey = pageInfo.detail.detailPrimaryKey
 const detailCheckKey = pageInfo.detail.detailCheckKey
+const detailSearchKey = pageInfo.detail.detailSearchKey
+const detailSearchPlaceholder = pageInfo.detail.detailSearchPlaceholder
 const store = useSaleOutStoreWithOut()
 const detailDrawerRef = ref()
 const formData = ref(store.getFormData())
