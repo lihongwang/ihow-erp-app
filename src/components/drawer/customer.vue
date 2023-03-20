@@ -3,7 +3,12 @@
     <view class="scroll-container">
       <view class="top-placeholder"></view>
       <view class="search">
-        <uni-search-bar placeholder="输入供应商名称" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <uni-search-bar
+          placeholder="输入供应商名称"
+          bg-color="#EEEEEE"
+          @confirm="handleSearch"
+          @cancel="handleCancel"
+        />
       </view>
       <view class="drawer-content">
         <PaginationList
@@ -52,7 +57,9 @@ const handleSearch = (res) => {
     name: res.value,
   })
 }
-
+const handleCancel = () => {
+  fetchData()
+}
 const handleRadioCheck = (item) => {
   selectedItems.value = [item]
 }

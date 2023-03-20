@@ -3,7 +3,12 @@
     <view class="scroll-container">
       <view class="top-placeholder"></view>
       <view class="search">
-        <uni-search-bar :placeholder="props.searchPlaceholder" bg-color="#EEEEEE" @confirm="handleSearch" />
+        <uni-search-bar
+          :placeholder="props.searchPlaceholder"
+          bg-color="#EEEEEE"
+          @confirm="handleSearch"
+          @cancel="handleCancel"
+        />
       </view>
       <view class="drawer-content">
         <PaginationList
@@ -44,6 +49,9 @@ const handleSearch = (res) => {
   fetchData({
     [props.searchKey]: res.value,
   })
+}
+const handleCancel = () => {
+  fetchData()
 }
 const detailData = ref()
 const drawer = ref()
