@@ -19,30 +19,30 @@
         title="帐号管理"
         @click="goToPage('account')"
       />
-      <uni-list-item
+      <!-- <uni-list-item
         :show-extra-icon="true"
         show-arrow
         clickable
         :extra-icon="icons.message"
         title="新消息通知"
         @click="goToPage('message')"
-      />
-      <uni-list-item
+      /> -->
+      <!-- <uni-list-item
         :show-extra-icon="true"
         show-arrow
         clickable
         :extra-icon="icons.feedback"
         title="问题反馈"
         @click="goToPage('feedback')"
-      />
-      <uni-list-item
+      /> -->
+      <!-- <uni-list-item
         :show-extra-icon="true"
         show-arrow
         clickable
         :extra-icon="icons.service"
         title="服务条款及协议"
         @click="goToPage('service')"
-      />
+      /> -->
       <uni-list-item
         :show-extra-icon="true"
         show-arrow

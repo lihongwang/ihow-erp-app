@@ -25,8 +25,8 @@
       </view>
 
       <view class="info-item grid2">
-        <InfoText title="采购未完成" :info="homeData?.unfinishedPurchaseOrder" extra="笔" />
-        <InfoText title="销售未完成" :info="homeData?.unfinishedSaleOrder" extra="笔" />
+        <InfoText title="采购未完成" class="color-red enhance" :info="homeData?.unfinishedPurchaseOrder" extra="笔" />
+        <InfoText title="销售未完成" class="color-red enhance" :info="homeData?.unfinishedSaleOrder" extra="笔" />
       </view>
       <view class="info-item grid2">
         <InfoText title="库存数量" :info="homeData?.currentStockQty" />
@@ -99,6 +99,11 @@ const handleClick = (url) => {
   .info-content {
     padding-top: 10px !important;
   }
+  ::v-deep .color-red {
+    .num {
+      color: red !important;
+    }
+  }
   .info-content,
   .action-content {
     box-sizing: border-box;
@@ -114,6 +119,7 @@ const handleClick = (url) => {
         margin-bottom: 0;
       }
     }
+
     ::v-deep .info-btn-wrap {
       display: flex;
       flex-direction: column;

@@ -21,12 +21,12 @@ export default (props: ReportProps) => {
     iconColor: '#fff',
   }
   const fabContent = [
-    {
-      iconPath: '/static/images/add-circle.png',
-      selectedIconPath: '/static/images/add-circle-blue.png',
-      text: '下载',
-      active: false,
-    },
+    // {
+    //   iconPath: '/static/images/add-circle.png',
+    //   selectedIconPath: '/static/images/add-circle-blue.png',
+    //   text: '下载',
+    //   active: false,
+    // },
     {
       iconPath: '/static/images/search.png',
       selectedIconPath: '/static/images/search-blue.png',

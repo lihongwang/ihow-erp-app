@@ -30,7 +30,8 @@
           @change="handleChange"
         />
       </view>
-      <uni-table
+      <Table v-if="tableData" class="report-table-wrap" :columns="tableFields" :data="tableData"></Table>
+      <!-- <uni-table
         ref="tableRef"
         :loading="loading"
         border
@@ -48,7 +49,7 @@
             </view>
           </uni-td>
         </uni-tr>
-      </uni-table>
+      </uni-table> -->
     </view>
     <uni-popup ref="searchDialog" type="dialog">
       <uni-popup-dialog
@@ -93,6 +94,7 @@ import FilterGroupBtn from '@/components/filter/groupButton'
 import SearchValue from '@/components/filter/searchValue'
 import { useReportDetailPage } from '@/hooks'
 import reportPageInfo from '@/pageInfo/report/purchaseOrderProcess.json'
+import Table from './table'
 const { title, code, searchFields, tableFields } = reportPageInfo
 const searchDialog = ref()
 const filterModel = ref({})
@@ -136,14 +138,17 @@ const {
 .page-content {
   width: 100%;
   box-sizing: border-box;
-
-  ::v-deep table {
-    table-layout: fixed;
-    min-width: 1000px;
-    td,
-    th {
-      padding: 3px !important;
-    }
+  .report-table-wrap {
+    min-height: 0;
+    flex: 1;
   }
+  // ::v-deep table {
+  //   table-layout: fixed;
+  //   min-width: 1000px;
+  //   td,
+  //   th {
+  //     padding: 3px !important;
+  //   }
+  // }
 }
 </style>

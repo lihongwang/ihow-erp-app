@@ -15,23 +15,28 @@ import uniChart from '@/components/uniapp-echarts/components/uni-chart/uni-chart
 import { fixNumber, toMoney } from '@/utils/data'
 import { ref, defineProps } from 'vue'
 import { useChart } from '@/hooks'
+import dayjs from 'dayjs'
 const props = defineProps(['refresh'])
 const chartOpts = ref()
+const year = new Date().getFullYear()
 useChart({
   props,
   code: 'ReportGoodsSaleOutRank',
+  params: {
+    fromBillDate: dayjs(`${year}-01-01`).format('YYYY-MM-DD 00:00:00'),
+  },
   format: (data) => {
     const values = []
     const labels = []
     const listData = data?.list || []
     let len
-    if (listData.length < 9) len = listData.length
+    if (listData.length < 10) len = listData.length
     listData
-      .sort((a, b) => a.outAmount - b.outAmount)
-      .slice(0, 9)
+      .sort((a, b) => a.outQty - b.outQty)
+      .slice(0, 10)
       .forEach((item, index) => {
-        values.push(item.outAmount)
-        labels.push(`No.${(len || 9) - index} ${item.goodsName}`)
+        values.push(item.outQty)
+        labels.push(`No.${(len || 10) - index} ${item.goodsName}`)
       })
     chartOpts.value = {
       backgroundColor: '#fff',

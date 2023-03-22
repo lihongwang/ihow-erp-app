@@ -26,22 +26,22 @@
         ></uni-file-picker>
       </uni-forms-item> -->
       <uni-forms-item label="昵称">
-        <uni-easyinput v-model="userInfo.name" class="list-val" />
+        <uni-easyinput v-model="userInfo.name" class="list-val" disabled />
       </uni-forms-item>
       <uni-forms-item label="公司名称">
         <uni-easyinput v-model="userInfo.companyName" class="list-val" disabled />
       </uni-forms-item>
       <uni-forms-item label="邮箱">
-        <uni-easyinput v-model="userInfo.email" class="list-val" />
+        <uni-easyinput v-model="userInfo.email" class="list-val" disabled />
       </uni-forms-item>
       <uni-forms-item label="手机">
-        <uni-easyinput v-model="userInfo.mobile" class="list-val" />
+        <uni-easyinput v-model="userInfo.mobile" class="list-val" disabled />
       </uni-forms-item>
       <uni-forms-item label="生日">
-        <uni-datetime-picker v-model="userInfo.birthday" type="date" :clear-icon="false" />
+        <uni-datetime-picker v-model="userInfo.birthday" type="date" :clear-icon="false" disabled />
       </uni-forms-item>
       <uni-forms-item label="性别">
-        <uni-data-select v-model="userInfo.gender" :localdata="list"></uni-data-select>
+        <uni-data-select v-model="userInfo.gender" :localdata="list" disabled></uni-data-select>
       </uni-forms-item>
     </uni-forms>
     <button class="login-button" @click="logout">退出登录</button>

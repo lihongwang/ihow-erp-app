@@ -1,18 +1,18 @@
 <template>
-  <view class="info-text">
+  <view class="info-text" :class="props.class">
     <view class="title">{{ props.title }}</view>
     <view class="info">
       <h3 class="num">
         {{ props.info }}
-        <span v-if="props.money || props.extra" class="extra">{{ props.extra || '元' }}</span>
       </h3>
+      <span v-if="props.money || props.extra" class="extra">{{ props.extra || '元' }}</span>
     </view>
   </view>
 </template>
 
 <script setup>
 import { defineProps } from 'vue'
-const props = defineProps(['title', 'info', 'money', 'extra'])
+const props = defineProps(['title', 'info', 'money', 'extra', 'class'])
 </script>
 
 <style lang="scss" scoped>
@@ -32,6 +32,9 @@ const props = defineProps(['title', 'info', 'money', 'extra'])
     font-size: 14px;
     font-weight: bold;
     min-height: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .extra {
       font-size: 12px;
       font-weight: bold;
