@@ -9,7 +9,7 @@
     { "name": "diffQty", "label": "缺货数量", "width": 100 },
     { "name": "purchasedQty", "label": "采购在途", "width": 100 },
     { "name": "supQty", "label": "建议补货", "width": 100 },
-    { "name": "masterUnit", "label": "单位", "width": 100 },
+    { "name": "masterUnit", "label": "单位", "width": 80 },
     { "name": "wrinkles", "label": "纹路", "width": 100 },
     { "name": "color", "label": "颜色", "width": 100 },
     { "name": "thickness", "label": "厚度", "width": 100 },
@@ -20,7 +20,7 @@
     { "name": "surfaceEffect", "label": "表面效果", "width": 100 },
     { "name": "functions", "label": "其它功能", "width": 100 },
     { "name": "bottomSlab", "label": "底坯", "width": 100 },
-    { "name": "pecification", "label": "厂家型号", "width": 100 }
+    { "name": "pecification", "label": "厂家型号", "width": 140 }
   ],
   "searchFields": [{ "name": "name", "title": "商品名称" }]
 }

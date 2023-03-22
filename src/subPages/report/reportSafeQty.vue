@@ -32,7 +32,7 @@
       </view>
       <Table
         v-if="tableData"
-        :style="'height: calc(100vh - 100px)'"
+        style="height: calc(100vh - 140px)"
         class="report-table-wrap"
         :formatter="formatData"
         :columns="tableFields"
@@ -144,14 +144,5 @@ const {
 .page-content {
   width: 100%;
   box-sizing: border-box;
-
-  ::v-deep table {
-    table-layout: fixed;
-    min-width: 1000px;
-    td,
-    th {
-      padding: 3px !important;
-    }
-  }
 }
 </style>

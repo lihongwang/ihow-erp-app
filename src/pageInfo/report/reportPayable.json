@@ -3,8 +3,8 @@
   "code": "ReportPayable!",
   "url": "/page/report/reportPayable!",
   "tableFields": [
-    { "name": "name", "title": "供应商名称", "width": 100 },
-    { "name": "balanceAmount", "title": "应付款余额", "width": 100 }
+    { "name": "name", "label": "供应商名称", "width": 100 },
+    { "name": "balanceAmount", "label": "应付款余额", "width": 100, "type": "money", "formatter": true }
   ],
   "searchFields": [{ "name": "supplierName1", "title": "供应商" }]
 }

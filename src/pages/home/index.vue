@@ -125,6 +125,11 @@ const handleClick = (url) => {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      border: 1px solid #d9d9d9;
+      padding-top: 15px;
+      padding-bottom: 5px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
       .btn-img {
         background: #007aff;
         width: 28px;

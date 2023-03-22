@@ -1063,7 +1063,7 @@ export default {
   overflow-wrap: break-word;
   border-bottom: 1px solid #e8e8e8;
   transition: background 0.3s;
-  padding-right: 20px;
+  padding-right: 8px;
   word-break:keep-all;           /* 不换行 */
   white-space:nowrap;          /* 不换行 */
   overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
@@ -1102,7 +1102,7 @@ export default {
     padding-left: 8px;
     height: 40px;
     line-height: 40px;
-	padding-right: 20px;
+    padding-right: 8px;
     box-sizing: border-box;
     word-break:keep-all;           /* 不换行 */
     white-space:nowrap;          /* 不换行 */
@@ -1148,7 +1148,7 @@ export default {
     //transition: box-shadow 0.3s ease;
   }
   .odd{
-    background-color:rgba(249,249,249,0.6);
+    background-color:rgba(239,246,255);
     //height: 100%;
     width: 100%;
   }
@@ -1199,7 +1199,7 @@ export default {
     padding-left: 8px;
     height: 40px;
     line-height: 40px;
-	padding-right:20px;
+    padding-right: 8px;
     box-sizing: border-box;
     word-break:keep-all;           /* 不换行 */
     white-space:nowrap;          /* 不换行 */
@@ -1290,13 +1290,13 @@ export default {
   }
   .current-row{
     .item-td{
-      background-color: #ecf5ff;
+      background-color: #a5e0fb;
     }
   }
 }
 .current-row{
   .item-td{
-    background-color: #ecf5ff;
+    background-color: #a5e0fb;
   }
 }
 .zb-table-header{

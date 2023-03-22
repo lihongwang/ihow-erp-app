@@ -1,6 +1,7 @@
 import { onLoad } from '@dcloudio/uni-app'
 import { getDataByCode } from '@/apis'
 import dayjs from 'dayjs'
+import { toMoney } from '@/utils/data'
 interface ReportProps {
   code: any
   pageInfo: any
@@ -88,6 +89,7 @@ export default (props: ReportProps) => {
     console.log(data)
     if (info.name.match(/Enum$/)) return data[info.name]?.name
     if (info.type === 'object') return data[info.name]?.name
+    if (info.type === 'money') return toMoney(data[info.name])
     if (info.type === 'date') return data[info.name] ? dayjs(new Date(data[info.name])).format('YYYY-MM-DD') : ''
     return data[info.name]
   }

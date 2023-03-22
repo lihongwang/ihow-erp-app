@@ -5,13 +5,13 @@
   "tableFields": [
     { "name": "goodsName", "label": "商品名称", "width": 100, "fixed": true },
     { "name": "warehouseName", "label": "仓库名称", "width": 100 },
-    { "name": "$batchNumber", "label": "批次号", "width": 100 },
-    { "name": "inDate", "label": "入库日期", "width": 100, "type": "date" },
+    { "name": "$batchNumber", "label": "批次号", "width": 160 },
+    { "name": "inDate", "label": "入库日期", "width": 90, "type": "date", "formatter": true },
     { "name": "billInfo", "label": "来源", "width": 100 },
     { "name": "remainQty", "label": "库存数量", "width": 100 },
-    { "name": "masterUnit", "label": "单位", "width": 100 },
-    { "name": "purchasePrice", "label": "单价", "width": 100 },
-    { "name": "amount", "label": "库存金额", "width": 100 },
+    { "name": "masterUnit", "label": "单位", "width": 80 },
+    { "name": "purchasePrice", "label": "单价", "width": 90, "type": "money", "formatter": true },
+    { "name": "amount", "label": "库存金额", "width": 100, "type": "money", "formatter": true },
     { "name": "warehouseAreaName", "label": "货位", "width": 100 },
     { "name": "stockDays", "label": "库齡(天)", "width": 100 },
     { "name": "supplierName", "label": "供应商名称", "width": 100 },
@@ -26,7 +26,7 @@
     { "name": "surfaceEffect", "label": "表面效果", "width": 100 },
     { "name": "functions", "label": "其它功能", "width": 100 },
     { "name": "bottomSlab", "label": "底坯", "width": 100 },
-    { "name": "pecification", "label": "厂家型号", "width": 100 }
+    { "name": "pecification", "label": "厂家型号", "width": 140 }
   ],
   "searchFields": [
     { "name": "warehouseId1", "title": "仓库名称", "type": "warehouse" },

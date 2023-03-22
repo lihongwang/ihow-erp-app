@@ -77,13 +77,20 @@ const handleClick = (url) => {
     }
   }
   .info-item {
-    margin-top: 20px;
+    margin-top: 10px;
+    padding: 0 30px;
+    column-gap: 30px;
   }
   .info-btn-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 1px solid #d9d9d9;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     .btn-img {
       background: #303f9f;
       width: 28px;

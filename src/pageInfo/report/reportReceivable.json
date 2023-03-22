@@ -3,8 +3,8 @@
   "code": "ReportReceivable!",
   "url": "/page/report/reportReceivable!",
   "tableFields": [
-    { "name": "name", "title": "客户名称", "width": 100 },
-    { "name": "balanceAmount", "title": "应收款余额", "width": 100 }
+    { "name": "name", "label": "客户名称", "width": 100 },
+    { "name": "balanceAmount", "label": "应收款余额", "width": 100, "type": "money", "formatter": true }
   ],
   "searchFields": [{ "name": "customerName1", "title": "客户名称" }]
 }

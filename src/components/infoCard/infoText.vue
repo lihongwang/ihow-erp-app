@@ -20,7 +20,7 @@ const props = defineProps(['title', 'info', 'money', 'extra', 'class'])
   box-sizing: border-box;
   padding: 10px;
   border: 1px solid #d9d9d9;
-  border-radius: 5px;
+  border-radius: 6px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   .title {
     font-size: 12px;

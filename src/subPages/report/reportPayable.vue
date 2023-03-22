@@ -30,7 +30,15 @@
           @change="handleChange"
         />
       </view>
-      <uni-table
+      <Table
+        v-if="tableData"
+        style="height: calc(100vh - 140px)"
+        class="report-table-wrap"
+        :formatter="formatData"
+        :columns="tableFields"
+        :data="tableData"
+      ></Table>
+      <!-- <uni-table
         ref="tableRef"
         :loading="loading"
         border
@@ -48,7 +56,7 @@
             </view>
           </uni-td>
         </uni-tr>
-      </uni-table>
+      </uni-table> -->
     </view>
     <uni-popup ref="searchDialog" type="dialog">
       <uni-popup-dialog
@@ -93,12 +101,13 @@ import FormField from '@/components/form/FormField'
 import SearchValue from '@/components/filter/searchValue'
 import { useReportDetailPage } from '@/hooks'
 import reportPageInfo from '@/pageInfo/report/reportPayable.json'
+import Table from './table'
 const { title, code, searchFields, tableFields } = reportPageInfo
 const searchDialog = ref()
 const filterModel = ref({})
 const hasSearched = ref(false)
 const searchModel = ref({})
-const tableRef = ref()
+// const tableRef = ref()
 const tableData = ref()
 const fieldContext = ref({})
 const pageInfo = ref({
@@ -135,14 +144,5 @@ const {
 .page-content {
   width: 100%;
   box-sizing: border-box;
-
-  ::v-deep table {
-    table-layout: fixed;
-    min-width: 1000px;
-    td,
-    th {
-      padding: 3px !important;
-    }
-  }
 }
 </style>
