@@ -6,23 +6,21 @@
 	      <template v-if="showHeader">
 	        <view class="zb-table-header top-header-uni"
           >
-	          <scroll-view
-id="tableHeaders"
-	                       class="zb-table-headers"
+	          <scroll-view class="zb-table-headers"
+	                       @scroll="handleTableScrollLeft"
 	                       scroll-x="true"
 	                       scroll-y="false"
+	                       id="tableHeaders"
 	                       scroll-anchoring="true"
 	                       :scroll-left="headerTableLeft"
 	                       style="
-						height: 100%"
-	                       @scroll="handleTableScrollLeft">
+						height: 100%">
 
 	            <view class="zb-table-fixed" >
 	              <view class="zb-table-thead" style="position: relative;" >
 	                <view class="item-tr">
 	                  <view
-	                      v-for="(item,index) in transColumns"
-	                      :key="index"
+	                      @click.stop="sortAction(item,index)"
 	                      class="item-th"
 	                      :style="[{
 	                              width:`${item.width?item.width:'100'}px`,
@@ -32,7 +30,8 @@ id="tableHeaders"
 
 															  borderTop:`${border?'1px solid #e8e8e8':''}`,
 															  textAlign:item.align||'left'
-														  },getHeaderCellStyle(item,index)]" @click.stop="sortAction(item,index)">
+														  },getHeaderCellStyle(item,index)]"
+	                      v-for="(item,index) in transColumns" :key="index">
                       <template v-if="item.type==='selection'">
                         <view class="checkbox-item">
                           <tableCheckbox
@@ -41,7 +40,7 @@ id="tableHeaders"
                       </template>
                       <template v-else>
                         {{ item.label }}
-                        <view v-if="item.sorter" class="sorter-table">
+                        <view class="sorter-table" v-if="item.sorter">
                           <view :class="['sorter-table-icon',item.sorterMode==='_asc'&&`sorting${item.sorterMode||''}`]"></view>
                           <view :class="['sorter-table-icon',item.sorterMode==='_desc'&&`sorting${item.sorterMode||''}`]"></view>
                         </view>
@@ -68,41 +67,40 @@ id="tableHeaders"
 	        <view class="no-data">暂无数据~~</view>
 	      </template>
 	      <scroll-view
-            id="tableBody" ref="tableBody"	class="zb-table-body"	scroll-x="true"	scroll-y="true"
+            class="zb-table-body" ref="tableBody"	scroll-x="true"	scroll-y="true"	id="tableBody"
 	                   :lower-threshold="40"
 	                   :upper-threshold="10"
-                     :scroll-left="bodyTableLeft"
-	                   :scroll-top="bodyScrollTop"
-                     :style=" `height: calc(100% - ${showSummary?80:40}px)`"	@scrolltolower="scrolltolower"	@scrolltoupper="(e)=>debounce(scrollToLeft)(e)"
-                     @scroll="handleBodyScroll" >
+                     @scrolltolower="scrolltolower"
+	                   @scrolltoupper="(e)=>debounce(scrollToLeft)(e)"
+                     @scroll="handleBodyScroll"	:scroll-left="bodyTableLeft"	:scroll-top="bodyScrollTop"
+                     :style=" `height: calc(100% - ${showSummary?80:40}px)`" >
 	          <view class="zb-table-fixed">
 	            <view class="zb-table-tbody">
-	              <view
-v-for="(item,index) in transData"
-                       :key="item.key"
-	                     :class="['item-tr',highlight&&isHighlight(item,index)?'current-row':'']" @click.stop="rowClick(item,index)" >
+	              <view  :class="['item-tr',highlight&&isHighlight(item,index)?'current-row':'']"
+                       @click.stop="rowClick(item,index)"
+	                     v-for="(item,index) in transData" :key="item.key" >
 	                <view
-	                    v-for="(ite,i) in transColumns"
-
-	                    :key="i"
 	                    :style="[{
 									              width:`${ite.width?ite.width:'100'}px`,
 															  flex:i===transColumns.length-1?1:'none',
 															  minWidth:`${ite.width?ite.width:'100'}px`,
 															  borderRight:`${border?'1px solid #e8e8e8':''}`,
                                 textAlign:ite.align||'left',
-														  },cellStyle&&getCellStyle(item,ite,index,i)]" :class="['item-td',stripe?(index % 2) != 0?'odd':'even':'']">
+														  },cellStyle&&getCellStyle(item,ite,index,i)]"
+
+	                    :class="['item-td',stripe?(index % 2) != 0?'odd':'even':'']"
+	                    v-for="(ite,i) in transColumns" :key="i">
 	                  <template  v-if="ite.type==='operation'">
 	                    <view style="display: flex;align-items: center;height: 100%">
 	                      <view
                             v-for="ren,ind in permission(item,ite.renders,index)"
 	                          :key="ind"
+	                          @click.stop="$emit(ren.func,item,index)"
 	                          :style="{
 	                          display:'flex',
 	                          alignItems: 'center',
 	                          marginRight:ite.renders.length>1?'8px':'0'
-	                        }"
-	                          @click.stop="$emit(ren.func,item,index)">
+	                        }">
                           <template v-if="ren.type==='custom'">
                             <view :class="ren.class||''" style="cursor: pointer">
                               {{ren.name}}
@@ -118,7 +116,7 @@ v-for="(item,index) in transData"
 	                  </template>
                     <template v-else-if="ite.type==='selection'">
                       <view class="checkbox-item">
-                        <tableCheckbox :cell-data="item" :checked="item.checked" @checkboxSelected="(e)=>checkboxSelected(e,item)"/>
+                        <tableCheckbox @checkboxSelected="(e)=>checkboxSelected(e,item)" :cellData="item" :checked="item.checked"/>
                       </view>
                     </template>
                     <template v-else-if="ite.type==='index'">
@@ -128,11 +126,11 @@ v-for="(item,index) in transData"
                     <view class="checkbox-item">
                       <template  v-if="item[ite.name]">
                         <image
+                            @click.stop="previewImage(item,item[ite.name],iImage)"
                             v-for="iImageTem,iImage in imgs(item[ite.name])"
-                            :key="iImage"
                             :show-menu-by-longpress="false"
-                            :src="iImageTem"
-                            style="width: 40px;height:30px; " mode="aspectFit" @click.stop="previewImage(item,item[ite.name],iImage)"></image>
+                            :key="iImage"
+                            :src="iImageTem" style="width: 40px;height:30px; " mode="aspectFit"></image>
                       </template>
                     <text v-else>{{ite.emptyString}}</text>
                     </view>
@@ -147,30 +145,28 @@ v-for="(item,index) in transData"
 	          </view>
 	        </scroll-view>
        <table-h5-summary
-           v-if="showSummary"
-           :scrollbar-size="scrollbarSize"
+           :scrollbarSize="scrollbarSize"
            :data="data"
-           :handle-footer-table-scroll-left="handleFooterTableScrollLeft"
-           :header-footer-table-left="headerFooterTableLeft"
-           :show-summary="showSummary"
-           :trans-columns="transColumns"
+           :handleFooterTableScrollLeft="handleFooterTableScrollLeft"
+           :headerFooterTableLeft="headerFooterTableLeft"
+           v-if="showSummary"
+           :showSummary="showSummary"
+           :transColumns="transColumns"
            :border="border"
            :summary-method="summaryMethod"
-           :sum-text="sumText"
-           :fixed-left-columns="fixedLeftColumns"/>
+           :sumText="sumText"
+           :fixedLeftColumns="fixedLeftColumns"/>
 	    </view>
-	    <view
-v-if="isFixedLeft"
-            class="zb-table-fixed-left"
+	    <view class="zb-table-fixed-left"
+            v-if="isFixedLeft"
             :style=" {height:  `calc(100% - ${scrollbarSize}px)`}"
       >
 	      <template v-if="showHeader">
 	        <view class="zb-table-header" style="display: flex">
-	          <view
-v-for="(item,index) in fixedLeftColumns"
-                  :key="index"
-                  class="item-tr"
-                  style="" @click.stop="rowClick(item,index)">
+	          <view class="item-tr"
+                  style=""
+                  @click.stop="rowClick(item,index)"
+                  v-for="(item,index) in fixedLeftColumns" :key="index">
 	            <view
 	                :style="{
 	               width:`${item.width?item.width:'100'}px`,
@@ -178,8 +174,8 @@ v-for="(item,index) in fixedLeftColumns"
 	               borderTop:`${border?'1px solid #e8e8e8':''}`,
                 textAlign:item.align||'left'
 	            }"
-	                class="item-th"
 	                @click.stop="sortAction(item,index)"
+	                class="item-th"
 	            >
                 <template v-if="item.type==='selection'">
                   <view class="checkbox-item">
@@ -189,7 +185,7 @@ v-for="(item,index) in fixedLeftColumns"
                 </template>
                 <template v-else>
                   {{ item.label }}
-                  <view v-if="item.sorter" class="sorter-table">
+                  <view class="sorter-table" v-if="item.sorter">
                     <view :class="['sorter-table-icon',item.sorterMode==='_asc'&&`sorting${item.sorterMode||''}`]"></view>
                     <view :class="['sorter-table-icon',item.sorterMode==='_desc'&&`sorting${item.sorterMode||''}`]"></view>
                   </view>
@@ -200,34 +196,33 @@ v-for="(item,index) in fixedLeftColumns"
 	        </view>
 	      </template>
         <scroll-view
-            id="leftTableFixed"
             scroll-y="true"
+            id="leftTableFixed"
             :upper-threshold="15"
+            @scrolltoupper="(e)=>scrollToFixedLeft(e)"
+            @scroll="leftFixedScrollAction"
             :scroll-top="leftFiexScrollTop"
             class="zb-table-body-inner"
-            :style=" `height: calc(100% - ${showSummary?80:40}px)`"
-            @scrolltoupper="(e)=>scrollToFixedLeft(e)"
-            @scroll="leftFixedScrollAction">
+            :style=" `height: calc(100% - ${showSummary?80:40}px)`">
           <view class="zb-table-fixed">
             <view class="zb-table-tbody">
               <view
-                  v-for="(ite,i) in transData"
+                  :class="['item-tr',stripe?(i % 2) != 0?'odd':'even':'',highlight&&isHighlight(ite,i)?'current-row':'']"
+                    v-for="(ite,i) in transData"
+                    @click.stop="rowClick(ite,i)"
                     :key="ite.key"
-                    :class="['item-tr',stripe?(i % 2) != 0?'odd':'even':'',highlight&&isHighlight(ite,i)?'current-row':'']"
-                    style=""
-                    @click.stop="rowClick(ite,i)">
-                <view
-v-for="(item,index) in fixedLeftColumns"
-                      :key="index"
-                      class='item-td'
+                    style="">
+                <view class='item-td'
                       :style="[{
 	                       width:`${item.width?item.width:'100'}px`,
 	                       borderRight:`${border?'1px solid #e8e8e8':''}`,
 	                       textAlign:item.align||'left'
-	                      },cellStyle&&getCellStyle(ite,item,i,index)]">
+	                      },cellStyle&&getCellStyle(ite,item,i,index)]"
+                      :key="index"
+                      v-for="(item,index) in fixedLeftColumns">
                   <template v-if="item.type==='selection'">
                     <view class="checkbox-item">
-                      <tableCheckbox :cell-data="ite" :checked="ite.checked" @checkboxSelected="(e)=>checkboxSelected(e,ite)"/>
+                      <tableCheckbox @checkboxSelected="(e)=>checkboxSelected(e,ite)" :cellData="ite" :checked="ite.checked"/>
                     </view>
                   </template>
                   <template v-else-if="item.type==='index'">
@@ -242,15 +237,15 @@ v-for="(item,index) in fixedLeftColumns"
           </view>
         </scroll-view>
         <table-side-summary
+            :scrollbarSize="scrollbarSize"
             v-if="showSummary&&!(scrollbarSize>0)"
-            :scrollbar-size="scrollbarSize"
             :data="data"
-            :show-summary="showSummary"
-            :trans-columns="transColumns"
+            :showSummary="showSummary"
+            :transColumns="transColumns"
             :border="border"
             :summary-method="summaryMethod"
-            :sum-text="sumText"
-            :fixed-left-columns="fixedLeftColumns"/>
+            :sumText="sumText"
+            :fixedLeftColumns="fixedLeftColumns"/>
 	    </view>
 	  </view>
     <zb-load-more v-if="isLoadMore&&!completeLoading"/>
@@ -261,7 +256,7 @@ v-for="(item,index) in fixedLeftColumns"
 	  <view class="zb-table-content" style="white-space: nowrap">
       <scroll-view
 
-		#ifdef <!-- m-p-a-l-i-p-a-y -->
+		<!-- #ifdef MP-ALIPAY -->
 		@scroll="scrollAlipay"
 		<!-- #endif  -->
 
@@ -281,8 +276,7 @@ v-for="(item,index) in fixedLeftColumns"
 	              <view class="zb-table-thead" style="position: relative;" >
 	                <view class="item-tr">
 	                  <view
-	                      v-for="(item,index) in transColumns"
-	                      :key="index"
+	                      @click.stop="sortAction(item,index)"
 	                      :class="['item-th',index <fixedLeftColumns.length&&'zb-stick-side']"
 	                      :style="{
 	                              left:`${item.left}px`,
@@ -292,7 +286,8 @@ v-for="(item,index) in fixedLeftColumns"
 															   borderRight:`${border?'1px solid #e8e8e8':''}`,
 															  borderTop:`${border?'1px solid #e8e8e8':''}`,
 															   textAlign:item.align||'left'
-														  }" @click.stop="sortAction(item,index)">
+														  }"
+	                      v-for="(item,index) in transColumns" :key="index">
                       <template v-if="item.type==='selection'">
                         <view class="checkbox-item">
                           <tableCheckbox
@@ -301,7 +296,7 @@ v-for="(item,index) in fixedLeftColumns"
                       </template>
                       <template v-else>
                         {{ item.label||'' }}
-                        <view v-if="item.sorter" class="sorter-table">
+                        <view class="sorter-table" v-if="item.sorter">
                           <view :class="['sorter-table-icon',item.sorterMode==='_asc'&&`sorting${item.sorterMode||''}`]"></view>
                           <view :class="['sorter-table-icon',item.sorterMode==='_desc'&&`sorting${item.sorterMode||''}`]"></view>
                         </view>
@@ -317,13 +312,10 @@ v-for="(item,index) in fixedLeftColumns"
 	      </template>
           <view class="zb-table-fixed">
             <view class="zb-table-tbody">
-              <view
-v-for="(item,index) in transData"
-                     :key="item.key"
-                     :class="['item-tr',highlight&&isHighlight(item,index)?'current-row':'']" @click.stop="rowClick(item,index)" >
+              <view  :class="['item-tr',highlight&&isHighlight(item,index)?'current-row':'']"
+                     @click.stop="rowClick(item,index)"
+                     v-for="(item,index) in transData" :key="item.key" >
                 <view
-                    v-for="(ite,i) in transColumns"
-                    :key="i"
                     :style="[{
                       left:`${ite.left}px`,
                       width:`${ite.width?ite.width:'100'}px`,
@@ -331,18 +323,20 @@ v-for="(item,index) in transData"
                       minWidth:`${ite.width?ite.width:'100'}px`,
                       borderRight:`${border?'1px solid #e8e8e8':''}`,
                       textAlign:ite.align||'left',
-                    },getCellStyle(item,ite,index,i)]" :class="['item-td', i <fixedLeftColumns.length&&'zb-stick-side',stripe?(index % 2) != 0?'odd':'even':'']">
+                    },getCellStyle(item,ite,index,i)]"
+                    :class="['item-td', i <fixedLeftColumns.length&&'zb-stick-side',stripe?(index % 2) != 0?'odd':'even':'']"
+                    v-for="(ite,i) in transColumns" :key="i">
                   <template  v-if="ite.type==='operation'">
                     <view style="display: flex;align-items: center;height: 100%">
                       <view
                           v-for="ren,ind in permission(item,ite.renders,index)"
                           :key="ind"
+                          @click.stop="$emit(ren.func,item,index)"
                           :style="{
 	                          display:'flex',
 	                          alignItems: 'center',
 	                          marginRight:ite.renders.length>1?'8px':'0'
-	                        }"
-                          @click.stop="$emit(ren.func,item,index)">
+	                        }">
                         <template v-if="ren.type==='custom'">
                           <view :class="ren.class||''" style="cursor: pointer">
                             {{ren.name}}
@@ -358,18 +352,18 @@ v-for="(item,index) in transData"
                   </template>
                   <template v-else-if="ite.type==='selection'">
                     <view class="checkbox-item">
-                      <tableCheckbox :cell-data="item" :checked="item.checked" @checkboxSelected="(e)=>checkboxSelected(e,item)"/>
+                      <tableCheckbox @checkboxSelected="(e)=>checkboxSelected(e,item)" :cellData="item" :checked="item.checked"/>
                     </view>
                   </template>
                   <template v-else-if="ite.type==='img'">
                     <template  v-if="item[ite.name]">
                       <view class="checkbox-item" @click.stop>
                         <image
+                            @click.stop="previewImage(iImageTem,item[ite.name],iImage)"
                             v-for="iImageTem,iImage in imgs(item[ite.name])"
-                            :key="iImage"
                             :show-menu-by-longpress="false"
-                            :src="iImageTem"
-                            style="width: 40px;height:30px; " mode="aspectFit" @click.stop="previewImage(iImageTem,item[ite.name],iImage)"></image>
+                            :key="iImage"
+                            :src="iImageTem" style="width: 40px;height:30px; " mode="aspectFit"></image>
                       </view>
                     </template>
 
@@ -389,12 +383,12 @@ v-for="(item,index) in transData"
         <table-summary
             v-if="showSummary"
             :data="data"
-            :show-summary="showSummary"
-            :fixed-left-columns="fixedLeftColumns"
-            :trans-columns="transColumns"
+            :showSummary="showSummary"
+            :fixedLeftColumns="fixedLeftColumns"
+            :transColumns="transColumns"
             :border="border"
             :summary-method="summaryMethod"
-            :sum-text="sumText"
+            :sumText="sumText"
         />
 	    </view>
       </scroll-view>
@@ -474,36 +468,6 @@ export default {
     cellStyle:Function,
     cellHeaderStyle:Function,
     permissionBtn:Function,
-  },
-  data() {
-    return {
-      button:[],
-	    alipayScrollTop:0,
-      alipayScrollOldTop:0,
-      alipayFlag:false,
-      bodyTableLeft:0,
-      headerTableLeft:0,
-      lastScrollLeft:0,
-      isLoadMore:false,
-      headerFooterTableLeft:0,
-      leftFiexScrollTop:0,
-      bodyScrollTop:0,
-      currentDriver:null,
-      currentDriver1:null,
-      bodyTime:null,
-      currentRowIndex:null,
-      currentRow: {},
-      bodyTime1:null,
-      headerTime:null,
-      debounceTime:null,
-      operation:{},
-      completedFlag:false,
-      selectArr:[],
-      indeterminate:false,
-      checkedAll:false,
-      completeLoading:false,
-      aliTime:null,
-    }
   },
   computed:{
     loadMoreHeight(){
@@ -675,6 +639,36 @@ export default {
        return {}
      }
     },
+  },
+  data() {
+    return {
+      button:[],
+	    alipayScrollTop:0,
+      alipayScrollOldTop:0,
+      alipayFlag:false,
+      bodyTableLeft:0,
+      headerTableLeft:0,
+      lastScrollLeft:0,
+      isLoadMore:false,
+      headerFooterTableLeft:0,
+      leftFiexScrollTop:0,
+      bodyScrollTop:0,
+      currentDriver:null,
+      currentDriver1:null,
+      bodyTime:null,
+      currentRowIndex:null,
+      currentRow: {},
+      bodyTime1:null,
+      headerTime:null,
+      debounceTime:null,
+      operation:{},
+      completedFlag:false,
+      selectArr:[],
+      indeterminate:false,
+      checkedAll:false,
+      completeLoading:false,
+      aliTime:null,
+    }
   },
   created(){
   },
