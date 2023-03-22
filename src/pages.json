@@ -47,42 +47,42 @@
           "path": "report/reportStockDetail",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情1"
+            "navigationBarTitleText": "库存汇总报表"
           }
         },
         {
           "path": "report/reportSafeQty",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情2"
+            "navigationBarTitleText": "库存预警报表"
           }
         },
         {
           "path": "report/saleOrderProcess",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情3"
+            "navigationBarTitleText": "销售订单进度"
           }
         },
         {
           "path": "report/purchaseOrderProcess",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情4"
+            "navigationBarTitleText": "采购订单进度"
           }
         },
         {
           "path": "report/reportReceivable",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情5"
+            "navigationBarTitleText": "应收款明细"
           }
         },
         {
           "path": "report/reportPayable",
           "style": {
             "navigationStyle": "custom",
-            "navigationBarTitleText": "报表详情6"
+            "navigationBarTitleText": "应付款明细"
           }
         },
         {

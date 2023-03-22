@@ -44,7 +44,7 @@
         <uni-tr v-for="(item, index) in tableData" :key="index">
           <uni-td v-for="col in tableFields" :key="col.name" align="center">
             <view class="table-cell" :title="formatData(col, item)">
-              {{ formatData(col, item) }}
+              {{ formatData(item, col) }}
             </view>
           </uni-td>
         </uni-tr>

@@ -30,7 +30,15 @@
           @change="handleChange"
         />
       </view>
-      <uni-table
+      <Table
+        v-if="tableData"
+        class="report-table-wrap"
+        :style="'height: calc(100vh - 100px)'"
+        :formatter="formatData"
+        :columns="tableFields"
+        :data="tableData"
+      ></Table>
+      <!-- <uni-table
         ref="tableRef"
         :loading="loading"
         border
@@ -44,11 +52,11 @@
         <uni-tr v-for="(item, index) in tableData" :key="index">
           <uni-td v-for="col in tableFields" :key="col.name" align="center">
             <view class="table-cell" :title="formatData(col, item)">
-              {{ formatData(col, item) }}
+              {{ formatData(item, col) }}
             </view>
           </uni-td>
         </uni-tr>
-      </uni-table>
+      </uni-table> -->
     </view>
     <uni-popup ref="searchDialog" type="dialog">
       <uni-popup-dialog
@@ -93,12 +101,13 @@ import FormField from '@/components/form/FormField'
 import SearchValue from '@/components/filter/searchValue'
 import { useReportDetailPage, useWarehouse } from '@/hooks'
 import reportPageInfo from '@/pageInfo/report/reportStockDetail.json'
+import Table from './table'
 const { title, code, searchFields, tableFields } = reportPageInfo
 const searchDialog = ref()
 const filterModel = ref({})
 const hasSearched = ref(false)
 const searchModel = ref({})
-const tableRef = ref()
+// const tableRef = ref()
 const tableData = ref()
 const fieldContext = ref({})
 const pageInfo = ref({

@@ -30,7 +30,14 @@
           @change="handleChange"
         />
       </view>
-      <Table v-if="tableData" class="report-table-wrap" :columns="tableFields" :data="tableData"></Table>
+      <Table
+        v-if="tableData"
+        :style="'height: calc(100vh - 320px)'"
+        class="report-table-wrap"
+        :formatter="formatData"
+        :columns="tableFields"
+        :data="tableData"
+      ></Table>
       <!-- <uni-table
         ref="tableRef"
         :loading="loading"
@@ -45,7 +52,7 @@
         <uni-tr v-for="(item, index) in tableData" :key="index">
           <uni-td v-for="col in tableFields" :key="col.name" align="center">
             <view class="table-cell" :title="formatData(col, item)">
-              {{ formatData(col, item) }}
+              {{ formatData(item, col) }}
             </view>
           </uni-td>
         </uni-tr>
@@ -100,7 +107,7 @@ const searchDialog = ref()
 const filterModel = ref({})
 const hasSearched = ref(false)
 const searchModel = ref({})
-const tableRef = ref()
+// const tableRef = ref()
 const tableData = ref()
 const fieldContext = ref({})
 const pageInfo = ref({

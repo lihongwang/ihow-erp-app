@@ -83,7 +83,9 @@ export default (props: ReportProps) => {
       url: '/pages/report/index',
     })
   }
-  const formatData = (info: any, data: any) => {
+  const formatData = (data: any, info: any) => {
+    console.log(info)
+    console.log(data)
     if (info.name.match(/Enum$/)) return data[info.name]?.name
     if (info.type === 'object') return data[info.name]?.name
     if (info.type === 'date') return data[info.name] ? dayjs(new Date(data[info.name])).format('YYYY-MM-DD') : ''

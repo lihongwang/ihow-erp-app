@@ -1,5 +1,5 @@
 <template>
-  <view style="height: calc(100vh - 320px)">
+  <view :style="props.style">
     <zbTable
       :columns="props.columns"
       :show-header="true"
@@ -7,7 +7,7 @@
       :border="true"
       row-key="id"
       :data="props.data"
-      :show-summary="true"
+      :formatter="props.formatter"
       :highlight="true"
     ></zbTable>
   </view>
@@ -16,7 +16,7 @@
 <script setup>
 import zbTable from '@/components/zb-table/zb-table'
 import { defineProps } from 'vue'
-const props = defineProps(['columns', 'data'])
+const props = defineProps(['columns', 'data', 'formatter', 'style'])
 </script>
 
 <style></style>
