@@ -81,7 +81,7 @@ useChart({
               fontSize: '18px',
             },
             formatter: function (value) {
-              return `${toMoney(fixNumber(Number(value), 2))} 元`
+              return `${toMoney(fixNumber(Number(value), 2))} 件`
             },
           },
         },

@@ -12,8 +12,20 @@
     <uni-notice-bar show-close show-icon scrollable text="欢迎使用皓网ERP" />
     <view class="content-item info-content">
       <view class="info-item grid2">
-        <InfoText title="今日销售" :money="true" extra="万元" :info="formatMoney(homeData?.todaySaleAmount)" />
-        <InfoText title="今日采购" :money="true" extra="万元" :info="formatMoney(homeData?.totayPurchaseAmount)" />
+        <InfoText
+          title="今日销售"
+          :money="true"
+          class="cur"
+          extra="万元"
+          :info="formatMoney(homeData?.todaySaleAmount)"
+        />
+        <InfoText
+          title="今日采购"
+          :money="true"
+          class="cur"
+          extra="万元"
+          :info="formatMoney(homeData?.totayPurchaseAmount)"
+        />
       </view>
       <view class="info-item grid2">
         <InfoText title="本月销售" :money="true" extra="万元" :info="formatMoney(homeData?.monthSaleAmount)" />
@@ -101,7 +113,7 @@ const handleClick = (url) => {
   }
   ::v-deep .color-red {
     .num {
-      color: red !important;
+      color: #ef4444 !important;
     }
   }
   .info-content,
@@ -119,7 +131,40 @@ const handleClick = (url) => {
         margin-bottom: 0;
       }
     }
-
+    ::v-deep .cur {
+      position: relative;
+      overflow: hidden;
+      background-color: transparent;
+      border-radius: 6px;
+      .info-text {
+        border-width: 2px !important;
+        border-color: #06b6d4 !important;
+      }
+      .num {
+        color: #06b6d4;
+      }
+    }
+    ::v-deep .enhance {
+      position: relative;
+      overflow: hidden;
+      background-color: transparent;
+      border-radius: 6px;
+      .info-text {
+        border-width: 2px !important;
+        border-color: #ef4444 !important;
+      }
+      &:before {
+        position: absolute;
+        right: -12px;
+        top: -12px;
+        width: 24px;
+        height: 24px;
+        content: '';
+        background-color: #ef4444;
+        transform: rotate(45deg);
+        box-sizing: border-box;
+      }
+    }
     ::v-deep .info-btn-wrap {
       display: flex;
       flex-direction: column;

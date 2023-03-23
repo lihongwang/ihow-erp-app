@@ -43,11 +43,12 @@ export default (props: ReportProps) => {
   }
   const trigger = (e) => {
     if (e.index == 0) {
+      searchDialog.value.open()
       // uni.navigateTo({
       //   url: addUrl,
       // })
     } else {
-      searchDialog.value.open()
+      // searchDialog.value.open()
     }
   }
   onLoad(() => {

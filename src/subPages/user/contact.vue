@@ -14,7 +14,20 @@
         <view class="item">欣北·钱江国际广场南区-3号楼-614室</view>
         <view class="item phone">
           <a href="tel:18895515016" class="viewy-2">
-            <uni-icons type="phone" size="20"></uni-icons>Tel: 18895515016（姚先生）
+            <uni-icons type="phone" size="20"></uni-icons>
+            <span class="item-text">Tel: 18895515016（姚先生）</span>
+          </a>
+        </view>
+        <view class="item phone">
+          <a href="tel:18601692529" class="viewy-2">
+            <uni-icons type="phone" size="20"></uni-icons>
+            <span class="item-text">Tel: 18601692529（项先生）</span>
+          </a>
+        </view>
+        <view class="item email">
+          <a href="mailto:it_support@ihownet.com" class="viewy-2">
+            <uni-icons type="email" size="20"></uni-icons>
+            <span class="item-text">Email: it_support@ihownet.com</span>
           </a>
         </view>
       </view>
@@ -66,12 +79,20 @@ const { back, titleInfo } = usePage({
     }
     .item {
       margin: 15px 0;
+      .viewy-2 {
+        display: flex;
+        align-items: center;
+      }
+      .item-text {
+        margin-left: 5px;
+      }
       &.title {
         font-weight: bold;
         margin-bottom: 50px;
         text-align: center;
       }
-      &.phone {
+      &.phone,
+      &.email {
         margin-top: 50px;
       }
     }
